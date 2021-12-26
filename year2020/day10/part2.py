@@ -5,7 +5,6 @@ from common.lists import as_ints
 
 
 def dfc(D, v, M={}):
-    "Memoized depth first counter"
     if v in M:
         return M[v]
     elif D[v]:
