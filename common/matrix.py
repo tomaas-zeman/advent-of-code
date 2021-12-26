@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+from typing import List
+
 from common.lists import flatten
 
 
@@ -71,22 +74,28 @@ class Matrix:
         return '\n'.join([' '.join([str(p) for p in row]) for row in self.rows])
 
 
+def matrix_from_data(data: List[str], item_sep=None, convert_value=lambda x: x) -> Matrix:
+    rows = []
+
+    for line_index, line in enumerate(data):
+        line = line.strip()
+        items = line if item_sep is None else line.split(item_sep)
+        rows.append([
+            Point(line_index, item_index, convert_value(item), (line_index * len(items)) + item_index)
+            for item_index, item in enumerate(items)
+        ])
+
+    matrix = Matrix(rows)
+
+    # add backwards reference to matrix for all points
+    for point in matrix.all_points():
+        point.matrix = matrix
+
+    return matrix
+
+
 def matrix_from_file(file_path: str, item_sep=None, convert_value=lambda x: int(x)) -> Matrix:
+    """Deprecated. Use #matrix_from_data() instead"""
     with open(file_path) as file:
-        rows = []
-
-        for line_index, line in enumerate(file.readlines()):
-            line = line.strip()
-            items = line if item_sep is None else line.split(item_sep)
-            rows.append([
-                Point(line_index, item_index, convert_value(item), (line_index * len(items)) + item_index)
-                for item_index, item in enumerate(items)
-            ])
-
-        matrix = Matrix(rows)
-
-        # add backwards reference to matrix for all points
-        for point in matrix.all_points():
-            point.matrix = matrix
-
-        return matrix
+        data = [line.strip() for line in file.readlines()]
+        return matrix_from_data(data, item_sep, convert_value)
