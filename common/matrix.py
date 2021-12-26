@@ -1,4 +1,5 @@
 from __future__ import annotations
+from common.lists import flatten
 
 
 class Point:
@@ -64,7 +65,7 @@ class Matrix:
         return [v for v in values if v is not None]
 
     def all_points(self) -> list[Point]:
-        return [column for row in self.rows for column in row]
+        return flatten(self.rows)
 
     def __str__(self):
         return '\n'.join([' '.join([str(p) for p in row]) for row in self.rows])
