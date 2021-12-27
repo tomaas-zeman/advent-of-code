@@ -11,6 +11,7 @@ class Point:
         self.column = column
         self.value = value
         self.id = id
+        self.matrix = None
 
     def neighbours(self, diagonals=False) -> list[Point]:
         return self.matrix.neighbours_of(self, diagonals)

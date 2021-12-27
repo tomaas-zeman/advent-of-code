@@ -1,9 +1,9 @@
 from typing import List, Dict, Tuple
 
-from common.matrix import matrix_from_data
+from common.matrix import matrix_from_data, Point
 
 
-def find_neighbour(seat, delta_row, delta_col):
+def find_neighbour(seat: Point, delta_row: int, delta_col: int):
     matrix = seat.matrix
     step = 1
     while 0 <= seat.row + delta_row * step < matrix.num_rows and 0 <= seat.column + delta_col * step < matrix.num_cols:
@@ -14,7 +14,7 @@ def find_neighbour(seat, delta_row, delta_col):
     return None
 
 
-def find_neighbours(seat):
+def find_neighbours(seat: Point):
     return [
         n for n in [
             find_neighbour(seat, 0, 1),
