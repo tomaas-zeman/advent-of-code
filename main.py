@@ -6,7 +6,9 @@ from sys import argv
 # Expected format of input params
 # [0] : <absolute file path>
 # [1] : dir=<file dir relative to root>
-# [2] : use_test_data=<True|False>
+# [2] : use_test_data=<true|false>
+#
+# Run as: python main.py dir=year2022/day1 use_test_data=true
 #
 [year, day] = argv[1].split('=')[1].split('/')
 use_test_data = argv[2].split('=')[1] == 'true'
