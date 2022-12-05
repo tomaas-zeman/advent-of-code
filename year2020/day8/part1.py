@@ -1,7 +1,7 @@
 from typing import List
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     visited_instructions = []
     acc = 0
     index = 0

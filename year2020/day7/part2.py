@@ -26,6 +26,6 @@ def compute_bags_in_series(bags: Dict[str, Tuple[str, int]], bag_name: str):
     ])
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     bags = parse_bags(data)
     return compute_bags_in_series(bags, 'shiny gold') - 1  # -1 for 'shiny gold'

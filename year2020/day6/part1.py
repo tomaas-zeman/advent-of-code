@@ -1,7 +1,7 @@
 from typing import List
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     groups = []
 
     yes_answers = set()

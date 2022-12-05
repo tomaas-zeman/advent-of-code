@@ -11,5 +11,5 @@ def fuel_recursive(fuel: int, mass: int):
     return fuel_recursive(fuel + fuel_for_mass, fuel_for_mass)
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     return sum([fuel_recursive(0, int(mass)) for mass in data])

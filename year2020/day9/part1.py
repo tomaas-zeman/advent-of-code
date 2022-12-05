@@ -4,7 +4,7 @@ from typing import List
 from common.lists import as_ints
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     numbers = as_ints(data)
     buffer_size = 25
     index = 0

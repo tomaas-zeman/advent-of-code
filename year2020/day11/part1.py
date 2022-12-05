@@ -3,7 +3,7 @@ from typing import List, Tuple, Dict
 from common.matrix import matrix_from_data
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     matrix = matrix_from_data(data)
 
     while True:

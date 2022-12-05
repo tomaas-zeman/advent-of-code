@@ -12,7 +12,7 @@ class Mapping(Enum):
     Z = Option.SCISSORS
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     points = 0
     for line in data:
         [enemy, me] = [Mapping[x].value for x in line.split(" ")]

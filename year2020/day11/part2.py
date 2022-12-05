@@ -30,7 +30,7 @@ def find_neighbours(seat: Point):
     ]
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     matrix = matrix_from_data(data)
     while True:
         changes: Dict[Tuple[int, int], str] = {}

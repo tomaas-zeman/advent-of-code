@@ -4,7 +4,7 @@ from typing import List
 from year2020.day2.common import parse_input_data
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     passwords = parse_input_data(data)
 
     correct_passwords = 0

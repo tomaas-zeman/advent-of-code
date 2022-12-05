@@ -12,7 +12,7 @@ def toggle_instructions(data: List[str], modification_start_index: int) -> Tuple
             return data_copy, i + 1
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     acc = 0
 
     [modified_data, modification_start_index] = toggle_instructions(data, 0)

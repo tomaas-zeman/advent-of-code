@@ -65,7 +65,7 @@ def count_arrangements(numbers):
     return len(combinations), len(numbers)
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     arrangements = 0
 
     jolts = as_ints(data)

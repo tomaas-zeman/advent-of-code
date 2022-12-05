@@ -2,7 +2,7 @@ from typing import List
 from year2022.day3.common import letter_value
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     sum = 0
     for line in data:
         first = line[0 : len(line) // 2]

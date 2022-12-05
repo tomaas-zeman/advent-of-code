@@ -2,7 +2,7 @@ from typing import List
 from common.lists import as_ints
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     codes = as_ints(data[0].split(","))
 
     # inputs (task description)

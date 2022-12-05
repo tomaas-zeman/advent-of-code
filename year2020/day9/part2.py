@@ -5,7 +5,7 @@ from common.lists import as_ints
 GOAL = 15353384  # result from part1
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     numbers = as_ints(data)
     index = 0
     last_index = numbers.index(GOAL)

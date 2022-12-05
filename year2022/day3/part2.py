@@ -2,7 +2,7 @@ from typing import List
 from year2022.day3.common import letter_value
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     sum = 0
     groups = [data[i : i + 3] for i in range(0, len(data), 3)]
     for group in groups:

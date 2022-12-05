@@ -3,7 +3,7 @@ from typing import List
 from common.lists import as_ints
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     jolts = as_ints(data)
     diffs = {diff: 0 for diff in range(1, 4)}
 

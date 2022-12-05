@@ -21,7 +21,7 @@ def parse_bags(data: List[str]) -> Dict[str, List[str]]:
     return bags
 
 
-def run(data: List[str]):
+def run(data: List[str], raw_data: List[str]):
     can_hold_shiny_gold_bag = set()
 
     bags = parse_bags(data)
