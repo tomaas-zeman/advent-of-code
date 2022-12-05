@@ -25,3 +25,16 @@ def parse_input(data: List[str]):
             instructions.append(Instruction(int(amount), int(from_stack), int(to_stack)))
 
     return (stacks, instructions)
+
+
+def compute_result(data: List[str], bulk_move=False):
+    [stacks, instructions] = parse_input(data)
+
+    for instruction in instructions:
+        items_to_move = stacks[instruction.from_stack][-instruction.amount :]
+        stacks[instruction.from_stack] = stacks[instruction.from_stack][: -instruction.amount]
+        stacks[instruction.to_stack] = stacks[instruction.to_stack] + (
+            items_to_move if bulk_move else items_to_move[::-1]
+        )
+
+    return "".join([stack.pop() for stack in stacks])
