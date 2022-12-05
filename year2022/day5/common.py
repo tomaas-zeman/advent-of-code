@@ -10,22 +10,18 @@ class Instruction:
 
 
 def parse_input(data: List[str]):
-    stacks: Dict[int, List[str]] = {}
+    stacks: List[str] = [[] for _ in range(len(data[0]) // 4)]
     instructions: List[Instruction] = []
 
     for line in data:
-        if '[' in line:
+        if "[" in line:
             groups = [line[i : i + 4] for i in range(0, len(line), 4)]
             for i in range(len(groups)):
                 crate = re.search(".*\[(\w+)\].*", groups[i])
-                if i not in stacks:
-                    stacks[i] = []
                 if crate is not None:
                     stacks[i].insert(0, crate.groups()[0])
         if line.startswith("move"):
-            [amount, from_stack, to_stack] = [
-                int(x) for x in re.search(".*?(\d+).*?(\d+).*?(\d+)", line).groups()
-            ]
-            instructions.append(Instruction(amount, from_stack, to_stack))
+            [_, amount, _, from_stack, _, to_stack] = line.split(" ")
+            instructions.append(Instruction(int(amount), int(from_stack), int(to_stack)))
 
     return (stacks, instructions)

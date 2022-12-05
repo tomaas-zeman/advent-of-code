@@ -10,4 +10,4 @@ def run(data: List[str], raw_data: List[str]):
         stacks[instruction.from_stack] = stacks[instruction.from_stack][:-instruction.amount]
         stacks[instruction.to_stack] = stacks[instruction.to_stack] + items_to_move[::-1]
 
-    return "".join([stacks[i].pop() for i in range(len(stacks.keys()))])
+    return "".join([stack.pop() for stack in stacks])
