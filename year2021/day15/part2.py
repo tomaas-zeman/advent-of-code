@@ -28,18 +28,14 @@ def run():
     rows_to_repeat = [row for row in huge_matrix_rows]
     for repeat in range(data_repeats - 1):
         huge_matrix_rows += [
-            [
-                repeated_point(point, repeat + 1, matrix.num_cols, matrix.num_rows, True) for point in row
-            ] for row in rows_to_repeat
+            [repeated_point(point, repeat + 1, matrix.num_cols, matrix.num_rows, True) for point in row]
+            for row in rows_to_repeat
         ]
 
     # reindex points
     matrix = Matrix(huge_matrix_rows)
     for point_id, point in enumerate(matrix.all_points()):
         point.id = point_id
-    matrix.mapped_by_id = {
-        point_id: point for point_id, point in
-        enumerate(matrix.all_points())
-    }
+    matrix.mapped_by_id = {point_id: point for point_id, point in enumerate(matrix.all_points())}
 
     return compute_risk(matrix)

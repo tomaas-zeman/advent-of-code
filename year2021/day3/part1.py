@@ -10,7 +10,7 @@ def run():
         for index, value in enumerate(bits):
             counter[index] += 1 if value == 1 else -1
 
-    gamma = ['1' if bit > 0 else '0' for bit in counter]
-    epsilon = ['0' if bit > 0 else '1' for bit in counter]
+    gamma = ["1" if bit > 0 else "0" for bit in counter]
+    epsilon = ["0" if bit > 0 else "1" for bit in counter]
 
-    return int(''.join(gamma), 2) * int(''.join(epsilon), 2)
+    return int("".join(gamma), 2) * int("".join(epsilon), 2)

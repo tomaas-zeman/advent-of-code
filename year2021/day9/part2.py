@@ -10,11 +10,11 @@ def get_basin_size(low_point, grid):
     stack = deque([low_point])
     while len(stack) > 0:
         current_point = stack.pop()
-        valid_neighbours = [n for n in grid.neighbours_of(current_point) if n.value < 9]
-        for neighbour in valid_neighbours:
-            if neighbour not in points:
-                points.add(neighbour)
-                stack.append(neighbour)
+        valid_neighbors = [n for n in grid.neighbors_of(current_point) if n.value < 9]
+        for neighbor in valid_neighbors:
+            if neighbor not in points:
+                points.add(neighbor)
+                stack.append(neighbor)
 
     return len(points)
 
@@ -22,8 +22,5 @@ def get_basin_size(low_point, grid):
 def run():
     grid = get_data()
     return reduce(
-        lambda x, y: x * y,
-        sorted([
-            get_basin_size(low_point, grid)
-            for low_point in find_low_points(grid)
-        ])[-3:])
+        lambda x, y: x * y, sorted([get_basin_size(low_point, grid) for low_point in find_low_points(grid)])[-3:]
+    )

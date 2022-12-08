@@ -1,6 +1,5 @@
 from __future__ import annotations
 from enum import Enum
-from typing import List, Tuple
 
 
 class Type(Enum):
@@ -9,12 +8,12 @@ class Type(Enum):
 
 
 class Node:
-    def __init__(self, name: str, type: Type, size: int, parent: Node = None) -> Node:
+    def __init__(self, name: str, type: Type, size: int, parent: Node | None = None):
         self.name = name
         self.size = size
-        self.parent = parent
+        self.parent = parent if parent is not None else self
         self.type = type
-        self.children: List[Node] = []
+        self.children: list[Node] = []
 
         self.size_of_child_nodes = 0
 
@@ -30,8 +29,8 @@ class Node:
             Node.add_size_to_parents(node.parent, size)
 
 
-def parse_input(data: List[str]) -> Tuple[Node, List[Node]]:
-    all_nodes = []
+def parse_input(data: list[str]):
+    all_nodes: list[Node] = []
     root = Node("/", Type.DIRECTORY, 0)
     current_node = root
 
@@ -39,9 +38,7 @@ def parse_input(data: List[str]) -> Tuple[Node, List[Node]]:
         if line.startswith("$ cd"):
             dest = line[5:]
             current_node = (
-                current_node.parent
-                if dest == ".."
-                else [c for c in current_node.children if c.name == dest][0]
+                current_node.parent if dest == ".." else [c for c in current_node.children if c.name == dest][0]
             )
         if not line.startswith("$"):
             [a, name] = line.split(" ")
@@ -54,4 +51,4 @@ def parse_input(data: List[str]) -> Tuple[Node, List[Node]]:
             current_node.add_child(new_node)
             all_nodes.append(new_node)
 
-    return [root, all_nodes]
+    return root, all_nodes

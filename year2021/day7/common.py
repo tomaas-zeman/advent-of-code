@@ -10,5 +10,5 @@ def count_lowest_cost(crabs, cost_fn):
 
 
 def get_data():
-    with open('year2021/day7/data') as f:
-        return [int(x) for x in f.readline().strip().split(',')]
+    with open("year2021/day7/data") as f:
+        return [int(x) for x in f.readline().strip().split(",")]

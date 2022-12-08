@@ -1,5 +1,2 @@
-from typing import List
-
-
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     pass

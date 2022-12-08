@@ -1,7 +1,4 @@
-from typing import List
-
-
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     visited_instructions = []
     acc = 0
     index = 0
@@ -11,11 +8,11 @@ def run(data: List[str], raw_data: List[str]):
 
         visited_instructions.append(index)
 
-        [instruction, value] = data[index].split(' ')
-        if instruction == 'acc':
+        [instruction, value] = data[index].split(" ")
+        if instruction == "acc":
             acc += int(value)
             index += 1
-        elif instruction == 'jmp':
+        elif instruction == "jmp":
             index += int(value)
         else:
             index += 1

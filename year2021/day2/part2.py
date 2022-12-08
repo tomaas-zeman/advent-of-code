@@ -6,12 +6,12 @@ def run():
     vertical_change = 0
     aim = 0
     for direction, value in get_data():
-        if direction == 'forward':
+        if direction == "forward":
             horizontal_change += value
             vertical_change += aim * value
-        elif direction == 'up':
+        elif direction == "up":
             aim -= value
-        elif direction == 'down':
+        elif direction == "down":
             aim += value
 
     return horizontal_change * vertical_change

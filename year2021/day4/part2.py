@@ -4,7 +4,7 @@ from year2021.day4.common import get_data
 def run():
     [numbers, boards] = get_data()
 
-    for number in numbers:
+    for number in numbers or []:
         boards = [board for board in boards if not board.has_bingo()]
         for board in boards:
             board.select_number(number)

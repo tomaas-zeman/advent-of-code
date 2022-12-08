@@ -1,55 +1,59 @@
-from typing import List, Dict, Tuple
-
 from common.matrix import matrix_from_data, Point
 
 
-def find_neighbour(seat: Point, delta_row: int, delta_col: int):
+def find_neighbor(seat: Point, delta_row: int, delta_col: int):
     matrix = seat.matrix
+    if matrix is None:
+        return None
+
     step = 1
     while 0 <= seat.row + delta_row * step < matrix.num_rows and 0 <= seat.column + delta_col * step < matrix.num_cols:
-        neighbour = matrix.point_at(seat.row + delta_row * step, seat.column + delta_col * step)
-        if neighbour is not None and neighbour.value != '.':
-            return neighbour
+        neighbor = matrix.point_at(seat.row + delta_row * step, seat.column + delta_col * step)
+        if neighbor is not None and neighbor.value != ".":
+            return neighbor
         step += 1
     return None
 
 
-def find_neighbours(seat: Point):
+def find_neighbors(seat: Point):
     return [
-        n for n in [
-            find_neighbour(seat, 0, 1),
-            find_neighbour(seat, 0, -1),
-            find_neighbour(seat, 1, 0),
-            find_neighbour(seat, -1, 0),
-            find_neighbour(seat, 1, 1),
-            find_neighbour(seat, -1, -1),
-            find_neighbour(seat, 1, -1),
-            find_neighbour(seat, -1, 1),
+        n
+        for n in [
+            find_neighbor(seat, 0, 1),
+            find_neighbor(seat, 0, -1),
+            find_neighbor(seat, 1, 0),
+            find_neighbor(seat, -1, 0),
+            find_neighbor(seat, 1, 1),
+            find_neighbor(seat, -1, -1),
+            find_neighbor(seat, 1, -1),
+            find_neighbor(seat, -1, 1),
         ]
         if n is not None
     ]
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     matrix = matrix_from_data(data)
     while True:
-        changes: Dict[Tuple[int, int], str] = {}
+        changes: dict[tuple[int, int], str] = {}
 
         for seat in matrix.all_points():
-            if seat.value == '.':
+            if seat.value == ".":
                 continue
 
-            occupied_neighbours = len([n for n in find_neighbours(seat) if n.value == '#'])
-            if seat.value == 'L' and occupied_neighbours == 0:
-                changes[(seat.row, seat.column)] = '#'
-            elif seat.value == '#' and occupied_neighbours >= 5:
-                changes[(seat.row, seat.column)] = 'L'
+            occupied_neighbors = len([n for n in find_neighbors(seat) if n.value == "#"])
+            if seat.value == "L" and occupied_neighbors == 0:
+                changes[(seat.row, seat.column)] = "#"
+            elif seat.value == "#" and occupied_neighbors >= 5:
+                changes[(seat.row, seat.column)] = "L"
 
         # apply changes - everything has to happen at once
         if len(changes) == 0:
             break
 
         for [row, column], new_value in changes.items():
-            matrix.point_at(row, column).value = new_value
+            point = matrix.point_at(row, column)
+            if point:
+                point.value = new_value
 
-    return len([point for point in matrix.all_points() if point.value == '#'])
+    return len([point for point in matrix.all_points() if point.value == "#"])

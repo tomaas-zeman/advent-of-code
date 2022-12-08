@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import Tuple
 
 
 class Direction(Enum):
@@ -14,7 +13,7 @@ class Rotation(Enum):
     L = -1
 
 
-def compute_new_position(current_position: Tuple[int, int], direction: Direction, value: int):
+def compute_new_position(current_position: tuple[int, int], direction: Direction, value: int):
     if direction == Direction.E:
         return current_position[0] + value, current_position[1]
     if direction == Direction.S:

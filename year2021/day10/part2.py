@@ -2,9 +2,9 @@ from collections import deque
 
 from year2021.day10.common import get_data
 
-opening = '([{<'
-closing = ')]}>'
-points = {')': 1, ']': 2, '}': 3, '>': 4}
+opening = "([{<"
+closing = ")]}>"
+points = {")": 1, "]": 2, "}": 3, ">": 4}
 
 
 def run():

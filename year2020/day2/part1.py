@@ -1,10 +1,9 @@
 from collections import Counter
-from typing import List
 
 from year2020.day2.common import parse_input_data
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     passwords = parse_input_data(data)
 
     correct_passwords = 0

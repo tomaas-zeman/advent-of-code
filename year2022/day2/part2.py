@@ -1,4 +1,3 @@
-from typing import List
 from enum import Enum
 from year2022.day2.common import Option, Result
 
@@ -12,10 +11,10 @@ class Mapping(Enum):
     Z = Result.WIN
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     points = 0
     for line in data:
-        enemy: Option = Mapping[line.split(' ')[0]].value
-        result: Result = Mapping[line.split(' ')[1]].value
+        enemy: Option = Mapping[line.split(" ")[0]].value
+        result: Result = Mapping[line.split(" ")[1]].value
         points += result.value + enemy.optionForResult(result).value
     return points

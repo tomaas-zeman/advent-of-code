@@ -1,24 +1,35 @@
 from __future__ import annotations
-
-from typing import List
+from typing import Generic, TypeVar, Callable, Any
+from random import random
 
 from common.lists import flatten
 
+V = TypeVar("V")
+F = TypeVar("F")
 
-class Point:
-    def __init__(self, row: int, column: int, value: int, id: int = None):
+
+class Point(Generic[V, F]):
+    def __init__(self, row: int, column: int, value: V, id: int | None = None):
         self.row = row
         self.column = column
         self.value = value
-        self.id = id
+        self.id = id or round(random() * 1_000_000_000)
         self.matrix = None
         self.flag = None
 
-    def set_flag(self, flag: str):
+    def set_flag(self, flag: F):
         self.flag = flag
 
-    def neighbours(self, diagonals=False) -> list[Point]:
-        return self.matrix.neighbours_of(self, diagonals)
+    def set_matrix(self, matrix: Matrix):
+        self.matrix = matrix
+
+    def set_value(self, value: V):
+        self.value = value
+
+    def neighbors(self, diagonals=False) -> list[Point]:
+        if self.matrix is None:
+            return []
+        return self.matrix.neighbors_of(self, diagonals)
 
     def __eq__(self, other):
         return self.id == other.id
@@ -33,15 +44,12 @@ class Point:
         return str(self.value)
 
 
-class Matrix:
+class Matrix(Generic[V, F]):
     def __init__(self, rows: list[list[Point]]):
         self.rows = rows
         self.num_rows = len(rows)
         self.num_cols = len(rows[0])
-        self.mapped_by_id = {
-            point_id: point for point_id, point in
-            enumerate(self.all_points())
-        }
+        self.mapped_by_id = {point_id: point for point_id, point in enumerate(self.all_points())}
 
     def point_by_id(self, point_id: int):
         return self.mapped_by_id[point_id]
@@ -54,12 +62,12 @@ class Matrix:
         except:
             return None
 
-    def neighbours_of(self, point: Point, diagonals=False) -> list[Point]:
+    def neighbors_of(self, point: Point, diagonals=False):
         values = [
             self.point_at(point.row, point.column - 1),
             self.point_at(point.row, point.column + 1),
             self.point_at(point.row - 1, point.column),
-            self.point_at(point.row + 1, point.column)
+            self.point_at(point.row + 1, point.column),
         ]
 
         if diagonals:
@@ -72,23 +80,25 @@ class Matrix:
 
         return [v for v in values if v is not None]
 
-    def all_points(self) -> list[Point]:
+    def all_points(self) -> list[Point[V, F]]:
         return flatten(self.rows)
 
     def __str__(self):
-        return '\n'.join([' '.join([str(p) for p in row]) for row in self.rows])
+        return "\n".join([" ".join([str(p) for p in row]) for row in self.rows])
 
 
-def matrix_from_data(data: List[str], item_sep=None, convert_value=lambda x: x) -> Matrix:
+def matrix_from_data(data: list[str], item_sep=None, convert_value: Callable[[str], V] = lambda x: x) -> Matrix[V, Any]:
     rows = []
 
     for line_index, line in enumerate(data):
         line = line.strip()
         items = line if item_sep is None else line.split(item_sep)
-        rows.append([
-            Point(line_index, item_index, convert_value(item), (line_index * len(items)) + item_index)
-            for item_index, item in enumerate(items)
-        ])
+        rows.append(
+            [
+                Point(line_index, item_index, convert_value(item), (line_index * len(items)) + item_index)
+                for item_index, item in enumerate(items)
+            ]
+        )
 
     matrix = Matrix(rows)
 

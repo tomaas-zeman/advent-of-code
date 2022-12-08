@@ -14,9 +14,9 @@ def reset_flashing(octopuses):
 
 
 def flash(octopus):
-    for neighbour in octopus.neighbours(diagonals=True):
-        neighbour.value += 1
+    for neighbor in octopus.neighbors(diagonals=True):
+        neighbor.value += 1
 
 
 def get_data():
-    return matrix_from_file('year2021/day11/data')
+    return matrix_from_file("year2021/day11/data")

@@ -6,7 +6,7 @@ def decode_line_patterns(patterns, output):
         length = len(pattern)
         if length not in patterns_by_length:
             patterns_by_length[length] = []
-        patterns_by_length[length].append(''.join(sorted(pattern)))
+        patterns_by_length[length].append("".join(sorted(pattern)))
 
     for length in range(2, 8):
         if length == 2:
@@ -26,10 +26,13 @@ def decode_line_patterns(patterns, output):
         elif length == 6:
             for pattern in patterns_by_length[6]:
                 if all([c in pattern for c in decoded_numbers[1]]):
-                    if set(decoded_numbers[2]) \
-                            .intersection(set(decoded_numbers[4])) \
-                            .intersection(set(decoded_numbers[5])) \
-                            .pop() in pattern:
+                    if (
+                        set(decoded_numbers[2])
+                        .intersection(set(decoded_numbers[4]))
+                        .intersection(set(decoded_numbers[5]))
+                        .pop()
+                        in pattern
+                    ):
                         decoded_numbers[9] = pattern
                     else:
                         decoded_numbers[0] = pattern
@@ -42,18 +45,18 @@ def decode_line_patterns(patterns, output):
 
     decoded_output = []
     for number_in_output in output:
-        decoded_output.append(reversed_decoded_numbers[''.join(sorted(number_in_output))])
+        decoded_output.append(reversed_decoded_numbers["".join(sorted(number_in_output))])
 
     return decoded_output
 
 
 def get_data():
-    with open('year2021/day8/data') as f:
+    with open("year2021/day8/data") as f:
         data = []
 
         lines = [x.strip() for x in f.readlines()]
         for line in lines:
-            [patterns, output] = line.split('|')
-            data.append((patterns.strip().split(' '), output.strip().split(' ')))
+            [patterns, output] = line.split("|")
+            data.append((patterns.strip().split(" "), output.strip().split(" ")))
 
         return data

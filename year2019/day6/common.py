@@ -1,7 +1,4 @@
-from typing import List, Dict
-
-
-def path_to_com_from(planet: str, orbits: Dict[str, str]):
+def path_to_com_from(planet: str, orbits: dict[str, str]):
     path = []
     next = orbits.get(planet, None)
 
@@ -12,7 +9,7 @@ def path_to_com_from(planet: str, orbits: Dict[str, str]):
     return path
 
 
-def construct_orbits(data: List[str]) -> Dict[str, str]:
+def construct_orbits(data: list[str]) -> dict[str, str]:
     orbits = {}
 
     for line in data:

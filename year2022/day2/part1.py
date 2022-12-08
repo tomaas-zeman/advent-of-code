@@ -1,4 +1,3 @@
-from typing import List
 from enum import Enum
 from year2022.day2.common import Option
 
@@ -12,7 +11,7 @@ class Mapping(Enum):
     Z = Option.SCISSORS
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     points = 0
     for line in data:
         [enemy, me] = [Mapping[x].value for x in line.split(" ")]

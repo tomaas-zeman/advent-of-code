@@ -1,9 +1,7 @@
-from typing import List
-
 from year2019.day3.common import generate_lines, Point
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     paths1 = data[0].split(",")
     paths2 = data[1].split(",")
 

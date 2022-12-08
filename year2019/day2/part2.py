@@ -1,8 +1,7 @@
-from typing import List
 from common.lists import as_ints
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     for noun in range(0, 100):
         for verb in range(0, 100):
             codes = as_ints(data[0].split(","))

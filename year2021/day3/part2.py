@@ -6,7 +6,7 @@ def find_rating(data, bit, compare):
     zeros = [bits for bits in data if bits[bit] == 0]
 
     if len(ones) == 1 and len(zeros) == 1:
-        return ''.join([str(x) for x in (ones if compare(1, 0) else zeros)[0]])
+        return "".join([str(x) for x in (ones if compare(1, 0) else zeros)[0]])
 
     return find_rating(ones if compare(len(ones), len(zeros)) else zeros, bit + 1, compare)
 

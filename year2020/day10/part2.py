@@ -1,5 +1,4 @@
 from collections import deque, OrderedDict
-from typing import List
 
 from common.lists import as_ints
 
@@ -16,14 +15,14 @@ def dfc(D, v, M={}):
 
 def alternative(jolts):
     dag = OrderedDict([(x, {y for y in range(x + 1, x + 4) if y in jolts}) for x in jolts])
-    print(f'Verified: {dfc(dag, 0)}')
+    print(f"Verified: {dfc(dag, 0)}")
 
 
 def slice_data(data, initial_index):
     index = initial_index
     while index < len(data) - 1:
         if data[index + 1] - data[index] == 3:
-            return data[initial_index:index + 1]
+            return data[initial_index : index + 1]
         index += 1
 
 
@@ -32,7 +31,7 @@ class Combination:
         self.numbers = initial_numbers
 
     def __str__(self):
-        return ''.join([str(n) for n in self.numbers])
+        return "".join([str(n) for n in self.numbers])
 
     def __eq__(self, other):
         return str(self) == str(other)
@@ -45,7 +44,8 @@ def count_arrangements(numbers):
     def next_combinations_for(combination):
         return [
             Combination(combination.numbers + [n])
-            for n in numbers if n > combination.numbers[-1] and n - combination.numbers[-1] <= 3
+            for n in numbers
+            if n > combination.numbers[-1] and n - combination.numbers[-1] <= 3
         ]
 
     if numbers is None:
@@ -65,7 +65,7 @@ def count_arrangements(numbers):
     return len(combinations), len(numbers)
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     arrangements = 0
 
     jolts = as_ints(data)

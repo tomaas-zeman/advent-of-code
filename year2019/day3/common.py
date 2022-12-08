@@ -1,6 +1,5 @@
 from __future__ import annotations
 from enum import Enum
-from typing import List
 
 
 class LineOrientation(Enum):
@@ -32,12 +31,10 @@ class Line:
             self.p1 = p2
             self.p2 = p1
 
-        self.orientation = (
-            LineOrientation.VERTICAL if p1.x == p2.x else LineOrientation.HORIZONTAL
-        )
+        self.orientation = LineOrientation.VERTICAL if p1.x == p2.x else LineOrientation.HORIZONTAL
         self.last_point = p2
 
-    def find_intersection_point(self, line: Line) -> Point:
+    def find_intersection_point(self, line: Line):
         if self.orientation == line.orientation:
             return None
 
@@ -54,7 +51,7 @@ class Line:
 
         return None
 
-    def common_point(self, line: Line) -> Point:
+    def common_point(self, line: Line):
         for point1 in [self.p1, self.p2]:
             for point2 in [line.p1, line.p2]:
                 if point1 == point2:
@@ -65,7 +62,7 @@ class Line:
         return f"{str(self.p1)} -> {str(self.p2)}"
 
 
-def generate_lines(paths) -> List[Line]:
+def generate_lines(paths) -> list[Line]:
     lines = []
     last_point = Point(0, 0)
 
@@ -73,6 +70,7 @@ def generate_lines(paths) -> List[Line]:
         direction = path[0]
         amount = int(path[1:])
 
+        new_point = None
         if direction == "L":
             new_point = Point(last_point.x - amount, last_point.y)
         if direction == "R":
@@ -82,7 +80,8 @@ def generate_lines(paths) -> List[Line]:
         if direction == "U":
             new_point = Point(last_point.x, last_point.y + amount)
 
-        lines.append(Line(last_point, new_point))
-        last_point = new_point
+        if new_point is not None:
+            lines.append(Line(last_point, new_point))
+            last_point = new_point
 
     return lines

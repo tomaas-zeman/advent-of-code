@@ -1,11 +1,8 @@
-from typing import List
-
-
 def all_yes_answers(yes_answers, people_in_group):
     return [answer for answer, count in yes_answers.items() if count == people_in_group]
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     groups = []
 
     yes_answers = {}

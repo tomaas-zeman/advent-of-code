@@ -1,4 +1,3 @@
-from typing import List, Tuple, Dict
 import re
 
 
@@ -9,9 +8,9 @@ class Instruction:
         self.to_stack = to_stack - 1
 
 
-def parse_input(data: List[str]):
-    stacks: List[str] = [[] for _ in range(len(data[0]) // 4)]
-    instructions: List[Instruction] = []
+def parse_input(data: list[str]):
+    stacks: list[list[str]] = [[] for _ in range(len(data[0]) // 4)]
+    instructions: list[Instruction] = []
 
     for line in data:
         if "[" in line:
@@ -27,7 +26,7 @@ def parse_input(data: List[str]):
     return (stacks, instructions)
 
 
-def compute_result(data: List[str], bulk_move=False):
+def compute_result(data: list[str], bulk_move=False):
     [stacks, instructions] = parse_input(data)
 
     for instruction in instructions:

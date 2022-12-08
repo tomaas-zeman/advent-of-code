@@ -15,7 +15,7 @@ class Graph:
 
 
 def dijkstra(matrix, graph, starting_point):
-    distances = {n: float('inf') for n in range(graph.point_num)}
+    distances = {n: float("inf") for n in range(graph.point_num)}
     distances[starting_point] = 0
 
     queue = PriorityQueue()
@@ -24,12 +24,12 @@ def dijkstra(matrix, graph, starting_point):
     while not queue.empty():
         [_, point] = queue.get()
         point.visited = True
-        for neighbour in [p for p in matrix.neighbours_of(point) if not p.visited]:
-            new_distance = distances[point.id] + graph.edges[neighbour.id][point.id]
-            current_distance = distances[neighbour.id]
+        for neighbor in [p for p in matrix.neighbors_of(point) if not p.visited]:
+            new_distance = distances[point.id] + graph.edges[neighbor.id][point.id]
+            current_distance = distances[neighbor.id]
             if new_distance < current_distance:
-                distances[neighbour.id] = new_distance
-                queue.put((distances[neighbour.id], matrix.point_by_id(neighbour.id)))
+                distances[neighbor.id] = new_distance
+                queue.put((distances[neighbor.id], matrix.point_by_id(neighbor.id)))
 
     return distances
 

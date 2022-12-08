@@ -9,7 +9,7 @@ def run():
     for step in range(10):
         index = 0
         while index < len(seq) - 1:
-            key = ''.join(seq[index:index + 2])
+            key = "".join(seq[index : index + 2])
             if key in rules:
                 seq.insert(index + 1, rules[key])
                 index += 1

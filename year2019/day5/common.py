@@ -1,4 +1,3 @@
-from typing import List
 from enum import Enum
 from common.lists import as_ints
 
@@ -20,13 +19,13 @@ class Mode(Enum):
     IMMEDIATE = 1
 
 
-def get_arg_value(codes: List[int], mode: Mode, i: int):
+def get_arg_value(codes: list[int], mode: Mode, i: int):
     if mode == Mode.IMMEDIATE:
         return codes[i]
     return codes[codes[i]]
 
 
-def compute_diagnostic_code(data: List[str], input: int):
+def compute_diagnostic_code(data: list[str], input: int):
     codes = as_ints(data[0].split(","))
     diagnostic_code = None
 
@@ -72,6 +71,6 @@ def compute_diagnostic_code(data: List[str], input: int):
                 codes[codes[i + 3]] = 0
             i += 4
         else:
-            raise KeyError("Unsuported opcode " + opcode.name)
+            raise KeyError("Unsupported opcode " + opcode.name)
 
     return diagnostic_code

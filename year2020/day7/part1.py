@@ -1,18 +1,17 @@
 import re
 from collections import deque
-from typing import List, Dict
 
 
-def parse_bags(data: List[str]) -> Dict[str, List[str]]:
+def parse_bags(data: list[str]) -> dict[str, list[str]]:
     bags = {}
     for line in data:
-        [source, rest] = line.replace('.', '').split(' bags contain ')
+        [source, rest] = line.replace(".", "").split(" bags contain ")
 
-        if rest == 'no other bags':
+        if rest == "no other bags":
             bags[source] = None
             continue
 
-        for bag in [bag.strip()[2:] for bag in re.sub('[ ]bags?', '', rest).split(',')]:
+        for bag in [bag.strip()[2:] for bag in re.sub("[ ]bags?", "", rest).split(",")]:
             if bag not in bags:
                 bags[bag] = []
             if bags[bag] is not None:
@@ -21,11 +20,11 @@ def parse_bags(data: List[str]) -> Dict[str, List[str]]:
     return bags
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     can_hold_shiny_gold_bag = set()
 
     bags = parse_bags(data)
-    stack = deque(bags['shiny gold'])
+    stack = deque(bags["shiny gold"])
     while len(stack) > 0:
         bag = stack.pop()
         can_hold_shiny_gold_bag.add(bag)

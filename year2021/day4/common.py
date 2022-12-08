@@ -5,19 +5,16 @@ SIZE = 5
 
 class Board:
     def __init__(self):
-        self.rows = []
+        self.rows: list[list] = []
 
     def add_row(self, row):
         self.rows.append(row)
 
-    def rows(self):
-        return self.rows
-
     def __str__(self):
-        string = ''
+        string = ""
         for row in self.rows:
-            string += ' '.join([str(x) for x in row])
-            string += '\n'
+            string += " ".join([str(x) for x in row])
+            string += "\n"
         return string
 
     def select_number(self, number):
@@ -49,19 +46,19 @@ class Board:
 
 
 def get_data():
-    with open('year2021/day4/data') as f:
+    with open("year2021/day4/data") as f:
         numbers = None
         boards = []
-        board = None
+        board = Board()
         for line in f.readlines():
             if numbers is None:
-                numbers = [int(x) for x in line.strip().split(',')]
+                numbers = [int(x) for x in line.strip().split(",")]
                 continue
 
             if len(line.strip()) == 0:
                 board = Board()
                 boards.append(board)
             else:
-                board.add_row([int(x) for x in re.split('[ ]+', line.strip())])
+                board.add_row([int(x) for x in re.split("[ ]+", line.strip())])
 
         return numbers, boards

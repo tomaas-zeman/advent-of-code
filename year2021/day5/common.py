@@ -4,7 +4,7 @@ class Point:
         self.y = int(y)
 
     def __str__(self):
-        return f'[{self.x},{self.y}]'
+        return f"[{self.x},{self.y}]"
 
 
 class Path:
@@ -18,32 +18,24 @@ class Path:
             steps = abs(self.src.x - self.dst.x) + 1
             step_x = -1 if self.src.x > self.dst.x else 1
             step_y = -1 if self.src.y > self.dst.y else 1
-            return [self.src] + [
-                Point(self.src.x + (step_x * i), self.src.y + (step_y * i))
-                for i in range(1, steps)
-            ]
+            return [self.src] + [Point(self.src.x + (step_x * i), self.src.y + (step_y * i)) for i in range(1, steps)]
 
         if self.src.x != self.dst.x:
             return [
                 Point(new_x, self.src.y)
-                for new_x in range(min(self.src.x, self.dst.x),
-                                   max(self.src.x, self.dst.x) + 1)
+                for new_x in range(min(self.src.x, self.dst.x), max(self.src.x, self.dst.x) + 1)
             ]
 
         if self.src.y != self.dst.y:
             return [
                 Point(self.src.x, new_y)
-                for new_y in range(min(self.src.y, self.dst.y),
-                                   max(self.src.y, self.dst.y) + 1)
+                for new_y in range(min(self.src.y, self.dst.y), max(self.src.y, self.dst.y) + 1)
             ]
 
 
 # flatten all the points in all paths
 def get_all_points(paths):
-    return [
-        point for points in [path.path_points() for path in paths]
-        for point in points
-    ]
+    return [point for points in [path.path_points() for path in paths] for point in points]
 
 
 def create_grid(points):
@@ -73,12 +65,12 @@ def get_intersection_count(grid, points):
 
 
 def get_data(include_diagonals):
-    with open('year2021/day5/data') as f:
+    with open("year2021/day5/data") as f:
         data = []
         for line in f.readlines():
-            [src, dest] = line.strip().split(' -> ')
-            [p1x, p1y] = src.split(',')
-            [p2x, p2y] = dest.split(',')
+            [src, dest] = line.strip().split(" -> ")
+            [p1x, p1y] = src.split(",")
+            [p2x, p2y] = dest.split(",")
 
             # skip invalid diagonals
             if not include_diagonals and p1x != p2x and p1y != p2y:

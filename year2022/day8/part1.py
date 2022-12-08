@@ -1,9 +1,11 @@
-from typing import List, Callable
+from typing import Callable
 from common.matrix import matrix_from_data, Matrix as Forest, Point as Tree
 
 
 def flag_visible_trees(forest: Forest):
-    def mark_direction(range1: int, range2: int, initial_index: int, index_change: int, select_tree: Callable[[Forest, int, int], Tree]):
+    def mark_direction(
+        range1: int, range2: int, initial_index: int, index_change: int, select_tree: Callable[[Forest, int, int], Tree]
+    ):
         for i in range(range1):
             j = initial_index
             tallest = -1
@@ -23,7 +25,7 @@ def flag_visible_trees(forest: Forest):
     mark_direction(forest.num_cols, forest.num_rows, forest.num_rows - 1, -1, selector)
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     forest = matrix_from_data(data, convert_value=lambda x: int(x))
     flag_visible_trees(forest)
     return len([tree for tree in forest.all_points() if tree.flag == 1])

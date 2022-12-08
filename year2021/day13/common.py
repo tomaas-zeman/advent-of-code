@@ -10,10 +10,7 @@ class Fold:
 
 
 def pretty_print(matrix):
-    print('\n'.join([
-        ' '.join(['#' if item.value else '.' for item in row])
-        for row in matrix.rows
-    ]))
+    print("\n".join([" ".join(["#" if item.value else "." for item in row]) for row in matrix.rows]))
 
 
 def merge(matrix1, matrix2):
@@ -32,19 +29,17 @@ def fold_matrix(data, fold_once=False):
     [matrix, folds] = data
 
     for fold in folds:
-        if fold.axis == 'y':
-            m1 = Matrix(matrix.rows[0:fold.value])
+        if fold.axis == "y":
+            m1 = Matrix(matrix.rows[0 : fold.value])
 
-            current_m2_rows = matrix.rows[fold.value + 1:len(matrix.rows)]
+            current_m2_rows = matrix.rows[fold.value + 1 : len(matrix.rows)]
 
             # too tired - hacked correction
             row_diff = m1.num_rows - len(current_m2_rows)
             if row_diff < 0:
                 current_m2_rows = current_m2_rows[:row_diff]
             elif row_diff > 0:
-                additonal_row = [
-                    Point(0, 0, False) for n in range(m1.num_cols)
-                ]
+                additonal_row = [Point(0, 0, False) for n in range(m1.num_cols)]
                 for i in range(row_diff):
                     current_m2_rows.append(additonal_row)
 
@@ -55,11 +50,9 @@ def fold_matrix(data, fold_once=False):
 
             matrix = merge(m1, m2)
         else:
-            m1 = Matrix([row[0:fold.value] for row in matrix.rows])
+            m1 = Matrix([row[0 : fold.value] for row in matrix.rows])
 
-            current_m2_rows = [
-                row[fold.value + 1:len(row)] for row in matrix.rows
-            ]
+            current_m2_rows = [row[fold.value + 1 : len(row)] for row in matrix.rows]
 
             # too tired - hacked correction
             col_diff = m1.num_cols - len(current_m2_rows[0])
@@ -67,9 +60,7 @@ def fold_matrix(data, fold_once=False):
                 current_m2_rows = [row[:col_diff] for row in current_m2_rows]
             elif col_diff > 0:
                 additional_cols = [Point(0, 0, False) for n in range(col_diff)]
-                current_m2_rows = [
-                    row + additional_cols for row in current_m2_rows
-                ]
+                current_m2_rows = [row + additional_cols for row in current_m2_rows]
 
             new_m2_rows = []
             for current_row in current_m2_rows:
@@ -87,7 +78,7 @@ def fold_matrix(data, fold_once=False):
 
 
 def get_data():
-    with open('year2021/day13/data') as f:
+    with open("year2021/day13/data") as f:
         folds = []
         points = []
 
@@ -95,13 +86,12 @@ def get_data():
             if len(line.strip()) == 0:
                 continue
 
-            if line.startswith('fold'):
-                [axis, value] = line.strip().replace('fold along ',
-                                                     '').split('=')
+            if line.startswith("fold"):
+                [axis, value] = line.strip().replace("fold along ", "").split("=")
                 folds.append(Fold(axis, int(value)))
                 continue
 
-            [col, row] = line.strip().split(',')
+            [col, row] = line.strip().split(",")
             points.append(Point(int(row), int(col), True))
 
         num_rows = reduce(max, [point.row for point in points], -1)

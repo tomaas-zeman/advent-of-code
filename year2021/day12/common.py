@@ -21,7 +21,7 @@ class Path:
         return hash(str(self))
 
     def __str__(self):
-        return ' -> '.join([n.id for n in self.nodes])
+        return " -> ".join([n.id for n in self.nodes])
 
 
 class Graph:
@@ -38,10 +38,7 @@ class Graph:
             return Node(id)
 
     def __str__(self):
-        return '\n'.join([
-            f'{id} -> {" ".join([n.id for n in node.nodes])}'
-            for id, node in self.nodes.items()
-        ])
+        return "\n".join([f'{id} -> {" ".join([n.id for n in node.nodes])}' for id, node in self.nodes.items()])
 
 
 class Node:
@@ -51,9 +48,9 @@ class Node:
         self.nodes = set()
 
     def link_with(self, node):
-        if self.id == 'start' or node.id == 'end':
+        if self.id == "start" or node.id == "end":
             self.nodes.add(node)
-        elif self.id == 'end' or node.id == 'start':
+        elif self.id == "end" or node.id == "start":
             node.nodes.add(self)
         else:
             self.nodes.add(node)
@@ -87,19 +84,22 @@ def find_all_paths(can_visit_small_cave_twice=False):
     # bfs
     # - appendleft
     # - pop
-    queue = deque([Path([graph.get_node('start')])])
+    queue = deque([Path([graph.get_node("start")])])
 
     while len(queue) > 0:
         path = queue.pop()
         last_node = path.nodes[-1]
 
-        if last_node.id == 'end':
+        if last_node.id == "end":
             paths.add(path)
             continue
 
         for node in last_node.nodes:
-            if node.revisitable or not path.has(node) \
-                    or (can_visit_small_cave_twice and can_still_visit_small_caves(path)):
+            if (
+                node.revisitable
+                or not path.has(node)
+                or (can_visit_small_cave_twice and can_still_visit_small_caves(path))
+            ):
                 new_path = path.copy()
                 new_path.add(node)
                 queue.appendleft(new_path)
@@ -108,11 +108,11 @@ def find_all_paths(can_visit_small_cave_twice=False):
 
 
 def get_data():
-    with open('year2021/day12/data') as f:
+    with open("year2021/day12/data") as f:
         graph = Graph()
 
         for line in f.readlines():
-            [n1, n2] = [graph.get_node(id) for id in line.strip().split('-')]
+            [n1, n2] = [graph.get_node(id) for id in line.strip().split("-")]
             n1.link_with(n2)
             graph.set(n1)
             graph.set(n2)

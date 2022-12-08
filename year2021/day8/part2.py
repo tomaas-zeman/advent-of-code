@@ -6,6 +6,6 @@ def run():
 
     result = 0
     for patterns, output in data:
-        result += int(''.join([str(n) for n in decode_line_patterns(patterns, output)]))
+        result += int("".join([str(n) for n in decode_line_patterns(patterns, output)]))
 
     return result

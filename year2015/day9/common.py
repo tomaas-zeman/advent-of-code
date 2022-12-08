@@ -1,14 +1,13 @@
 from itertools import permutations
-from typing import List, Set, Tuple, Dict
 
 
-def parse_input(data: List[str]) -> Tuple[Dict[Tuple[str, str], int], Set[str]]:
+def parse_input(data: list[str]) -> tuple[dict[tuple[str, str], int], set[str]]:
     distances = {}
     all_cities = set()
 
     for line in data:
-        [cities, distance] = line.split('=')
-        [source, destination] = cities.split(' to ')
+        [cities, distance] = line.split("=")
+        [source, destination] = cities.split(" to ")
         distances[(source.strip(), destination.strip())] = int(distance.strip())
         distances[(destination.strip(), source.strip())] = int(distance.strip())
         all_cities.add(source.strip())
@@ -17,7 +16,7 @@ def parse_input(data: List[str]) -> Tuple[Dict[Tuple[str, str], int], Set[str]]:
     return distances, all_cities
 
 
-def find_longest_path_length(distances: Dict[Tuple[str, str], int], cities: Set[str]) -> int:
+def find_longest_path_length(distances: dict[tuple[str, str], int], cities: set[str]):
     longest_distance = 0
 
     paths = permutations(cities, len(cities))
@@ -29,8 +28,8 @@ def find_longest_path_length(distances: Dict[Tuple[str, str], int], cities: Set[
     return longest_distance
 
 
-def find_shortest_path_length(distances: Dict[Tuple[str, str], int], cities: Set[str]) -> int:
-    shortest_distance = float('inf')
+def find_shortest_path_length(distances: dict[tuple[str, str], int], cities: set[str]):
+    shortest_distance = float("inf")
 
     paths = permutations(cities, len(cities))
     for path in paths:

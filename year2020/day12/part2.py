@@ -1,9 +1,7 @@
-from typing import List, Tuple
-
 from year2020.day12.common import Direction, Rotation, compute_new_position
 
 
-def rotate_waypoint(ship: Tuple[int, int], waypoint: Tuple[int, int], degree: int):
+def rotate_waypoint(ship: tuple[int, int], waypoint: tuple[int, int], degree: int):
     sector = (degree / 90) % 4
     diff_horizontal = ship[0] - waypoint[0]
     diff_vertical = ship[1] - waypoint[1]
@@ -16,16 +14,16 @@ def rotate_waypoint(ship: Tuple[int, int], waypoint: Tuple[int, int], degree: in
     return waypoint
 
 
-def run(data: List[str], raw_data: List[str]):
+def run(data: list[str], raw_data: list[str]):
     ship = (0, 0)  # (horizontal, vertical), positive is south/east
     waypoint = (10, -1)
 
     for line in data:
         movement = line[0]
         value = int(line[1:])
-        if movement in ['N', 'S', 'E', 'W']:
+        if movement in ["N", "S", "E", "W"]:
             waypoint = compute_new_position(waypoint, Direction[movement], value)
-        elif movement in ['L', 'R']:
+        elif movement in ["L", "R"]:
             waypoint = rotate_waypoint(ship, waypoint, value * Rotation[movement].value)
         else:
             shift_h = (waypoint[0] - ship[0]) * value
