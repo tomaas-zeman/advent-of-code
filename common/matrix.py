@@ -12,6 +12,10 @@ class Point:
         self.value = value
         self.id = id
         self.matrix = None
+        self.flag = None
+
+    def set_flag(self, flag: str):
+        self.flag = flag
 
     def neighbours(self, diagonals=False) -> list[Point]:
         return self.matrix.neighbours_of(self, diagonals)
