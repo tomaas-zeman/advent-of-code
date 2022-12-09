@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Generic, TypeVar, Callable, Any
-from random import random
+from uuid import uuid4
 
 from common.lists import flatten
 
@@ -9,11 +9,11 @@ F = TypeVar("F")
 
 
 class Point(Generic[V, F]):
-    def __init__(self, row: int, column: int, value: V, id: int | None = None):
+    def __init__(self, row: int, column: int, value: V | None = None, id: int | None = None):
         self.row = row
         self.column = column
-        self.value = value
-        self.id = id or round(random() * 1_000_000_000)
+        self.value = value if value is not None else uuid4()
+        self.id = id
         self.matrix = None
         self.flag = None
 
@@ -31,11 +31,18 @@ class Point(Generic[V, F]):
             return []
         return self.matrix.neighbors_of(self, diagonals)
 
-    def __eq__(self, other):
-        return self.id == other.id
+    def is_neighbor_of(self, other: Point):
+        return abs(self.row - other.row) <= 1 and abs(self.column - other.column) <= 1
+
+    def __eq__(self, other: Point):
+        if self.id is not None and other.id is not None:
+            return self.id == other.id
+        return self.row == other.row and self.column == other.column
 
     def __lt__(self, other):
-        return self.id - other.id
+        if self.id is not None and other.id is not None:
+            return self.id - other.id
+        return self.row - other.row + self.column - other.column < 0
 
     def __hash__(self):
         return hash((self.row, self.column))
