@@ -58,7 +58,11 @@ def run_with_file(filename: str):
     return run_result
 
 
-print("\nRunning with test data ...\n")
-if run_with_file("testdata"):
-    print("\nPASSED. Running with real data ...\n")
+# 2021 does not support testdata
+if "2021" in year:
     run_with_file("data")
+else:
+    print("\nRunning with test data ...\n")
+    if run_with_file("testdata"):
+        print("\nPASSED. Running with real data ...\n")
+        run_with_file("data")
