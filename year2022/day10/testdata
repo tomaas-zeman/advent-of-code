@@ -1,3 +1,5 @@
+# part1 = 13140
+# part2 = True
 addx 15
 addx -11
 addx 6

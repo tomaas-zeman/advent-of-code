@@ -11,7 +11,7 @@ class Node:
     def __init__(self, name: str, type: Type, size: int, parent: Node | None = None):
         self.name = name
         self.size = size
-        self.parent = parent if parent is not None else self
+        self.parent = parent
         self.type = type
         self.children: list[Node] = []
 
@@ -38,7 +38,9 @@ def parse_input(data: list[str]):
         if line.startswith("$ cd"):
             dest = line[5:]
             current_node = (
-                current_node.parent if dest == ".." else [c for c in current_node.children if c.name == dest][0]
+                (current_node.parent if current_node.parent else root)
+                if dest == ".."
+                else [c for c in current_node.children if c.name == dest][0]
             )
         if not line.startswith("$"):
             [a, name] = line.split(" ")

@@ -10,7 +10,6 @@ def is_light_pixel(position: int, sprite_mid_position: int):
 
 
 def draw_crt(crt: list[str]):
-    clear()
     for line in [crt[i : i + width] for i in range(0, len(crt), width)]:
         print("".join(line))
 
@@ -26,7 +25,9 @@ def run(data: list[str], raw_data: list[str]):
         for _ in range(instruction.duration):
             if is_light_pixel(step, value):
                 crt[step] = with_color('#', Color.CYAN)
-                draw_crt(crt)
             step += 1
 
         value = instruction.operation(value, line[1:])
+    
+    draw_crt(crt)
+    return True
