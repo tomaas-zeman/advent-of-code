@@ -8,7 +8,7 @@ def find_neighbor(seat: Point, delta_row: int, delta_col: int):
 
     step = 1
     while 0 <= seat.row + delta_row * step < matrix.num_rows and 0 <= seat.column + delta_col * step < matrix.num_cols:
-        neighbor = matrix.point_at(seat.row + delta_row * step, seat.column + delta_col * step)
+        neighbor = matrix.point_at_safe(seat.row + delta_row * step, seat.column + delta_col * step)
         if neighbor is not None and neighbor.value != ".":
             return neighbor
         step += 1
@@ -52,7 +52,7 @@ def run(data: list[str], raw_data: list[str]):
             break
 
         for [row, column], new_value in changes.items():
-            point = matrix.point_at(row, column)
+            point = matrix.point_at_safe(row, column)
             if point:
                 point.value = new_value
 

@@ -22,7 +22,7 @@ def run(data: list[str], raw_data: list[str]):
             break
 
         for [row, column], new_value in changes.items():
-            point = matrix.point_at(row, column)
+            point = matrix.point_at_safe(row, column)
             if point:
                 point.value = new_value
 

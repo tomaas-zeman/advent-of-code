@@ -19,7 +19,7 @@ def merge(matrix1, matrix2):
         folded_row = []
         for column in range(len(matrix1.rows[0])):
             value = matrix1.point_at(row, column).value or matrix2.point_at(row, column).value
-            folded_row.append(Point(row, column, value))
+            folded_row.append(Point.simple(row, column, value))
         folded_rows.append(folded_row)
 
     return Matrix(folded_rows)
@@ -39,7 +39,7 @@ def fold_matrix(data, fold_once=False):
             if row_diff < 0:
                 current_m2_rows = current_m2_rows[:row_diff]
             elif row_diff > 0:
-                additonal_row = [Point(0, 0, False) for n in range(m1.num_cols)]
+                additonal_row = [Point.simple(0, 0, False) for n in range(m1.num_cols)]
                 for i in range(row_diff):
                     current_m2_rows.append(additonal_row)
 
@@ -59,7 +59,7 @@ def fold_matrix(data, fold_once=False):
             if col_diff < 0:
                 current_m2_rows = [row[:col_diff] for row in current_m2_rows]
             elif col_diff > 0:
-                additional_cols = [Point(0, 0, False) for n in range(col_diff)]
+                additional_cols = [Point.simple(0, 0, False) for n in range(col_diff)]
                 current_m2_rows = [row + additional_cols for row in current_m2_rows]
 
             new_m2_rows = []
@@ -92,7 +92,7 @@ def get_data():
                 continue
 
             [col, row] = line.strip().split(",")
-            points.append(Point(int(row), int(col), True))
+            points.append(Point.simple(int(row), int(col), True))
 
         num_rows = reduce(max, [point.row for point in points], -1)
         num_cols = reduce(max, [point.column for point in points], -1)
@@ -101,7 +101,7 @@ def get_data():
         for row_index in range(num_rows + 1):
             row = []
             for col_index in range(num_cols + 1):
-                point = Point(row_index, col_index, 0)
+                point = Point.simple(row_index, col_index, 0)
                 point.value = point in points
                 row.append(point)
             rows.append(row)

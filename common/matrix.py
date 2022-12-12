@@ -3,19 +3,25 @@ from typing import Generic, TypeVar, Callable, Any
 from uuid import uuid4
 
 from common.lists import flatten
+from random import randint
+import sys
 
 V = TypeVar("V")
 F = TypeVar("F")
 
 
 class Point(Generic[V, F]):
-    def __init__(self, row: int, column: int, value: V | None = None, id: int | None = None):
+    def __init__(self, row: int, column: int, value: V, id: int):
         self.row = row
         self.column = column
-        self.value = value if value is not None else uuid4()
+        self.value = value
         self.id = id
         self.matrix = None
         self.flag = None
+
+    @staticmethod
+    def simple(row: int, column: int, value: int = 0, id: int = randint(0, sys.maxsize)):
+        return Point(row, column, value, id)
 
     def set_flag(self, flag: F):
         self.flag = flag
@@ -61,7 +67,7 @@ class Matrix(Generic[V, F]):
     def point_by_id(self, point_id: int):
         return self.mapped_by_id[point_id]
 
-    def point_at(self, row: int, column: int):
+    def point_at_safe(self, row: int, column: int):
         if row < 0 or column < 0:
             return None
         try:
@@ -69,20 +75,23 @@ class Matrix(Generic[V, F]):
         except:
             return None
 
+    def point_at(self, row: int, column: int):
+        return self.rows[row][column]
+
     def neighbors_of(self, point: Point, diagonals=False):
         values = [
-            self.point_at(point.row, point.column - 1),
-            self.point_at(point.row, point.column + 1),
-            self.point_at(point.row - 1, point.column),
-            self.point_at(point.row + 1, point.column),
+            self.point_at_safe(point.row, point.column - 1),
+            self.point_at_safe(point.row, point.column + 1),
+            self.point_at_safe(point.row - 1, point.column),
+            self.point_at_safe(point.row + 1, point.column),
         ]
 
         if diagonals:
             values = values + [
-                self.point_at(point.row - 1, point.column - 1),
-                self.point_at(point.row - 1, point.column + 1),
-                self.point_at(point.row + 1, point.column - 1),
-                self.point_at(point.row + 1, point.column + 1),
+                self.point_at_safe(point.row - 1, point.column - 1),
+                self.point_at_safe(point.row - 1, point.column + 1),
+                self.point_at_safe(point.row + 1, point.column - 1),
+                self.point_at_safe(point.row + 1, point.column + 1),
             ]
 
         return [v for v in values if v is not None]

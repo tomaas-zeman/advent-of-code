@@ -7,7 +7,7 @@ def compute_tree_scores(forest: Forest):
         score = 0
         for i in range:
             [row, col] = coords(tree, i)
-            other = forest.point_at(row, col)
+            other = forest.point_at_safe(row, col)
             if other is not None and tree != other:
                 score += 1
                 if tree.value <= other.value:
