@@ -29,8 +29,6 @@ def dijkstra(matrix: Matrix, graph: Graph, starting_point_id: int):
         # True=visited
         point.flag = True
         for neighbor in [p for p in matrix.neighbors_of(point) if not p.flag]:
-            if neighbor.id is None:
-                raise ValueError("All nodes must have their ID assigned")
             new_distance = distances[point.id] + graph.edges[neighbor.id][point.id]
             current_distance = distances[neighbor.id]
             if new_distance < current_distance:
