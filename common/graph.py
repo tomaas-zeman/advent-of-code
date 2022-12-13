@@ -1,9 +1,11 @@
 from queue import PriorityQueue
 from common.matrix import Matrix, Point
 import sys
+from collections import deque
+from typing import Callable
 
 
-class Graph:
+class DijkstraGraph:
     def __init__(self, points: int):
         self.points = points
         self.edges = {}
@@ -14,7 +16,7 @@ class Graph:
         self.edges[point1_id][point2_id] = cost
 
 
-def dijkstra(matrix: Matrix, graph: Graph, starting_point_id: int):
+def dijkstra(matrix: Matrix, graph: DijkstraGraph, starting_point_id: int):
     distances = {n: sys.maxsize for n in range(graph.points)}
     distances[starting_point_id] = 0
 
@@ -36,3 +38,41 @@ def dijkstra(matrix: Matrix, graph: Graph, starting_point_id: int):
                 queue.put((distances[neighbor.id], matrix.point_by_id(neighbor.id)))
 
     return distances
+
+
+class BfsPath:
+    def __init__(self, points: list[Point]) -> None:
+        self.points = points
+
+    def add_point(self, point: Point):
+        self.points.append(point)
+
+    def copy(self):
+        return BfsPath(self.points[:])
+
+    def __str__(self) -> str:
+        return ">".join([str(p.id) for p in self.points])
+
+
+def bfs(starting_point: Point, ending_point: Point, expansion: Callable[[Point], list[Point]]):
+    queue = deque([BfsPath([starting_point])])
+
+    while len(queue) > 0:
+        path = queue.pop()
+        last_point = path.points[-1]
+
+        if last_point.flag:
+            continue
+        else:
+            last_point.flag = True
+
+        if last_point.id == ending_point.id:
+            return path
+
+        for point in expansion(last_point):
+            if point not in path.points:
+                new_path = path.copy()
+                new_path.add_point(point)
+                queue.appendleft(new_path)
+
+    return None

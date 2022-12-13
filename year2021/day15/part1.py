@@ -1,9 +1,9 @@
 from year2021.day15.common import get_data
-from common.graph import dijkstra, Graph
+from common.graph import dijkstra, DijkstraGraph
 
 
 def compute_risk(matrix):
-    graph = Graph(matrix.num_rows * matrix.num_cols)
+    graph = DijkstraGraph(matrix.num_rows * matrix.num_cols)
 
     for row_index in range(matrix.num_rows):
         for column_index in range(matrix.num_cols):
