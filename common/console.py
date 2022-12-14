@@ -24,5 +24,7 @@ def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 
-def with_color(text: str, color: str):
+def with_color(text: str, color: str | None):
+    if color is None:
+        return text
     return f"\x1B[{color}m{text}\x1B[0m"

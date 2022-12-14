@@ -42,7 +42,7 @@ def run_with_file(filename: str, part: int):
             print(traceback.format_exc())
             run_result = False
 
-        color = Color.GREEN
+        color = None
         symbol = "✔"
         if (
             solution is None
@@ -58,13 +58,15 @@ def run_with_file(filename: str, part: int):
 
 
 for part in [1, 2]:
+    print(with_color("\n##################################", Color.BOLD_CYAN))
+    print(with_color(f"#             PART {part}             #", Color.BOLD_CYAN))
+    print(with_color("##################################\n", Color.BOLD_CYAN))
+
     # 2021 does not support testdata
     if "2021" in year:
         run_with_file("data", part)
     else:
-        print("\nRunning with test data ...\n")
         if run_with_file("testdata", part):
-            print("\nPASSED. Running with real data ...\n")
             run_with_file("data", part)
         else:
             break
