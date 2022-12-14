@@ -20,8 +20,12 @@ class Point(Generic[V, F]):
         self.flag = None
 
     @staticmethod
-    def simple(row: int, column: int, value: int = 0, id: int = randint(0, sys.maxsize)):
-        return Point(row, column, value, id)
+    def simple(row: int, column: int, value: int = 0):
+        return Point(row, column, value, randint(0, sys.maxsize))
+
+    @staticmethod
+    def simples(row: int, column: int, value: str = ''):
+        return Point(row, column, value, randint(0, sys.maxsize))
 
     def set_flag(self, flag: F):
         self.flag = flag
