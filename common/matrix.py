@@ -18,6 +18,7 @@ class Point(Generic[V, F]):
         self.id = id
         self.matrix = None
         self.flag = None
+        self.compare_by_id = False
 
     @staticmethod
     def simple(row: int, column: int, value: int = 0):
@@ -36,6 +37,9 @@ class Point(Generic[V, F]):
     def set_value(self, value: V):
         self.value = value
 
+    def toggle_position_equality(self):
+        self.compare_by_id = True
+
     def neighbors(self, diagonals=False) -> list[Point]:
         if self.matrix is None:
             return []
@@ -45,7 +49,7 @@ class Point(Generic[V, F]):
         return abs(self.row - other.row) <= 1 and abs(self.column - other.column) <= 1
 
     def __eq__(self, other: Point):
-        if self.id is not None and other.id is not None:
+        if self.compare_by_id and self.id is not None and other.id is not None:
             return self.id == other.id
         return self.row == other.row and self.column == other.column
 
