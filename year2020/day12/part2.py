@@ -14,7 +14,7 @@ def rotate_waypoint(ship: tuple[int, int], waypoint: tuple[int, int], degree: in
     return waypoint
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     ship = (0, 0)  # (horizontal, vertical), positive is south/east
     waypoint = (10, -1)
 

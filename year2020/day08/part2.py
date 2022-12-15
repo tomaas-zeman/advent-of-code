@@ -10,7 +10,7 @@ def toggle_instructions(data: list[str], modification_start_index: int):
     return data_copy, modification_start_index
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     acc = 0
 
     [modified_data, modification_start_index] = toggle_instructions(data, 0)

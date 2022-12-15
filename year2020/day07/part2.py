@@ -27,6 +27,6 @@ def compute_bags_in_series(bags: struct, bag_name: str):
     )
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     bags = parse_bags(data)
     return compute_bags_in_series(bags, "shiny gold") - 1  # -1 for 'shiny gold'

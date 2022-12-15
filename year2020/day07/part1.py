@@ -20,7 +20,7 @@ def parse_bags(data: list[str]) -> dict[str, list[str]]:
     return bags
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     can_hold_shiny_gold_bag = set()
 
     bags = parse_bags(data)

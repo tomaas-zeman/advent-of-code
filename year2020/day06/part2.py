@@ -2,7 +2,7 @@ def all_yes_answers(yes_answers, people_in_group):
     return [answer for answer, count in yes_answers.items() if count == people_in_group]
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     groups = []
 
     yes_answers = {}

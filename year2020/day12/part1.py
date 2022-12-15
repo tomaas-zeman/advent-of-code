@@ -5,7 +5,7 @@ def turn_ship(degree: int, current_direction: Direction):
     return Direction((current_direction.value + (degree / 90)) % 4)
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     position = (0, 0)  # (horizontal, vertical), positive is south/east
     direction = Direction.E
 

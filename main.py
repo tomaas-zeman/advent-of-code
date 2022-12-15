@@ -13,7 +13,7 @@ from common.console import Color, with_color
 [year, day] = argv[1].split("=")[1].split("/")
 
 
-def compute_solution(module: str, part: int, data: list[str], raw_data: list[str]):
+def compute_solution(module: str, part: int, data: list[str], raw_data: list[str], is_test: bool):
     # 2021 does not support autoparse
     if "2021" in year:
         return (import_module(module).run(), None)
@@ -21,10 +21,10 @@ def compute_solution(module: str, part: int, data: list[str], raw_data: list[str
     test_solution_prefix = "# part"
     if len(data) > 2 and data[0].startswith(test_solution_prefix) and data[1].startswith(test_solution_prefix):
         expected_test_solution = data[part - 1].split(" = ")[1]
-        solution = import_module(module).run(data[2:], raw_data=raw_data[2:])
+        solution = import_module(module).run(data[2:], raw_data=raw_data[2:], is_test=is_test)
         return solution, expected_test_solution
     else:
-        return (import_module(module).run(data, raw_data=raw_data), None)
+        return (import_module(module).run(data, raw_data=raw_data, is_test=is_test), None)
 
 
 def run_with_file(filename: str, part: int):
@@ -36,7 +36,7 @@ def run_with_file(filename: str, part: int):
         data = [line.strip() for line in raw_data]
         try:
             module = f"{year}.{day}.part{part}"
-            solution, expected_test_solution = compute_solution(module, part, data, raw_data)
+            solution, expected_test_solution = compute_solution(module, part, data, raw_data, is_test=filename == 'testdata')
         except Exception:
             solution = "ERR"
             print(traceback.format_exc())

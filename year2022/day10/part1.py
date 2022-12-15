@@ -1,7 +1,7 @@
 from year2022.day10.common import instructions
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     value = 1
     step = 0
     information = []

@@ -3,7 +3,7 @@ from itertools import combinations
 from common.lists import as_ints
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     numbers = as_ints(data)
     buffer_size = 25
     index = 0

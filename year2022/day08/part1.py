@@ -25,7 +25,7 @@ def flag_visible_trees(forest: Forest):
     mark_direction(forest.num_cols, forest.num_rows, forest.num_rows - 1, -1, selector)
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     forest = matrix_from_data(data, convert_value=lambda x: int(x))
     flag_visible_trees(forest)
     return len([tree for tree in forest.all_points() if tree.flag == 1])

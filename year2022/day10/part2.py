@@ -14,7 +14,7 @@ def draw_crt(crt: list[str]):
         print("".join(line))
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     value = 1
     step = 0
     crt = ["." for _ in range(width * height)]

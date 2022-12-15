@@ -11,7 +11,7 @@ class Mapping(Enum):
     Z = Result.WIN
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     points = 0
     for line in data:
         enemy: Option = Mapping[line.split(" ")[0]].value

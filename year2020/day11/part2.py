@@ -32,7 +32,7 @@ def find_neighbors(seat: Point):
     ]
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     matrix = matrix_from_data(data)
     while True:
         changes: dict[tuple[int, int], str] = {}

@@ -23,7 +23,7 @@ def compute_tree_scores(forest: Forest):
         )
 
 
-def run(data: list[str], raw_data: list[str]):
+def run(data: list[str], raw_data: list[str], is_test: bool):
     forest = matrix_from_data(data, convert_value=lambda x: int(x))
     compute_tree_scores(forest)
     return max([tree.flag for tree in forest.all_points() if tree.flag])
