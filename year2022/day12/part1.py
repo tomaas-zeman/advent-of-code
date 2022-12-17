@@ -20,4 +20,4 @@ def run(data: list[str], raw_data: list[str], is_test: bool):
 
     path = bfs(starting_point, ending_point, expansion)
     if path is not None:
-        return len(path.points) - 1
+        return len(path.nodes) - 1

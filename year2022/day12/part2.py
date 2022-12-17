@@ -28,6 +28,6 @@ def run(data: list[str], raw_data: list[str], is_test: bool):
         clear_point_visits(matrix)
         path = bfs(starting_point, ending_point, expansion)
         if path is not None:
-            lengths.append(len(path.points) - 1)
+            lengths.append(len(path.nodes) - 1)
 
     return min(lengths)

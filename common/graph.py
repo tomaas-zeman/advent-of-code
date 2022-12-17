@@ -2,8 +2,10 @@ from queue import PriorityQueue
 from common.matrix import Matrix, Point
 import sys
 from collections import deque
-from typing import Callable
+from typing import Callable, Generic, TypeVar
 
+
+T = TypeVar("T")
 
 class DijkstraGraph:
     def __init__(self, points: int):
@@ -40,18 +42,18 @@ def dijkstra(matrix: Matrix, graph: DijkstraGraph, starting_point_id: int):
     return distances
 
 
-class BfsPath:
-    def __init__(self, points: list[Point]) -> None:
-        self.points = points
+class BfsPath(Generic[T]):
+    def __init__(self, nodes: list[T]) -> None:
+        self.nodes = nodes
 
-    def add_point(self, point: Point):
-        self.points.append(point)
+    def add_node(self, node: T):
+        self.nodes.append(node)
 
     def copy(self):
-        return BfsPath(self.points[:])
+        return BfsPath(self.nodes[:])
 
     def __str__(self) -> str:
-        return ">".join([str(p.id) for p in self.points])
+        return ">".join([str(p.id) for p in self.nodes])
 
 
 def bfs(starting_point: Point, ending_point: Point, expansion: Callable[[Point], list[Point]]):
@@ -59,7 +61,7 @@ def bfs(starting_point: Point, ending_point: Point, expansion: Callable[[Point],
 
     while len(queue) > 0:
         path = queue.pop()
-        last_point = path.points[-1]
+        last_point = path.nodes[-1]
 
         if last_point.flag:
             continue
@@ -70,9 +72,9 @@ def bfs(starting_point: Point, ending_point: Point, expansion: Callable[[Point],
             return path
 
         for point in expansion(last_point):
-            if point not in path.points:
+            if point not in path.nodes:
                 new_path = path.copy()
-                new_path.add_point(point)
+                new_path.add_node(point)
                 queue.appendleft(new_path)
 
     return None
