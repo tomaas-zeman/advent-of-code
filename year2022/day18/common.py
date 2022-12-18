@@ -1,17 +1,30 @@
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation, PillowWriter
 import numpy as np
 from typing import Callable
 
 from common.lists import as_ints
 
 
-def plot(matrix: np.ndarray, x: int, y: int, z: int, filename: str):
-    axes = [x, y, z]
-    plot = plt.figure()
-    axes = plot.add_subplot(111, projection="3d")
-    axes.voxels(matrix, facecolors=[1, 0, 0, 0.5])
-    plot.savefig(f"year2022/day18/{filename}")
-    plot.show()
+def plot(before: np.ndarray, after: np.ndarray):
+    figure, axes = plt.subplots(1, 2)
+
+    def animate(i):
+        axes[0].clear()
+        axes[0].set_xlim(0, before.shape[0])
+        axes[0].set_ylim(0, before.shape[1])
+        axes[0].set_title("Original rock with holes")
+        axes[1].clear()
+        axes[1].set_xlim(0, after.shape[0])
+        axes[1].set_ylim(0, after.shape[1])
+        axes[1].set_title("After filling the holes")
+        return (
+            axes[0].matshow(before.take(i, axis=2)),
+            axes[1].matshow(after.take(i, axis=2)),
+        )
+
+    animation = FuncAnimation(figure, animate, blit=True, repeat=True, frames=before.shape[2] - 1)
+    animation.save(f"year2022/day18/animation.gif", dpi=300, writer=PillowWriter(fps=2))
 
 
 def calc_surface_area(data: list[str], matrix_postprocess: Callable[[np.ndarray], np.ndarray | None] = lambda a: a):
@@ -24,12 +37,11 @@ def calc_surface_area(data: list[str], matrix_postprocess: Callable[[np.ndarray]
     for [x, y, z] in [as_ints(line.split(",")) for line in data]:
         matrix[(x, y, z)] = 1
 
-    matrix = matrix_postprocess(matrix)
-
-    if matrix is None:
+    processed_matrix = matrix_postprocess(matrix)
+    if processed_matrix is None:
         raise ValueError("Unexpected calc error - postprocessing failed")
 
-    # plot(matrix, max_x, max_y, max_z, "visualization.png")
+    plot(matrix, processed_matrix)
 
-    diffs = [np.diff(matrix, 1, axis, 0, 0) for axis in [0, 1, 2]]
+    diffs = [np.diff(processed_matrix, 1, axis, 0, 0) for axis in [0, 1, 2]]
     return sum([np.count_nonzero(diff) for diff in diffs])
