@@ -97,3 +97,7 @@ def settle_rock(cave: np.ndarray, rock: Rock):
 
 def row_of_tower_top(cave: np.ndarray):
     return min(np.nonzero(cave)[0])
+
+
+def get_tower_size(cave: np.ndarray):
+    return cave.shape[0] - row_of_tower_top(cave) - 1  # -1 for floor

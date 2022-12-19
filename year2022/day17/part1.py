@@ -1,4 +1,12 @@
-from year2022.day17.common import CAVE_TOP_BUFFER, CAVE_WIDTH, prototypes, resize_cave, row_of_tower_top, settle_rock
+from year2022.day17.common import (
+    CAVE_TOP_BUFFER,
+    CAVE_WIDTH,
+    get_tower_size,
+    prototypes,
+    resize_cave,
+    row_of_tower_top,
+    settle_rock,
+)
 import numpy as np
 
 
@@ -22,5 +30,4 @@ def run(data: list[str], raw_data: list[str], is_test: bool):
                 settle_rock(cave, rock)
                 break
 
-    # -1 for floor
-    return cave.shape[0] - row_of_tower_top(cave) - 1
+    return get_tower_size(cave)
