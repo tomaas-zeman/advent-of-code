@@ -2,6 +2,7 @@ import traceback
 from importlib import import_module
 from sys import argv
 from common.console import Color, with_color
+from common.decorators import measure_time
 
 #
 # Expected format of input params
@@ -13,6 +14,7 @@ from common.console import Color, with_color
 [year, day] = argv[1].split("=")[1].split("/")
 
 
+@measure_time
 def compute_solution(module: str, part: int, data: list[str], raw_data: list[str], is_test: bool):
     # 2021 does not support autoparse
     if "2021" in year:
