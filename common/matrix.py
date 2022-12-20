@@ -1,3 +1,6 @@
+##########################################
+# DEPRECATED: use 'common.utils' instead #
+##########################################
 from __future__ import annotations
 from typing import Generic, TypeVar, Callable, Any
 from uuid import uuid4
@@ -25,7 +28,7 @@ class Point(Generic[V, F]):
         return Point(row, column, value, randint(0, sys.maxsize))
 
     @staticmethod
-    def simples(row: int, column: int, value: str = ''):
+    def simples(row: int, column: int, value: str = ""):
         return Point(row, column, value, randint(0, sys.maxsize))
 
     def set_flag(self, flag: F):

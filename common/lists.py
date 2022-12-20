@@ -1,3 +1,6 @@
+##########################################
+# DEPRECATED: use 'common.utils' instead #
+##########################################
 from typing import TypeVar, Iterator
 
 T = TypeVar("T")
