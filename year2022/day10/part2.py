@@ -1,5 +1,5 @@
 from year2022.day10.common import instructions
-from common.console import clear, with_color, Color
+from common.utils import Console
 
 width = 40
 height = 6
@@ -24,7 +24,7 @@ def run(data: list[str], raw_data: list[str], is_test: bool):
 
         for _ in range(instruction.duration):
             if is_light_pixel(step, value):
-                crt[step] = with_color('#', Color.CYAN)
+                crt[step] = Console.with_color('#', Console.Color.CYAN)
             step += 1
 
         value = instruction.operation(value, line[1:])

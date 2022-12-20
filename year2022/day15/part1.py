@@ -1,4 +1,4 @@
-from common.lists import flatten
+from common.utils import flatten
 from year2022.day15.common import parse_input, to_polygons
 from shapely.ops import unary_union
 from shapely.geometry import LineString

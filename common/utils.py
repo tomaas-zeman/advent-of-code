@@ -1,5 +1,28 @@
 from __future__ import annotations
 from typing import Generic, Iterator, TypeVar, Callable
+import time
+import os
+
+
+##############
+# DECORATORS #
+##############
+
+
+def measure_time(fn):
+    def wrapper(*args, **kwargs):
+        start_time = time.perf_counter()
+        result = fn(*args, **kwargs)
+        end_time = time.perf_counter()
+        print(f"Computation took {end_time - start_time:.3f} seconds")
+        return result
+
+    return wrapper
+
+
+#########
+# LISTS #
+#########
 
 T = TypeVar("T")
 
@@ -11,6 +34,10 @@ def flatten(list_of_lists: list[list[T]]):
 def as_ints(list: list[str] | Iterator[str]):
     return [int(x) for x in list]
 
+
+############
+# MATRICES #
+############
 
 V = TypeVar("V")
 F = TypeVar("F")
@@ -113,6 +140,11 @@ class Matrix(Generic[P]):
         return Matrix(rows)
 
 
+#########
+# TREES #
+#########
+
+
 class GenericNode(Generic[T]):
     def __init__(self, id: int, value: T, parent: GenericNode[T] = None):
         self.id = id
@@ -128,3 +160,38 @@ class GenericNode(Generic[T]):
 
     def __str__(self):
         return str(self.value)
+
+
+###########
+# CONSOLE #
+###########
+
+
+class Console:
+    class Color:
+        BLACK = "0;30"
+        RED = "0;31"
+        GREEN = "0;32"
+        YELLOW = "0;33"
+        BLUE = "0;34"
+        PURPLE = "0;35"
+        CYAN = "0;36"
+        LIGHT_GRAY = "0;37"
+        DARK_GRAY = "1;30"
+        BOLD_RED = "1;31"
+        BOLD_CYAN = "1;32"
+        BOLD_YELLOW = "1;33"
+        BOLD_BLUE = "1;34"
+        BOLD_PURPLE = "1;35"
+        BOLD_CYAN = "1;36"
+        WHITE = "1;37"
+
+    @staticmethod
+    def clear():
+        os.system("cls" if os.name == "nt" else "clear")
+
+    @staticmethod
+    def with_color(text: str, color: str | None):
+        if color is None:
+            return text
+        return f"\x1B[{color}m{text}\x1B[0m"

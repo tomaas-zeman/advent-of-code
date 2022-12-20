@@ -1,3 +1,6 @@
+##########################################
+# DEPRECATED: use 'common.utils' instead #
+##########################################
 from queue import PriorityQueue
 from common.matrix import Matrix, Point
 import sys

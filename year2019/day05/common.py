@@ -1,5 +1,5 @@
 from enum import Enum
-from common.lists import as_ints
+from common.utils import as_ints
 
 
 class OpCode(Enum):

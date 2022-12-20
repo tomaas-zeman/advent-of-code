@@ -1,4 +1,4 @@
-from common.lists import as_ints
+from common.utils import as_ints
 
 GOAL = 15353384  # result from part1
 

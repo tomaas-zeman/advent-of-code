@@ -3,7 +3,7 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 import numpy as np
 from typing import Callable
 
-from common.lists import as_ints
+from common.utils import as_ints
 
 
 def plot(before: np.ndarray, after: np.ndarray):

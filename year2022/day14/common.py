@@ -1,5 +1,5 @@
 from common.matrix import Point, Matrix
-from common.lists import as_ints, flatten
+from common.utils import as_ints, flatten
 
 
 MATRIX_SIDE_PADDING = 200

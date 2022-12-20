@@ -1,6 +1,6 @@
 from collections import deque, OrderedDict
 
-from common.lists import as_ints
+from common.utils import as_ints
 
 
 def dfc(D, v, M={}):

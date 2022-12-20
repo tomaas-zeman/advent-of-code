@@ -1,8 +1,7 @@
 import traceback
 from importlib import import_module
 from sys import argv
-from common.console import Color, with_color
-from common.decorators import measure_time
+from common.utils import measure_time, Console
 
 #
 # Expected format of input params
@@ -51,18 +50,18 @@ def run_with_file(filename: str, part: int):
             or (expected_test_solution is not None and expected_test_solution != str(solution))
             or solution == "ERR"
         ):
-            color = Color.BOLD_RED
+            color = Console.Color.BOLD_RED
             symbol = "✘"
             run_result = False
 
-        print(with_color(f"{symbol} {year} | {day} | part{part:02d} => {solution}", color))
+        print(Console.with_color(f"{symbol} {year} | {day} | part{part:02d} => {solution}", color))
     return run_result
 
 
 for part in [1, 2]:
-    print(with_color("\n##################################", Color.BOLD_CYAN))
-    print(with_color(f"#             PART {part}             #", Color.BOLD_CYAN))
-    print(with_color("##################################\n", Color.BOLD_CYAN))
+    print(Console.with_color("\n##################################", Console.Color.BOLD_CYAN))
+    print(Console.with_color(f"#             PART {part}             #", Console.Color.BOLD_CYAN))
+    print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))
 
     # 2021 does not support testdata
     if "2021" in year:

@@ -1,5 +1,5 @@
 from itertools import groupby
-from common.lists import as_ints
+from common.utils import as_ints
 
 
 def get_elves(data: list[str]) -> list[int]:
