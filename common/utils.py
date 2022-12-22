@@ -25,6 +25,7 @@ def measure_time(fn):
 #########
 
 T = TypeVar("T")
+U = TypeVar("U")
 
 
 def flatten(list_of_lists: list[list[T]]):
@@ -146,11 +147,17 @@ class Matrix(Generic[P]):
 
 
 class GenericNode(Generic[T]):
-    def __init__(self, id: int, value: T, parent: GenericNode[T] = None):
+    def __init__(self, id: int, value: T):
         self.id = id
         self.value = value
-        self.parent = parent
+        self.parent = None
         self.children: set[GenericNode[T]] = set()
+
+    def set_parent(self, parent: GenericNode[T]):
+        self.parent = parent
+
+    def set_children(self, children: set[GenericNode[T]]):
+        self.children = children
 
     def __eq__(self, other: GenericNode[T]):
         return self.id == other.id
@@ -160,6 +167,23 @@ class GenericNode(Generic[T]):
 
     def __str__(self):
         return str(self.value)
+
+
+class BinaryTreeNode(Generic[T, U]):
+    def __init__(self, id: U, value: T):
+        self.id = id
+        self.value = value
+        self.left: BinaryTreeNode[T, U] | None = None
+        self.right: BinaryTreeNode[T, U] | None = None
+
+    def is_leaf(self):
+        return self.left is None and self.right is None
+
+    def set_left(self, left: BinaryTreeNode[T, U]):
+        self.left = left
+
+    def set_right(self, right: BinaryTreeNode[T, U]):
+        self.right = right
 
 
 ###########
