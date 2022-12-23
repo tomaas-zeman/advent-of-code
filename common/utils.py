@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Generic, Iterator, TypeVar, Callable
 import time
 import os
+import numpy as np
 
 
 ##############
@@ -139,6 +140,10 @@ class Matrix(Generic[P]):
             )
 
         return Matrix(rows)
+
+
+def print_matrix(matrix: np.ndarray):
+    print(np.array2string(matrix, separator="", formatter={"str_kind": lambda x: x}))  # type: ignore
 
 
 #########
