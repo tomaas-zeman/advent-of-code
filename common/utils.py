@@ -142,8 +142,8 @@ class Matrix(Generic[P]):
         return Matrix(rows)
 
 
-def print_matrix(matrix: np.ndarray):
-    print(np.array2string(matrix, separator="", formatter={"str_kind": lambda x: x}))  # type: ignore
+def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x):
+    print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
 
 
 #########
