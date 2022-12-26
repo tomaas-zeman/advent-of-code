@@ -1,6 +1,5 @@
-from common.graph import bfs
 from common.matrix import Matrix, matrix_from_data
-from year2022.day12.common import expansion
+from year2022.day12.common import expansion, bfs
 
 
 def clear_point_visits(matrix: Matrix):

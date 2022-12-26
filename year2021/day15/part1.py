@@ -1,5 +1,4 @@
-from year2021.day15.common import get_data
-from common.graph import dijkstra, DijkstraGraph
+from year2021.day15.common import get_data, dijkstra, DijkstraGraph
 
 
 def compute_risk(matrix):
