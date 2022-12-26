@@ -2,21 +2,39 @@ import traceback
 from importlib import import_module
 from sys import argv
 from common.utils import measure_time, Console
+from os.path import exists
+import requests
+import re
 
 #
 # Expected format of input params
 # [0] : <absolute file path>
 # [1] : dir=<file dir relative to root>
 #
-# Run as: python main.py dir=year2022/day1
+# Run as: python main.py dir=2022/01
 #
 [year, day] = argv[1].split("=")[1].split("/")
+
+
+def download_input_file(input_file):
+    if "/data" not in input_file:
+        return
+
+    if not exists(input_file):
+        with open(".session", "r") as session_file:
+            session = session_file.readline().strip()
+            response = requests.get(
+                url=f"https://adventofcode.com/{year}/day/{day}/input",
+                cookies={"session": session},
+            )
+            with open(input_file, "w") as input_file:
+                input_file.write(re.sub("\n$", "", response.text))
 
 
 @measure_time
 def compute_solution(module: str, part: int, data: list[str], raw_data: list[str], is_test: bool):
     # 2021 does not support autoparse
-    if "2021" in year:
+    if year == "2021":
         return (import_module(module).run(), None)
 
     test_solution_prefix = "# part"
@@ -30,14 +48,17 @@ def compute_solution(module: str, part: int, data: list[str], raw_data: list[str
 
 def run_with_file(filename: str, part: int):
     run_result = True
-    input_file = f"{year}/{day}/{filename}"
+    input_file = f"year{year}/day{day}/{filename}"
+    download_input_file(input_file)
     expected_test_solution = None
     with open(input_file, "r") as file:
         raw_data = file.readlines()
         data = [line.strip() for line in raw_data]
         try:
-            module = f"{year}.{day}.part{part}"
-            solution, expected_test_solution = compute_solution(module, part, data, raw_data, is_test=filename == 'testdata')
+            module = f"year{year}.day{day}.part{part}"
+            solution, expected_test_solution = compute_solution(
+                module, part, data, raw_data, is_test=filename == "testdata"
+            )
         except Exception:
             solution = "ERR"
             print(traceback.format_exc())
@@ -54,7 +75,7 @@ def run_with_file(filename: str, part: int):
             symbol = "✘"
             run_result = False
 
-        print(Console.with_color(f"{symbol} {year} | {day} | part{part:02d} => {solution}", color))
+        print(Console.with_color(f"{symbol} year {year} | day {day} | part{part:02d} => {solution}", color))
     return run_result
 
 
@@ -64,11 +85,10 @@ for part in [1, 2]:
     print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))
 
     # 2021 does not support testdata
-    if "2021" in year:
+    if year == "2021":
         run_with_file("data", part)
     else:
         if run_with_file("testdata", part):
             run_with_file("data", part)
         else:
             break
-        
