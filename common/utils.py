@@ -147,6 +147,61 @@ class Numpy:
     def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x):
         print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
 
+    @staticmethod
+    def from_input_as_str(data: list[str]):
+        matrix = np.empty((len(data), len(data[0])), dtype=np.dtype("U100"))
+        for row_index, row in enumerate(data):
+            for col_index, col in enumerate(row):
+                matrix[row_index][col_index] = col
+        return matrix
+
+    @staticmethod
+    def from_input_as_int(data: list[str]):
+        matrix = np.empty((len(data), len(data[0])), dtype=np.uint8)
+        for row_index, row in enumerate(data):
+            for col_index, col in enumerate(row):
+                matrix[row_index][col_index] = int(col)
+        return matrix
+
+    @staticmethod
+    def neighbors_of(point: tuple[int, int], matrix: np.ndarray, include_diagonals: bool = False):
+        return [
+            matrix[n] for n in Numpy.valid_neighbor_positions_of(point, matrix, include_diagonals=include_diagonals)
+        ]
+
+    @staticmethod
+    def all_neighbor_positions_of(point: tuple[int, int], include_diagonals: bool = False):
+        positions = [
+            (point[0] - 1, point[1]),
+            (point[0] + 1, point[1]),
+            (point[0], point[1] - 1),
+            (point[0], point[1] + 1),
+        ]
+        if include_diagonals:
+            positions += [
+                (point[0] - 1, point[1] - 1),
+                (point[0] - 1, point[1] + 1),
+                (point[0] + 1, point[1] - 1),
+                (point[0] + 1, point[1] + 1),
+            ]
+        return positions
+
+    @staticmethod
+    def valid_neighbor_positions_of(point: tuple[int, int], matrix: np.ndarray, include_diagonals: bool = False):
+        return [
+            p
+            for p in Numpy.all_neighbor_positions_of(point)
+            if 0 <= p[0] < matrix.shape[0] and 0 <= p[1] < matrix.shape[1]
+        ]
+
+    @staticmethod
+    def all_items(matrix: np.ndarray):
+        items: list[tuple[Any, int, int]] = []
+        for row_index, row in enumerate(matrix):
+            for col_index, col in enumerate(row):
+                items.append((matrix[row_index, col_index], row_index, col_index))
+        return items
+
 
 #########
 # TREES #
