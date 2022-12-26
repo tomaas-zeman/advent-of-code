@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Generic, Iterator, TypeVar, Callable
+from typing import Any, Generic, Iterator, TypeVar, Callable
 import time
 import os
 import numpy as np
@@ -126,7 +126,7 @@ class Matrix(Generic[P]):
     @staticmethod
     def from_input(
         data: list[str], item_sep=None, convert_value: Callable[[str], V] = lambda x: x
-    ) -> Matrix[MatrixPoint[V]]:
+    ) -> Matrix[MatrixPoint[V, Any]]:
         rows = []
 
         for row_index, line in enumerate(data):
@@ -142,8 +142,10 @@ class Matrix(Generic[P]):
         return Matrix(rows)
 
 
-def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x):
-    print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
+class Numpy:
+    @staticmethod
+    def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x):
+        print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
 
 
 #########
