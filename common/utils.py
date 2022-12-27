@@ -143,25 +143,28 @@ class Matrix(Generic[P]):
 
 
 class Numpy:
+    # (row, column) type for Numpy
+    Point = tuple[int, int]
+
     @staticmethod
     def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x):
         print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
 
     @staticmethod
-    def from_input_as_str(data: list[str]):
+    def from_input(data: list[str], dtype: Any, value_convertor: Callable[[str], Any]):
         matrix = np.empty((len(data), len(data[0])), dtype=np.dtype("U100"))
         for row_index, row in enumerate(data):
             for col_index, col in enumerate(row):
-                matrix[row_index][col_index] = col
+                matrix[row_index][col_index] = value_convertor(col)
         return matrix
 
     @staticmethod
+    def from_input_as_str(data: list[str]):
+        return Numpy.from_input(data, np.dtype("U100"), lambda x: x)
+
+    @staticmethod
     def from_input_as_int(data: list[str]):
-        matrix = np.empty((len(data), len(data[0])), dtype=np.uint8)
-        for row_index, row in enumerate(data):
-            for col_index, col in enumerate(row):
-                matrix[row_index][col_index] = int(col)
-        return matrix
+        return Numpy.from_input(data, np.uint8, int)
 
     @staticmethod
     def neighbors_of(point: tuple[int, int], matrix: np.ndarray, include_diagonals: bool = False):
@@ -170,7 +173,7 @@ class Numpy:
         ]
 
     @staticmethod
-    def all_neighbor_positions_of(point: tuple[int, int], include_diagonals: bool = False):
+    def all_neighbor_positions_of(point: Point, include_diagonals: bool = False):
         positions = [
             (point[0] - 1, point[1]),
             (point[0] + 1, point[1]),
@@ -187,7 +190,7 @@ class Numpy:
         return positions
 
     @staticmethod
-    def valid_neighbor_positions_of(point: tuple[int, int], matrix: np.ndarray, include_diagonals: bool = False):
+    def valid_neighbor_positions_of(point: Point, matrix: np.ndarray, include_diagonals: bool = False):
         return [
             p
             for p in Numpy.all_neighbor_positions_of(point)
@@ -201,6 +204,10 @@ class Numpy:
             for col_index, col in enumerate(row):
                 items.append((matrix[row_index, col_index], row_index, col_index))
         return items
+
+    @staticmethod
+    def are_neighbors(a: Point, b: Point):
+        return abs(a[0] - b[0]) <= 1 and abs(a[1] - b[1]) <= 1
 
 
 #########
@@ -255,7 +262,6 @@ class BinaryTreeNode(Generic[T, U]):
 
 class Console:
     class Color:
-        BLACK = "0;30"
         RED = "0;31"
         GREEN = "0;32"
         YELLOW = "0;33"
