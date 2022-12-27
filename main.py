@@ -11,9 +11,9 @@ import re
 # [0] : <absolute file path>
 # [1] : dir=<file dir relative to root>
 #
-# Run as: python main.py dir=2022/01
+# Run as: python main.py 2022/01
 #
-[year, day] = argv[1].split("=")[1].split("/")
+[year, day] = argv[1].split("/")
 
 
 def download_input_file(input_file):
