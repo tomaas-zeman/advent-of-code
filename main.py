@@ -16,10 +16,8 @@ import re
 [year, day] = argv[1].split("/")
 
 
-def download_input_file(input_file):
-    if "/data" not in input_file:
-        return
-
+def download_input_file():
+    input_file = f"year{year}/day{day}/data"
     if not exists(input_file):
         with open(".session", "r") as session_file:
             session = session_file.readline().strip()
@@ -49,7 +47,7 @@ def compute_solution(module: str, part: int, data: list[str], raw_data: list[str
 def run_with_file(filename: str, part: int):
     run_result = True
     input_file = f"year{year}/day{day}/{filename}"
-    download_input_file(input_file)
+    download_input_file()
     expected_test_solution = None
     with open(input_file, "r") as file:
         raw_data = file.readlines()

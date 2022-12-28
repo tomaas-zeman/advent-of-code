@@ -10,6 +10,17 @@ import numpy as np
 ##############
 
 
+def memoize(fn):
+    cache = {}
+
+    def wrapper(*args):
+        if args not in cache:
+            cache[args] = fn(*args)
+        return cache[args]
+
+    return wrapper
+
+
 def measure_time(fn):
     def wrapper(*args, **kwargs):
         start_time = time.perf_counter()
