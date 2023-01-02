@@ -22,7 +22,7 @@ class Valve:
 
 
 def parse_input(data: list[str]):
-    pattern = re.compile("Valve ([A-Z]+) has flow rate=(\d+); tunnels? leads? to valves? ([A-Z, ]+)")
+    pattern = re.compile(r"Valve ([A-Z]+) has flow rate=(\d+); tunnels? leads? to valves? ([A-Z, ]+)")
     valves = [
         Valve(m[1], int(m[2]), [n.strip() for n in m[3].split(",")]) for line in data if (m := pattern.match(line))
     ]

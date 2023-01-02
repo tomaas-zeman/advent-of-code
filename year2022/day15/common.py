@@ -17,7 +17,7 @@ class Pair:
 
 
 def parse_input(data: list[str]):
-    pattern = re.compile("Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)")
+    pattern = re.compile(r"Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)")
     return [
         Pair(Coord(int(match[1]), int(match[2])), Coord(int(match[3]), int(match[4])))
         for line in data

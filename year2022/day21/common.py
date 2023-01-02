@@ -21,8 +21,8 @@ class Monkey:
 def parse_input(data: list[str]):
     monkeys = {name: Monkey(name) for line in data if (name := line.split(":")[0])}
 
-    number_monkey = re.compile("([a-z]+): (\d+)")
-    operation_monkey = re.compile("([a-z]+): ([a-z]+) (.) ([a-z]+)")
+    number_monkey = re.compile(r"([a-z]+): (\d+)")
+    operation_monkey = re.compile(r"([a-z]+): ([a-z]+) (.) ([a-z]+)")
     ops = {"+": add, "-": sub, "*": mul, "/": truediv}
 
     for line in data:
