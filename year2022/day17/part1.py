@@ -13,7 +13,7 @@ import numpy as np
 ROCKS = 2022
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     cave = resize_cave(np.ones((1, CAVE_WIDTH), dtype=np.int8), CAVE_TOP_BUFFER)
 
     blow_index = 0

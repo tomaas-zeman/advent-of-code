@@ -2,7 +2,7 @@ from common.matrix import matrix_from_data
 from year2022.day12.common import expansion, bfs
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     matrix = matrix_from_data(data)
 
     starting_point = None

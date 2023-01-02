@@ -1,7 +1,7 @@
 from common.utils import as_ints
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     for noun in range(0, 100):
         for verb in range(0, 100):
             codes = as_ints(data[0].split(","))

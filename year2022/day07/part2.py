@@ -1,7 +1,7 @@
 from year2022.day07.common import parse_input, Type
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     [root, all_nodes] = parse_input(data)
     need_to_free = root.size_of_child_nodes - 40000000
     return min(

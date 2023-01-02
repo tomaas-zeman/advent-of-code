@@ -3,7 +3,7 @@ from common.utils import as_ints
 GOAL = 15353384  # result from part1
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     numbers = as_ints(data)
     index = 0
     last_index = numbers.index(GOAL)

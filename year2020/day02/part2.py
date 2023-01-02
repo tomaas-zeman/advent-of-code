@@ -1,7 +1,7 @@
 from year2020.day02.common import parse_input_data
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     passwords = parse_input_data(data)
 
     correct_passwords = 0

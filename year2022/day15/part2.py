@@ -3,7 +3,7 @@ from shapely.ops import unary_union, clip_by_rect
 from shapely.geometry import Polygon, Point
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     pairs = parse_input(data)
     shape: Polygon = clip_by_rect(unary_union(to_polygons(pairs)), 0, 0, 4_000_000, 4_000_000)
 

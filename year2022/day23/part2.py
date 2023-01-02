@@ -1,7 +1,7 @@
 from year2022.day23.common import do_round, enlarge_map, parse_input
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     elves, map = parse_input(data)
     steps = 1000
     map = enlarge_map(map, steps, elves)

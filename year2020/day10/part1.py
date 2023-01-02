@@ -1,7 +1,7 @@
 from common.utils import as_ints
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     jolts = as_ints(data)
     diffs = {diff: 0 for diff in range(1, 4)}
 

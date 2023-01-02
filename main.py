@@ -22,7 +22,7 @@ def download_input_file():
         with open(".session", "r") as session_file:
             session = session_file.readline().strip()
             response = requests.get(
-                url=f"https://adventofcode.com/{year}/day/{day}/input",
+                url=f"https://adventofcode.com/{year}/day/{int(day)}/input",
                 cookies={"session": session},
             )
             with open(input_file, "w") as input_file:
@@ -30,18 +30,21 @@ def download_input_file():
 
 
 @measure_time
-def compute_solution(module: str, part: int, data: list[str], raw_data: list[str], is_test: bool):
+def compute_solution(module: str, part: int, data: list[str], is_test: bool):
     # 2021 does not support autoparse
     if year == "2021":
         return (import_module(module).run(), None)
 
+    runnable = import_module(module).run
+    data = data if getattr(runnable, 'uses_raw_input', False) else [line.strip() for line in data]
     test_solution_prefix = "# part"
+
     if len(data) > 2 and data[0].startswith(test_solution_prefix) and data[1].startswith(test_solution_prefix):
-        expected_test_solution = data[part - 1].split(" = ")[1]
-        solution = import_module(module).run(data[2:], raw_data=raw_data[2:], is_test=is_test)
+        expected_test_solution = data[part - 1].split(" = ")[1].strip()
+        solution = runnable(data[2:], is_test=is_test)
         return solution, expected_test_solution
     else:
-        return (import_module(module).run(data, raw_data=raw_data, is_test=is_test), None)
+        return runnable(data, is_test=is_test), None
 
 
 def run_with_file(filename: str, part: int):
@@ -50,12 +53,10 @@ def run_with_file(filename: str, part: int):
     download_input_file()
     expected_test_solution = None
     with open(input_file, "r") as file:
-        raw_data = file.readlines()
-        data = [line.strip() for line in raw_data]
         try:
             module = f"year{year}.day{day}.part{part}"
             solution, expected_test_solution = compute_solution(
-                module, part, data, raw_data, is_test=filename == "testdata"
+                module, part, file.readlines(), is_test=filename == "testdata"
             )
         except Exception:
             solution = "ERR"

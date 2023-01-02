@@ -1,3 +1,4 @@
+from common.utils import raw_input
 from year2022.day22.common import COORD_CHANGES, Facing, Me, find_password
 import numpy as np
 
@@ -16,5 +17,6 @@ def find_next_valid_coord(me: Me, facing: Facing, maze: np.ndarray) -> tuple[int
         step += 1
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
-    return find_password(raw_data, find_next_valid_coord)
+@raw_input
+def run(data: list[str], is_test: bool):
+    return find_password(data, find_next_valid_coord)

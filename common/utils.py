@@ -32,6 +32,14 @@ def measure_time(fn):
     return wrapper
 
 
+def raw_input(fn):
+    def wrapper(*args, **kwargs):
+        return fn(*args, **kwargs)
+
+    wrapper.uses_raw_input = True
+    return wrapper
+
+
 #########
 # LISTS #
 #########

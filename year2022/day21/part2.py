@@ -19,7 +19,7 @@ def get_comparison_direction(monkeys: dict[str, Monkey], humn_subtree: Monkey):
     return lt if result1 < result2 else gt
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     monkeys = parse_input(data)
     subtrees = {contains_humn(m): m for m in [monkeys["root"].left, monkeys["root"].right]}
 

@@ -39,7 +39,7 @@ def print_graph(graph: nx.Graph):
     plt.show()
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     graph = nx.Graph()
     valves = parse_input(data)
 

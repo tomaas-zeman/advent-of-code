@@ -1,7 +1,7 @@
 from common.utils import as_ints
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     codes = as_ints(data[0].split(","))
 
     # inputs (task description)

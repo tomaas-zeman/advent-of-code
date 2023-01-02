@@ -1,7 +1,7 @@
 from year2022.day03.common import letter_value
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     sum = 0
     for line in data:
         first = line[0 : len(line) // 2]

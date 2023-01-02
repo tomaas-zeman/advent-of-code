@@ -7,7 +7,7 @@ def clear_point_visits(matrix: Matrix):
         point.flag = False
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     matrix = matrix_from_data(data)
 
     starting_points = []

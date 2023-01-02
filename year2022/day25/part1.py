@@ -16,5 +16,5 @@ def dec_to_snafu(dec: int):
     return res[::-1]
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     return dec_to_snafu(sum([snafu_to_dec(line) for line in data]))

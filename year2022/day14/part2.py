@@ -3,7 +3,7 @@ import os
 import time
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     matrix, sand_source = parse_input(data)
 
     # mark floor

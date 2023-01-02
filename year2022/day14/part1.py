@@ -1,7 +1,7 @@
 from year2022.day14.common import Type, parse_input, pick_free
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     matrix, sand_source = parse_input(data)
 
     steps = 0

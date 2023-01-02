@@ -1,4 +1,4 @@
-def run(data: list[str], raw_data: list[str], is_test: bool):
+def run(data: list[str], is_test: bool):
     visited_instructions = []
     acc = 0
     index = 0

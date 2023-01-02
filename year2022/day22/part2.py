@@ -1,3 +1,4 @@
+from common.utils import raw_input
 from year2022.day22.common import COORD_CHANGES, Facing, Me, find_password
 import numpy as np
 from typing import Callable
@@ -107,8 +108,9 @@ def find_next_valid_coord(me: Me, facing: Facing, maze: np.ndarray) -> tuple[int
     return me.row, me.col, facing
 
 
-def run(data: list[str], raw_data: list[str], is_test: bool):
+@raw_input
+def run(data: list[str], is_test: bool):
     if not is_test:
         config["movements"] = movements
         config["quadrant"] = get_quadrant
-    return find_password(raw_data, find_next_valid_coord)
+    return find_password(data, find_next_valid_coord)
