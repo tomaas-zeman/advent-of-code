@@ -20,6 +20,6 @@ def to_int(number):
 def run(data: list[str], is_test: bool):
     sum = 0
     for line in data:
-        numbers = re.findall(f"(?=(\\d|{'|'.join(words.keys())}))", line)
-        sum += int(f"{to_int(numbers[0])}{to_int(numbers[-1])}")
+        numbers = [to_int(n) for n in re.findall(f"(?=(\\d|{'|'.join(words.keys())}))", line)]
+        sum += int(f"{numbers[0]}{numbers[-1]}")
     return sum
