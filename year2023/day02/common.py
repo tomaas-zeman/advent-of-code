@@ -11,16 +11,16 @@ class Game:
         self.blue = blue
 
 
-def cube_count(color, turn):
-    result = re.findall(f"(\d+) {color}", turn)
+def cube_count(color, turns) -> int:
+    result = re.findall(f"(\d+) {color}", turns)
     return max(as_ints(result)) if len(result) > 0 else 0
 
 
 def parse_games(data: list[str]) -> list[Game]:
     games = []
 
-    for line in data:
-        id, turns = re.findall("Game (\d+): (.*)", line)[0]
+    for game in data:
+        id, turns = re.findall("Game (\d+): (.*)", game)[0]
         games.append(Game(int(id), cube_count("red", turns), cube_count("green", turns), cube_count("blue", turns)))
 
     return games
