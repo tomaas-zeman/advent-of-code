@@ -190,7 +190,7 @@ class Numpy:
         return [
             matrix[n] for n in Numpy.valid_neighbor_positions_of(point, matrix, include_diagonals=include_diagonals)
         ]
-
+    
     @staticmethod
     def all_neighbor_positions_of(point: Point, include_diagonals: bool = False):
         positions = [
@@ -212,7 +212,7 @@ class Numpy:
     def valid_neighbor_positions_of(point: Point, matrix: np.ndarray, include_diagonals: bool = False):
         return [
             p
-            for p in Numpy.all_neighbor_positions_of(point)
+            for p in Numpy.all_neighbor_positions_of(point, include_diagonals=include_diagonals)
             if 0 <= p[0] < matrix.shape[0] and 0 <= p[1] < matrix.shape[1]
         ]
 
