@@ -2,10 +2,11 @@ import re
 
 
 class Card:
-    def __init__(self, id: int, winning: list[int], scratched: list[int]) -> None:
+    def __init__(self, id: int, winning_numbers: list[int], scratched_numbers: list[int]) -> None:
         self.id = id
-        self.winning = winning
-        self.scratched = scratched
+        self.winning_numbers = winning_numbers
+        self.scratched_numbers = scratched_numbers
+        self.winning_card_count = len(set(winning_numbers).intersection(set(scratched_numbers)))
         self.counter = 1
 
 
