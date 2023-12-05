@@ -1,3 +1,4 @@
+import multiprocessing
 import traceback
 from importlib import import_module
 from sys import argv
@@ -11,7 +12,7 @@ import re
 # [0] : <absolute file path>
 # [1] : dir=<file dir relative to root>
 #
-# Run as: python main.py 2022/01
+# Run as: python -- . 2022/01
 #
 [year, day] = argv[1].split("/")
 
@@ -78,16 +79,19 @@ def run_with_file(filename: str, part: int):
     return run_result
 
 
-for part in [1, 2]:
-    print(Console.with_color("\n##################################", Console.Color.BOLD_CYAN))
-    print(Console.with_color(f"#             PART {part}             #", Console.Color.BOLD_CYAN))
-    print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))
+if __name__ == '__main__':
+    multiprocessing.freeze_support()
 
-    # 2021 does not support testdata
-    if year == "2021":
-        run_with_file("data", part)
-    else:
-        if run_with_file("testdata", part):
+    for part in [1, 2]:
+        print(Console.with_color("\n##################################", Console.Color.BOLD_CYAN))
+        print(Console.with_color(f"#             PART {part}             #", Console.Color.BOLD_CYAN))
+        print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))
+
+        # 2021 does not support testdata
+        if year == "2021":
             run_with_file("data", part)
         else:
-            break
+            if run_with_file("testdata", part):
+                run_with_file("data", part)
+            else:
+                break
