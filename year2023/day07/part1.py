@@ -1,7 +1,7 @@
 from year2023.day07.common import Hand, calculate_winnings, card_order, get_rank
 
 
-def parse_hands(data: list[str]) -> list[Hand]:
+def parse(data: list[str]) -> list[Hand]:
     hands = []
     for line in data:
         cards, bid = line.split()
@@ -10,5 +10,5 @@ def parse_hands(data: list[str]) -> list[Hand]:
 
 
 def run(data: list[str], is_test: bool):
-    hands = parse_hands(data)
+    hands = parse(data)
     return calculate_winnings(hands)

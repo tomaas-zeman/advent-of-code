@@ -13,7 +13,7 @@ def get_rank_with_jokers(cards: str) -> Rank:
     return get_rank(cards.replace("J", most_common[0][0]))
 
 
-def parse_hands(data: list[str]) -> list[Hand]:
+def parse(data: list[str]) -> list[Hand]:
     hands = []
     for line in data:
         cards, bid = line.split()
@@ -24,5 +24,5 @@ def parse_hands(data: list[str]) -> list[Hand]:
 
 
 def run(data: list[str], is_test: bool):
-    hands = parse_hands(data)
+    hands = parse(data)
     return calculate_winnings(hands)
