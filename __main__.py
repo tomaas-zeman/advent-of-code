@@ -51,13 +51,18 @@ def compute_solution(module: str, part: int, data: list[str], is_test: bool):
 def run_with_file(filename: str, part: int):
     run_result = True
     input_file = f"year{year}/day{day}/{filename}"
+    
+    # support different testdata for each part
+    if part == 2 and filename == "testdata" and exists(f"{input_file}2"):
+        input_file = f"{input_file}2"
+    
     download_input_file()
     expected_test_solution = None
     with open(input_file, "r") as file:
         try:
             module = f"year{year}.day{day}.part{part}"
             solution, expected_test_solution = compute_solution(
-                module, part, file.readlines(), is_test=filename == "testdata"
+                module, part, file.readlines(), is_test=filename.startswith("testdata")
             )
         except Exception:
             solution = "ERR"
