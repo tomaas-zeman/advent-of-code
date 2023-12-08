@@ -37,7 +37,7 @@ def compute_solution(module: str, part: int, data: list[str], is_test: bool):
         return (import_module(module).run(), None)
 
     runnable = import_module(module).run
-    data = data if getattr(runnable, 'uses_raw_input', False) else [line.strip() for line in data]
+    data = data if getattr(runnable, "uses_raw_input", False) else [line.strip() for line in data]
     test_solution_prefix = "# part"
 
     if len(data) > 2 and data[0].startswith(test_solution_prefix) and data[1].startswith(test_solution_prefix):
@@ -50,20 +50,19 @@ def compute_solution(module: str, part: int, data: list[str], is_test: bool):
 
 def run_with_file(filename: str, part: int):
     run_result = True
+    is_test = filename.startswith("testdata")
     input_file = f"year{year}/day{day}/{filename}"
-    
+
     # support different testdata for each part
     if part == 2 and filename == "testdata" and exists(f"{input_file}2"):
         input_file = f"{input_file}2"
-    
+
     download_input_file()
     expected_test_solution = None
     with open(input_file, "r") as file:
         try:
             module = f"year{year}.day{day}.part{part}"
-            solution, expected_test_solution = compute_solution(
-                module, part, file.readlines(), is_test=filename.startswith("testdata")
-            )
+            solution, expected_test_solution = compute_solution(module, part, file.readlines(), is_test=is_test)
         except Exception:
             solution = "ERR"
             print(traceback.format_exc())
@@ -81,10 +80,64 @@ def run_with_file(filename: str, part: int):
             run_result = False
 
         print(Console.with_color(f"{symbol} year {year} | day {day} | part{part:02d} => {solution}", color))
+        if not is_test:
+            send_answer(str(part), str(solution))
     return run_result
 
 
-if __name__ == '__main__':
+def save_correct_answer(part: str, answer: str):
+    with open("answers.txt", "a") as answers_file:
+        answers_file.write(f"{year}-{day}-{part}={answer}")
+
+
+def get_correct_answer(part: str):
+    with open("answers.txt", "r") as answers_file:
+        for line in answers_file.readlines():
+            if line.startswith(f"{year}-{day}-{part}="):
+                return line.split("=")[1].strip()
+    return None
+
+
+def send_answer(part: str, answer: str):
+    if get_correct_answer(part) is not None:
+        print(Console.with_color("> You already submitted a correct answer for this part.", Console.Color.YELLOW))
+        return
+
+    choice = input(f"> Send answer '{answer}' to AOC for verification? [y/N] ")
+    if choice.lower() != "y":
+        return
+
+    with open(".session", "r") as session_file:
+        session = session_file.readline().strip()
+        response = requests.post(
+            url=f"https://adventofcode.com/{year}/day/{int(day)}/answer",
+            cookies={"session": session},
+            data={"level": part, "answer": answer},
+        )
+
+        if response.ok:
+            if "You gave an answer too recently" in response.text:
+                print(
+                    Console.with_color(
+                        "> You submitted an answer too recently. Try again in a few minutes.", Console.Color.RED
+                    )
+                )
+            elif "not the right answer" in response.text:
+                if "too low" in response.text:
+                    print(Console.with_color("> Incorrect answer - too low.", Console.Color.RED))
+                elif "too high" in response.text:
+                    print(Console.with_color("> Incorrect answer - too high.", Console.Color.RED))
+                else:
+                    print(Console.with_color(f"> {response.text}", Console.Color.RED))
+            elif "seem to be solving the right level." in response.text:
+                print(Console.with_color("> Wrong level or already solved.", Console.Color.YELLOW))
+            else:
+                print(Console.with_color("> CORRECT!", Console.Color.GREEN))
+                save_correct_answer(part, answer)
+        else:
+            print(Console.with_color(f"> {response.text}", Console.Color.RED))
+
+if __name__ == "__main__":
     multiprocessing.freeze_support()
 
     for part in [1, 2]:
