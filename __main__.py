@@ -87,7 +87,7 @@ def run_with_file(filename: str, part: int):
 
 def save_correct_answer(part: str, answer: str):
     with open("answers.txt", "a") as answers_file:
-        answers_file.write(f"{year}-{day}-{part}={answer}")
+        answers_file.write(f"{year}-{day}-{part}={answer}\n")
 
 
 def get_correct_answer(part: str):
@@ -128,7 +128,9 @@ def send_answer(part: str, answer: str):
                 elif "too high" in response.text:
                     print(Console.with_color("> Incorrect answer - too high.", Console.Color.RED))
                 else:
-                    print(Console.with_color(f"> {response.text}", Console.Color.RED))
+                    print(Console.with_color("> Incorrect answer", Console.Color.RED))
+                wait_before_retry = re.search(r"([Pp]lease wait .* trying again\.)", response.text).group(1)
+                print(Console.with_color(f"> {wait_before_retry}", Console.Color.YELLOW))
             elif "seem to be solving the right level." in response.text:
                 print(Console.with_color("> Wrong level or already solved.", Console.Color.YELLOW))
             else:
