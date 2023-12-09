@@ -1,4 +1,4 @@
-def generate_sequences(initial_sequence: str):
+def generate_sequences(initial_sequence: list[int]):
     sequences = [initial_sequence]
 
     while True:
