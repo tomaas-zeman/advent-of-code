@@ -59,5 +59,26 @@ def initial_steps(maze: np.ndarray, start: tuple[int, int]):
     return initial_steps
 
 
-def combine(point: tuple[int, int], direction: Direction) -> tuple[int, int]:
-    return tuple(map(sum, zip(point, direction.value)))
+def walk_path(data: list[str]):
+    maze = Numpy.from_input_as_str(data)
+    start = np.argwhere(maze == "S")[0]
+    visited = np.full(maze.shape, False)
+    path = initial_steps(maze, start)
+
+    # visit initial nodes
+    for point, _ in path + [start]:
+        visited[point] = True
+
+    steps = 1
+    while any(p[0] != path[0][0] for p in path):
+        next_path_positions = []
+        for point, direction in path:
+            next_point = tuple(map(sum, zip(point, direction.value)))
+            next_pipe = PIPES[maze[next_point]]
+            next_path_positions.append((next_point, next_pipe.flows_to(direction)))
+            visited[next_point] = True
+
+        path = next_path_positions
+        steps += 1
+
+    return maze, visited, steps
