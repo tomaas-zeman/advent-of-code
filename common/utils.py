@@ -170,8 +170,8 @@ class Numpy:
         print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
 
     @staticmethod
-    def from_input(data: list[str], dtype: Any, value_convertor: Callable[[str], Any]):
-        matrix = np.empty((len(data), len(data[0])), dtype=np.dtype("U100"))
+    def from_input(data: list[str], dtype: T, value_convertor: Callable[[str], T]) -> np.ndarray[T]:
+        matrix = np.empty((len(data), len(data[0])), dtype=dtype)
         for row_index, row in enumerate(data):
             for col_index, col in enumerate(row):
                 matrix[row_index][col_index] = value_convertor(col)
@@ -190,7 +190,7 @@ class Numpy:
         return [
             matrix[n] for n in Numpy.valid_neighbor_positions_of(point, matrix, include_diagonals=include_diagonals)
         ]
-    
+
     @staticmethod
     def all_neighbor_positions_of(point: Point, include_diagonals: bool = False):
         positions = [
@@ -227,6 +227,10 @@ class Numpy:
     @staticmethod
     def are_neighbors(a: Point, b: Point):
         return abs(a[0] - b[0]) <= 1 and abs(a[1] - b[1]) <= 1
+
+    @staticmethod
+    def is_valid_point(point: Point, matrix: np.ndarray):
+        return 0 <= point[0] < matrix.shape[0] and 0 <= point[1] < matrix.shape[1]
 
 
 #########

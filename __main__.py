@@ -44,6 +44,10 @@ def compute_solution(module: str, part: int, data: list[str], is_test: bool):
         expected_test_solution = data[part - 1].split(" = ")[1].strip()
         solution = runnable(data[2:], is_test=is_test)
         return solution, expected_test_solution
+    elif len(data) > 1 and data[0].startswith(f"{test_solution_prefix}{part}"):
+        expected_test_solution = data[0].split(" = ")[1].strip()
+        solution = runnable(data[1:], is_test=is_test)
+        return solution, expected_test_solution
     else:
         return runnable(data, is_test=is_test), None
 
