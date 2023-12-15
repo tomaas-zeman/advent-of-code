@@ -10,11 +10,15 @@ import re
 #
 # Expected format of input params
 # [0] : <absolute file path>
-# [1] : dir=<file dir relative to root>
+# [1] : year/day
+# [2] : "skip_part_1" (optional)
 #
 # Run as: python -- . 2022/01
 #
 [year, day] = argv[1].split("/")
+
+# Optional argument to skip part 1
+skip_part_1 = len(argv) > 2 and argv[2] == "skip_part_1" 
 
 
 def download_input_file():
@@ -146,7 +150,7 @@ def send_answer(part: str, answer: str):
 if __name__ == "__main__":
     multiprocessing.freeze_support()
 
-    for part in [1, 2]:
+    for part in [1, 2] if not skip_part_1 else [2]:
         print(Console.with_color("\n##################################", Console.Color.BOLD_CYAN))
         print(Console.with_color(f"#             PART {part}             #", Console.Color.BOLD_CYAN))
         print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))

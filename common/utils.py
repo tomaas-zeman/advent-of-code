@@ -18,6 +18,10 @@ def memoize(fn):
             cache[args] = fn(*args)
         return cache[args]
 
+    def clear_cache():
+        cache.clear()
+
+    wrapper.clear_cache = clear_cache
     return wrapper
 
 
