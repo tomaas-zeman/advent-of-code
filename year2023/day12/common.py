@@ -35,7 +35,6 @@ def get_arrangement_count(data: list[str], parse_line: Callable[[str], tuple[str
     for line in data:
         springs, conditions = parse_line(line)
         process.clear_cache()
-        result = process(springs, conditions)
-        combinations += result
+        combinations += process(springs, conditions)
 
     return combinations
