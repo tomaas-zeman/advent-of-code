@@ -6,6 +6,9 @@ import os
 import numpy as np
 
 
+# (row, column) generic type alias
+Point = tuple[int, int]
+
 ##############
 # DECORATORS #
 ##############
@@ -167,9 +170,6 @@ class Matrix(Generic[P]):
 
 
 class Numpy:
-    # (row, column) type for Numpy
-    Point = tuple[int, int]
-
     @staticmethod
     def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x):
         print(np.array2string(matrix, separator="", formatter={"str_kind": str_formatter}))  # type: ignore
@@ -350,3 +350,18 @@ class Direction(Enum):
             cls.LEFT: (0, -1 * factor),
             cls.RIGHT: (0, 1 * factor),
         }[direction]
+
+    @classmethod
+    def from_string(cls, string: str):
+        return {
+            "U": Direction.UP,
+            "D": Direction.DOWN,
+            "L": Direction.LEFT,
+            "R": Direction.RIGHT,
+        }[string]
+
+
+class Coord:
+    @staticmethod
+    def add(*points: Point):
+        return tuple(map(sum, zip(*points)))
