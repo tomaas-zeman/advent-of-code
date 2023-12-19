@@ -1,25 +1,9 @@
 import numpy as np
-from enum import Enum
-from common.utils import Numpy
+from common.utils import Direction, Numpy
 
 
 def merge(c1: tuple[int, int], c2: tuple[int, int]) -> tuple[int, int]:
     return (c1[0] + c2[0], c1[1] + c2[1])
-
-
-class Direction(Enum):
-    UP = "1"
-    DOWN = "2"
-    LEFT = "3"
-    RIGHT = "4"
-
-
-coord_change = {
-    Direction.UP: (-1, 0),
-    Direction.DOWN: (1, 0),
-    Direction.LEFT: (0, -1),
-    Direction.RIGHT: (0, 1),
-}
 
 
 class Beam:
@@ -30,7 +14,7 @@ class Beam:
 
 class Empty:
     def next(self, beam: Beam) -> list[Beam]:
-        beam.position = merge(beam.position, coord_change[beam.direction])
+        beam.position = merge(beam.position, Direction.coord_change(beam.direction))
         return [beam]
 
 
@@ -40,7 +24,8 @@ class Reflection:
 
     def next(self, beam: Beam) -> list[Beam]:
         return [
-            Beam(merge(beam.position, coord_change[direction]), direction) for direction in self.mapping[beam.direction]
+            Beam(merge(beam.position, Direction.coord_change(direction)), direction)
+            for direction in self.mapping[beam.direction]
         ]
 
 
@@ -89,12 +74,12 @@ def energized_tiles_count(beam: Beam, device: np.ndarray) -> int:
 
     while len(stack) > 0:
         beam = stack.pop()
-        visited[beam.position] += beam.direction.value
+        visited[beam.position] += str(beam.direction.value)
 
         for next_beam in components[device[beam.position]].next(beam):
             if (
                 Numpy.is_valid_point(next_beam.position, device)
-                and next_beam.direction.value not in visited[next_beam.position]
+                and str(next_beam.direction.value) not in visited[next_beam.position]
             ):
                 stack.append(next_beam)
 

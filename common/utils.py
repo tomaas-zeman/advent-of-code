@@ -1,4 +1,5 @@
 from __future__ import annotations
+from enum import Enum
 from typing import Any, Generic, Iterator, TypeVar, Callable
 import time
 import os
@@ -314,3 +315,38 @@ class Console:
         if color is None:
             return text
         return f"\x1B[{color}m{text}\x1B[0m"
+
+
+########
+# MISC #
+########
+
+
+class Direction(Enum):
+    UP = 1
+    DOWN = 2
+    LEFT = 3
+    RIGHT = 4
+
+    @classmethod
+    def all(cls):
+        return [cls.UP, cls.DOWN, cls.LEFT, cls.RIGHT]
+
+    @classmethod
+    def opposite(cls, direction):
+        return {
+            cls.UP: cls.DOWN,
+            cls.DOWN: cls.UP,
+            cls.LEFT: cls.RIGHT,
+            cls.RIGHT: cls.LEFT,
+        }[direction]
+
+    @classmethod
+    def coord_change(cls, direction: Direction, factor=1) -> tuple[int, int]:
+        # (row, col)
+        return {
+            cls.UP: (-1 * factor, 0),
+            cls.DOWN: (1 * factor, 0),
+            cls.LEFT: (0, -1 * factor),
+            cls.RIGHT: (0, 1 * factor),
+        }[direction]
