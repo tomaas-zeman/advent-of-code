@@ -1,0 +1,7 @@
+# part1 = 11687500
+# part2 = None
+broadcaster -> a
+%a -> inv, con
+&inv -> b
+%b -> con
+&con -> output
