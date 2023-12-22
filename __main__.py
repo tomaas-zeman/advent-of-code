@@ -17,7 +17,7 @@ import re
 #         python -- . 2022/01 2
 #
 [year, day] = argv[1].split("/")
-parts = [int(argv[2])] if len(argv) > 2 else [1,2]
+parts = [int(argv[2])] if len(argv) > 2 else [1, 2]
 
 
 def download_input_file():
@@ -107,7 +107,14 @@ def get_correct_answer(part: str):
 
 def send_answer(part: str, answer: str):
     if get_correct_answer(part) is not None:
-        print(Console.with_color("> You already submitted a correct answer for this part.", Console.Color.YELLOW))
+        if get_correct_answer(part) == answer:
+            print(Console.with_color("> You already submitted a correct answer for this part.", Console.Color.YELLOW))
+        else:
+            print(
+                Console.with_color(
+                    "> You already submitted a correct answer for this part but it's incorrect NOW", Console.Color.RED
+                )
+            )
         return
 
     choice = input(f"> Send answer '{answer}' to AOC for verification? [y/N] ")
@@ -145,6 +152,7 @@ def send_answer(part: str, answer: str):
                 save_correct_answer(part, answer)
         else:
             print(Console.with_color(f"> {response.text}", Console.Color.RED))
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
