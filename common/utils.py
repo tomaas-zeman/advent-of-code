@@ -1,8 +1,10 @@
 from __future__ import annotations
 from enum import Enum
 from typing import Any, Generic, Iterator, TypeVar, Callable
+import matplotlib.pyplot as plot
 import time
 import os
+import networkx as nx
 import numpy as np
 
 # (row, column) generic type alias
@@ -259,8 +261,34 @@ class Direction(Enum):
             "R": Direction.RIGHT,
         }[string]
 
+    @classmethod
+    def infer_direction(cls, p1: Point, p2: Point):
+        diff = (p1[0] - p2[0], p1[1] - p2[1])
+        if all(x != 0 for x in diff):
+            raise AttributeError("Unsupported diagonal direction")
+        if diff[0] != 0:
+            return Direction.UP if diff[0] > 0 else Direction.DOWN
+        if diff[1] != 0:
+            return Direction.LEFT if diff[1] > 0 else Direction.RIGHT
+
 
 class Coord:
     @staticmethod
     def add(*points: Point):
         return tuple(map(sum, zip(*points)))
+
+
+##########
+# Graphs #
+##########
+
+
+class Graph:
+    @staticmethod
+    def draw(graph: nx.Graph):
+        layout = nx.spring_layout(graph, scale=2, seed=255)
+        nx.draw(graph, layout, with_labels=True, node_size=2000)
+        nx.draw_networkx_edge_labels(
+            graph, layout, edge_labels={(n1, n2): d["weight"] for n1, n2, d in graph.edges(data=True)}
+        )
+        plot.show()
