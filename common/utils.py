@@ -285,10 +285,13 @@ class Coord:
 
 class Graph:
     @staticmethod
-    def draw(graph: nx.Graph):
+    def draw(graph: nx.Graph, edge_labels=True):
         layout = nx.spring_layout(graph, scale=2, seed=255)
         nx.draw(graph, layout, with_labels=True, node_size=2000)
-        nx.draw_networkx_edge_labels(
-            graph, layout, edge_labels={(n1, n2): d["weight"] for n1, n2, d in graph.edges(data=True)}
-        )
+
+        if edge_labels:
+            nx.draw_networkx_edge_labels(
+                graph, layout, edge_labels={(n1, n2): d["weight"] for n1, n2, d in graph.edges(data=True)}
+            )
+
         plot.show()
