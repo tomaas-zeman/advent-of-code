@@ -1,6 +1,8 @@
 from __future__ import annotations
+from random import randint
 from enum import Enum
 from typing import Any, Generic, Iterator, TypeVar, Callable
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.pyplot as plot
 import time
 import os
@@ -9,6 +11,7 @@ import numpy as np
 
 # (row, column) generic type alias
 Point = tuple[int, int]
+
 
 ##############
 # DECORATORS #
@@ -137,6 +140,39 @@ class Numpy:
     @staticmethod
     def is_valid_point(point: Point, matrix: np.ndarray):
         return 0 <= point[0] < matrix.shape[0] and 0 <= point[1] < matrix.shape[1]
+
+    @staticmethod
+    def plot_3d_as_cubes(matrix: np.ndarray):
+        figure = plot.figure()
+        ax = figure.add_subplot(111, projection="3d")
+
+        cube_vertices = np.array(
+            [[0, 0, 0], [1, 0, 0], [1, 0, 1], [0, 0, 1], [0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]]
+        )
+
+        cube_sides = [
+            [cube_vertices[i] for i in [0, 1, 2, 3]],
+            [cube_vertices[i] for i in [4, 5, 6, 7]],
+            [cube_vertices[i] for i in [0, 3, 7, 4]],
+            [cube_vertices[i] for i in [1, 2, 6, 5]],
+            [cube_vertices[i] for i in [0, 1, 5, 4]],
+            [cube_vertices[i] for i in [2, 3, 7, 6]],
+        ]
+
+        for x in range(matrix.shape[0]):
+            for y in range(matrix.shape[1]):
+                for z in range(matrix.shape[2]):
+                    if matrix[x, y, z]:
+                        faces = [np.array(face) + [x, y, z] for face in cube_sides]
+                        cube = Poly3DCollection(faces, alpha=0.5, edgecolor="k", facecolors="bgrcmy"[randint(0, 5)])
+                        ax.add_collection3d(cube)
+
+        ax.set_xlim(0, matrix.shape[0])
+        ax.set_ylim(0, matrix.shape[1])
+        ax.set_zlim(0, matrix.shape[2])
+        ax.set_box_aspect([1, 1, 1])
+
+        plot.show()
 
 
 #########
