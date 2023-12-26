@@ -285,7 +285,7 @@ class Coord:
 
 class Graph:
     @staticmethod
-    def draw(graph: nx.Graph, edge_labels=True):
+    def draw(graph: nx.Graph, edge_labels=False):
         layout = nx.spring_layout(graph, scale=2, seed=255)
         nx.draw(graph, layout, with_labels=True, node_size=2000)
 
