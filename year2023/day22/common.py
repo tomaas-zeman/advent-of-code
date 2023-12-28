@@ -1,6 +1,5 @@
 from __future__ import annotations
 import numpy as np
-from typing import Union
 from portion import closed
 from common.utils import Numpy
 
@@ -51,8 +50,8 @@ def parse(data: list[str]) -> list[Brick]:
     return bricks
 
 
-def sort_by_z(bricks: list[Brick], mode: Union[min, max]) -> list[Brick]:
-    return sorted(bricks, key=lambda brick: mode(brick.range_z))
+def sort_by_z(bricks: list[Brick]) -> list[Brick]:
+    return sorted(bricks, key=lambda brick: min(brick.range_z))
 
 
 def can_drop(brick: Brick, bricks: list[Brick]):
@@ -77,14 +76,14 @@ def can_drop(brick: Brick, bricks: list[Brick]):
 
 def settle_bricks(bricks: list[Brick]):
     for step in range(max([max(b.range_z) for b in bricks])):
-        dropped_this_step = 0
+        dropped_this_step = False
 
-        for brick in sort_by_z(bricks, min):
+        for brick in sort_by_z(bricks):
             if can_drop(brick, bricks):
                 brick.drop()
-                dropped_this_step += 1
+                dropped_this_step = True
 
-        if dropped_this_step == 0:
+        if not dropped_this_step:
             break
 
 
