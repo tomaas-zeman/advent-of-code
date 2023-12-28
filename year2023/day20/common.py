@@ -66,11 +66,7 @@ class Conjunction(Module):
     def process(self, signal: Signal) -> list[Signal]:
         if signal.source in self.pulses:
             self.pulses[signal.source] = signal.pulse
-        pulse_to_send = (
-            Pulse.LOW
-            if all(p == Pulse.HIGH for p in self.pulses.values())
-            else Pulse.HIGH
-        )
+        pulse_to_send = Pulse.LOW if all(p == Pulse.HIGH for p in self.pulses.values()) else Pulse.HIGH
         return [Signal(self.name, d, pulse_to_send) for d in self.destinations]
 
 

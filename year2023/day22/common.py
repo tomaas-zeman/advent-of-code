@@ -62,9 +62,9 @@ def can_drop(brick: Brick, bricks: list[Brick]):
         b
         for b in bricks
         if b.id != brick.id
-           and max(b.range_z) == min(brick.range_z) - 1
-           and closed(*b.range_x).overlaps(closed(*brick.range_x))
-           and closed(*b.range_y).overlaps(closed(*brick.range_y))
+        and max(b.range_z) == min(brick.range_z) - 1
+        and closed(*b.range_x).overlaps(closed(*brick.range_x))
+        and closed(*b.range_y).overlaps(closed(*brick.range_y))
     ]
 
     if len(bricks_under) == 0:

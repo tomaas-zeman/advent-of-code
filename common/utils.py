@@ -310,7 +310,7 @@ class Direction(Enum):
 
 class Coord:
     @staticmethod
-    def add(*points: Point):
+    def add(*points: Point | tuple[int, int, int]):
         return tuple(map(sum, zip(*points)))
 
 
