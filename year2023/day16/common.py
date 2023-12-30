@@ -1,5 +1,6 @@
 import numpy as np
-from common.utils import Direction, Numpy
+
+from aocutils import Direction, Numpy
 
 
 def merge(c1: tuple[int, int], c2: tuple[int, int]) -> tuple[int, int]:

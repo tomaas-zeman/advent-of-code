@@ -1,4 +1,4 @@
-from common.matrix import Point
+from aocutils.matrix import Point
 
 
 def move_head(point: Point, direction: str):

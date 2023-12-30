@@ -1,6 +1,6 @@
 from __future__ import annotations
+
 from year2022.day19.common import Blueprint, Resources, Robot, Type, parse_input
-from queue import PriorityQueue
 
 
 class State:

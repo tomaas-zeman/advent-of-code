@@ -1,4 +1,4 @@
-from common.utils import Numpy
+from aocutils import Numpy
 from year2022.day24.common import find_path
 
 

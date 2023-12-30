@@ -1,7 +1,8 @@
 from typing import Type
 
-from common.utils import Numpy, Point, Direction
 import networkx as nx
+
+from aocutils import Numpy, Point, Direction
 
 slopes = {Direction.DOWN: "v", Direction.UP: "^", Direction.LEFT: "<", Direction.RIGHT: ">"}
 

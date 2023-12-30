@@ -1,4 +1,5 @@
 from operator import mul
+
 from year2023.day20.common import parse, Pulse, push_button
 
 

@@ -1,5 +1,5 @@
+from aocutils import Console
 from year2022.day10.common import instructions
-from common.utils import Console
 
 width = 40
 height = 6
@@ -24,10 +24,10 @@ def run(data: list[str], is_test: bool):
 
         for _ in range(instruction.duration):
             if is_light_pixel(step, value):
-                crt[step] = Console.with_color('#', Console.Color.CYAN)
+                crt[step] = Console.with_color("#", Console.Color.CYAN)
             step += 1
 
         value = instruction.operation(value, line[1:])
-    
+
     draw_crt(crt)
     return True

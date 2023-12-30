@@ -1,8 +1,9 @@
-from common.utils import raw_input
-from year2022.day22.common import COORD_CHANGES, Facing, Me, find_password
-import numpy as np
 from typing import Callable
 
+import numpy as np
+
+from aocutils import raw_input
+from year2022.day22.common import COORD_CHANGES, Facing, Me, find_password
 
 ##############
 # TEST SETUP #
@@ -83,10 +84,7 @@ movements: dict[tuple[int, Facing], tuple[int, Facing, Callable[[int, int], tupl
     (6, Facing.DOWN): (2, Facing.DOWN, lambda row, col: (0, 2 * SIZE + col)),
 }
 
-config = {
-    "movements" : test_movements,
-    "quadrant" : get_test_quadrant
-}
+config = {"movements": test_movements, "quadrant": get_test_quadrant}
 
 
 def find_next_valid_coord(me: Me, facing: Facing, maze: np.ndarray) -> tuple[int, int, Facing]:

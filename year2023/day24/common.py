@@ -1,10 +1,12 @@
 from __future__ import annotations
-from sympy.geometry.line import LinearEntity
-from common.utils import Coord
+
+from sympy import Point2D
+
+from aocutils import Coord
 
 
 class Hailstone:
-    def __init__(self, id: int, position: tuple[int, int, int], velocity: tuple[int, int, int]):
+    def __init__(self, id: int, position: tuple[int, ...], velocity: tuple[int, ...]):
         self.id = id
         self._position = position
         self.velocity = velocity
@@ -21,7 +23,8 @@ def parse(data: list[str]) -> list[Hailstone]:
     ]
 
 
-def intersects_within_range(intersections: list[LinearEntity], range: tuple[int, int]):
+def intersects_within_range(intersections: list[Point2D], range: tuple[int, int]):
     if len(intersections) == 0:
         return False
-    return range[0] <= float(intersections[0][0]) <= range[1] and range[0] <= float(intersections[0][1]) <= range[1]
+    x, y = intersections[0]
+    return range[0] <= float(x) <= range[1] and range[0] <= float(y) <= range[1]

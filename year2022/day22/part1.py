@@ -1,6 +1,7 @@
-from common.utils import raw_input
-from year2022.day22.common import COORD_CHANGES, Facing, Me, find_password
 import numpy as np
+
+from aocutils import raw_input
+from year2022.day22.common import COORD_CHANGES, Facing, Me, find_password
 
 
 def find_next_valid_coord(me: Me, facing: Facing, maze: np.ndarray) -> tuple[int, int, Facing]:

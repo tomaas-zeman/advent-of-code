@@ -1,5 +1,5 @@
-from operator import gt, lt
 import re
+from operator import gt, lt
 
 
 class Part:

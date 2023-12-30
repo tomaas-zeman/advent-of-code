@@ -1,5 +1,6 @@
-from year2023.day08.common import parse
 import math
+
+from year2023.day08.common import parse
 
 
 def run(data: list[str], is_test: bool):

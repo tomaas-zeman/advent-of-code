@@ -1,5 +1,6 @@
-from year2022.day11.common import run_monkey_business, parse_input
 import math
+
+from year2022.day11.common import run_monkey_business, parse_input
 
 
 def run(data: list[str], is_test: bool):

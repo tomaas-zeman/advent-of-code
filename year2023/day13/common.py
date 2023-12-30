@@ -1,6 +1,8 @@
 from itertools import groupby
+
 import numpy as np
-from common.utils import Numpy
+
+from aocutils import Numpy
 
 
 def can_fix_smudge(left_slice: np.ndarray, right_slice: np.ndarray) -> bool:

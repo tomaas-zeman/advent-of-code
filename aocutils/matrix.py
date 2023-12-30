@@ -1,12 +1,13 @@
-##########################################
-# DEPRECATED: use 'common.utils' instead #
-##########################################
+######################################
+# DEPRECATED: use 'aocutils' instead #
+######################################
 from __future__ import annotations
+
+import sys
+from random import randint
 from typing import Generic, TypeVar, Callable, Any
 
-from common.utils import flatten
-from random import randint
-import sys
+from aocutils import flatten
 
 V = TypeVar("V")
 F = TypeVar("F")

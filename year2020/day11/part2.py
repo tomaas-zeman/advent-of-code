@@ -1,4 +1,4 @@
-from common.matrix import matrix_from_data, Point
+from aocutils.matrix import matrix_from_data, Point
 
 
 def find_neighbor(seat: Point, delta_row: int, delta_col: int):

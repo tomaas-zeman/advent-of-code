@@ -1,4 +1,5 @@
 from sympy import solve, Eq, symbols
+
 from year2023.day24.common import parse
 
 

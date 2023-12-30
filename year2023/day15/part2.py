@@ -1,4 +1,5 @@
 import re
+
 from year2023.day15.common import hash
 
 

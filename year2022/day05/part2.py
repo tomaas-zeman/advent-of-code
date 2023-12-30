@@ -1,4 +1,4 @@
-from common.utils import raw_input
+from aocutils import raw_input
 from year2022.day05.common import compute_result
 
 

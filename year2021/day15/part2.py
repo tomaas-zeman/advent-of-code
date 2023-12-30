@@ -1,6 +1,6 @@
+from aocutils.matrix import Point, Matrix
 from year2021.day15.common import get_data
 from year2021.day15.part1 import compute_risk
-from common.matrix import Point, Matrix
 
 data_repeats = 5
 

@@ -1,4 +1,5 @@
 from collections import deque
+
 from year2023.day22.common import parse, settle_bricks, Brick
 
 

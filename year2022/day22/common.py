@@ -1,8 +1,10 @@
 from __future__ import annotations
-import numpy as np
-from enum import Enum
+
 import re
+from enum import Enum
 from typing import Callable
+
+import numpy as np
 
 
 class Facing(Enum):

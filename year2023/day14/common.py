@@ -1,6 +1,6 @@
 import numpy as np
-from common.utils import Numpy
 
+from aocutils import Numpy
 
 chars = {c: i for i, c in enumerate("O.#")}
 

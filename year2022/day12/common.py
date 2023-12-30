@@ -1,6 +1,7 @@
 from collections import deque
-from common.matrix import Point
 from typing import Callable, Generic, TypeVar
+
+from aocutils.matrix import Point
 
 T = TypeVar("T")
 

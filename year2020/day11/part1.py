@@ -1,4 +1,4 @@
-from common.matrix import matrix_from_data
+from aocutils.matrix import matrix_from_data
 
 
 def run(data: list[str], is_test: bool):

@@ -1,9 +1,10 @@
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation, PillowWriter
-import numpy as np
 from typing import Callable
 
-from common.utils import as_ints
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation, PillowWriter
+
+from aocutils import as_ints
 
 
 def plot(before: np.ndarray, after: np.ndarray):

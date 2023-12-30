@@ -1,6 +1,6 @@
 from collections import deque
-from typing import Callable
 from operator import add, mul
+from typing import Callable
 
 
 class Monkey:

@@ -1,16 +1,20 @@
 from __future__ import annotations
-from random import randint
-from enum import Enum
-from typing import Any, Generic, Iterator, TypeVar, Callable
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-import matplotlib.pyplot as plot
-import time
+
 import os
+import time
+from enum import Enum
+from random import randint
+from typing import Any, Generic, Iterator, TypeVar, Callable
+
+import matplotlib.pyplot as plot
 import networkx as nx
 import numpy as np
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
-# (row, column) generic type alias
-Point = tuple[int, int]
+# Generic type alias
+# (row, column)
+# (x, y, z)
+Point = tuple[int, ...]
 
 
 ##############
@@ -129,8 +133,8 @@ class Numpy:
     def all_items(matrix: np.ndarray):
         items: list[tuple[Any, int, int]] = []
         for row_index, row in enumerate(matrix):
-            for col_index, col in enumerate(row):
-                items.append((matrix[row_index, col_index], row_index, col_index))
+            for col_index, value in enumerate(row):
+                items.append((value, row_index, col_index))
         return items
 
     @staticmethod
@@ -310,7 +314,7 @@ class Direction(Enum):
 
 class Coord:
     @staticmethod
-    def add(*points: Point | tuple[int, int, int]):
+    def add(*points: Point):
         return tuple(map(sum, zip(*points)))
 
 

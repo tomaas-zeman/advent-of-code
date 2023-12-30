@@ -1,8 +1,8 @@
 from typing import Callable
+
+from shapely import get_interior_ring
 from shapely.geometry import Polygon
 from shapely.ops import unary_union
-from shapely import get_interior_ring
-
 
 change = {
     "R": (1, 0),

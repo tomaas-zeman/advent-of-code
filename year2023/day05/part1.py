@@ -1,5 +1,6 @@
-from year2023.day05.common import parse
 from functools import reduce
+
+from year2023.day05.common import parse
 
 
 def run(data: list[str], is_test: bool):

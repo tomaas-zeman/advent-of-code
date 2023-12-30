@@ -1,5 +1,6 @@
-from year2023.day23.common import create_graph
 import networkx as nx
+
+from year2023.day23.common import create_graph
 
 
 # Essentially running a topological sort algorithm

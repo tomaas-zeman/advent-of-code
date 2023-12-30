@@ -1,8 +1,9 @@
 import re
-import networkx as nx
-from typing import Callable
-from itertools import combinations
 from functools import reduce
+from itertools import combinations
+from typing import Callable
+
+import networkx as nx
 
 
 def solve(graph: nx.Graph, generate_edge_combinations: Callable[[nx.Graph], list[list[tuple[str, str]]]]):

@@ -1,6 +1,7 @@
 import sys
-from year2022.day21.common import Monkey, parse_input, recursing_to_madness
 from operator import lt, gt
+
+from year2022.day21.common import Monkey, parse_input, recursing_to_madness
 
 
 def contains_humn(monkey: Monkey):

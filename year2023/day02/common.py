@@ -1,6 +1,6 @@
 import re
 
-from common.utils import as_ints
+from aocutils import as_ints
 
 
 class Game:

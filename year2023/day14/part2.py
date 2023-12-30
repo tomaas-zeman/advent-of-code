@@ -1,6 +1,6 @@
 import numpy as np
-from year2023.day14.common import compute_result, parse, tilt
 
+from year2023.day14.common import compute_result, parse, tilt
 
 CYCLES = 1_000_000_000
 

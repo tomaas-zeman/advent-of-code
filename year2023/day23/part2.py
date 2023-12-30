@@ -1,6 +1,8 @@
 import re
-import networkx as nx
 from itertools import pairwise
+
+import networkx as nx
+
 from year2023.day23.common import create_graph
 
 

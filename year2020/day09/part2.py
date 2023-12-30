@@ -1,4 +1,4 @@
-from common.utils import as_ints
+from aocutils import as_ints
 
 GOAL = 15353384  # result from part1
 

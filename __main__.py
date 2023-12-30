@@ -1,15 +1,17 @@
 import multiprocessing
+import re
 import traceback
 from importlib import import_module
-from sys import argv
-from common.utils import measure_time, Console
 from os.path import exists
+from sys import argv
+
 import requests
-import re
+
+from aocutils import measure_time, Console
 
 #
 # Expected format of input params
-# [0] : <absolute file path>
+# [0] : working directory
 # [1] : year/day
 # [2] : part to run (optional)
 #

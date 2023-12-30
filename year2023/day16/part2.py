@@ -1,4 +1,4 @@
-from common.utils import Numpy
+from aocutils import Numpy
 from year2023.day16.common import Beam, Direction, energized_tiles_count
 
 

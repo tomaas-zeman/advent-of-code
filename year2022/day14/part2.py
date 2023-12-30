@@ -1,6 +1,4 @@
 from year2022.day14.common import Type, parse_input, pick_free
-import os
-import time
 
 
 def run(data: list[str], is_test: bool):

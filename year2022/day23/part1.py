@@ -1,5 +1,6 @@
-from year2022.day23.common import do_round, parse_input, enlarge_map
 import numpy as np
+
+from year2022.day23.common import do_round, parse_input, enlarge_map
 
 
 def run(data: list[str], is_test: bool):

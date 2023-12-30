@@ -7,7 +7,4 @@ class Instruction:
         self.operation = operation
 
 
-instructions = {
-    "noop": Instruction(1, lambda x, _: x),
-    "addx": Instruction(2, lambda x, args: x + int(args[0]))
-}
+instructions = {"noop": Instruction(1, lambda x, _: x), "addx": Instruction(2, lambda x, args: x + int(args[0]))}

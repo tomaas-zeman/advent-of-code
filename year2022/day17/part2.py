@@ -1,6 +1,7 @@
-from year2022.day17.common import CAVE_TOP_BUFFER, CAVE_WIDTH, get_tower_size, prototypes, resize_cave, row_of_tower_top, settle_rock
 import numpy as np
 
+from year2022.day17.common import CAVE_TOP_BUFFER, CAVE_WIDTH, get_tower_size, prototypes, resize_cave, \
+    row_of_tower_top, settle_rock
 
 ROCKS = 1_000_000_000_000
 

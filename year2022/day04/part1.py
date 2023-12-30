@@ -1,5 +1,6 @@
-from common.utils import as_ints
 import re
+
+from aocutils import as_ints
 
 
 def run(data: list[str], is_test: bool):

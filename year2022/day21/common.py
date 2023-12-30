@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import re
 from operator import add, mul, sub, truediv
 from typing import Callable

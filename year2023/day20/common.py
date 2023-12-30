@@ -1,5 +1,5 @@
-from enum import Enum
 from collections import deque
+from enum import Enum
 
 PART2_END_MODULE = "qn"
 

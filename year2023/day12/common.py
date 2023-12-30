@@ -1,6 +1,7 @@
 import re
 from typing import Callable
-from common.utils import memoize
+
+from aocutils import memoize
 
 
 @memoize

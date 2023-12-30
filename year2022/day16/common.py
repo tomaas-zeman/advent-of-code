@@ -1,7 +1,9 @@
 from __future__ import annotations
-import networkx as nx
+
 import re
 from queue import PriorityQueue
+
+import networkx as nx
 
 
 class Valve:

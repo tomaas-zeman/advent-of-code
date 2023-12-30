@@ -1,6 +1,6 @@
 from functools import reduce
 
-from common.matrix import Point, Matrix
+from aocutils.matrix import Point, Matrix
 
 
 class Fold:

@@ -1,4 +1,4 @@
-from common.matrix import matrix_from_file
+from aocutils.matrix import matrix_from_file
 
 
 def find_low_points(grid):

@@ -1,6 +1,7 @@
-from year2023.day05.common import Map, parse
-from functools import reduce
 import multiprocessing
+from functools import reduce
+
+from year2023.day05.common import Map, parse
 
 
 def calculate_min_dest(interval_with_maps: tuple[tuple[int, int], list[Map]]):

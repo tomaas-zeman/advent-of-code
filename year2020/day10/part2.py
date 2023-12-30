@@ -1,6 +1,7 @@
-from itertools import groupby
 import math
-from common.utils import as_ints
+from itertools import groupby
+
+from aocutils import as_ints
 
 
 def run(data: list[str], is_test: bool):

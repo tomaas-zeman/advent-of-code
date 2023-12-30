@@ -1,8 +1,8 @@
 from __future__ import annotations
+
 from collections import Counter
 from enum import Enum
 from functools import cmp_to_key
-
 
 card_order = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
 

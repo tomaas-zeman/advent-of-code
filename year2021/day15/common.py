@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 import sys
 from queue import PriorityQueue
 from typing import Callable, Any, Generic, TypeVar
-from common.matrix import matrix_from_file
-from common.utils import flatten
 
+from aocutils import flatten
+from aocutils.matrix import matrix_from_file
 
 V = TypeVar("V")
 F = TypeVar("F")

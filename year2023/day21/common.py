@@ -1,7 +1,9 @@
-import numpy as np
-from enum import Enum
 from collections import deque
-from common.utils import Point, Numpy
+from enum import Enum
+
+import numpy as np
+
+from aocutils import Point, Numpy
 
 
 class Tile(Enum):

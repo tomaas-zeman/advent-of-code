@@ -1,5 +1,6 @@
 from enum import Enum
-from common.utils import as_ints
+
+from aocutils import as_ints
 
 
 class OpCode(Enum):

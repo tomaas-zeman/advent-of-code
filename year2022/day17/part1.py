@@ -1,3 +1,5 @@
+import numpy as np
+
 from year2022.day17.common import (
     CAVE_TOP_BUFFER,
     CAVE_WIDTH,
@@ -7,8 +9,6 @@ from year2022.day17.common import (
     row_of_tower_top,
     settle_rock,
 )
-import numpy as np
-
 
 ROCKS = 2022
 

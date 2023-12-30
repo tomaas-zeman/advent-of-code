@@ -1,4 +1,5 @@
 from enum import Enum
+
 from year2022.day02.common import Option
 
 

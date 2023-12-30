@@ -1,5 +1,6 @@
 import re
 
+
 def run(data: list[str], is_test: bool):
     sum = 0
     for line in data:

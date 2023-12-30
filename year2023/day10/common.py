@@ -1,6 +1,8 @@
-import numpy as np
 from itertools import permutations
-from common.utils import Direction, Numpy
+
+import numpy as np
+
+from aocutils import Direction, Numpy
 
 
 class Pipe:
@@ -12,6 +14,7 @@ class Pipe:
 
     def allows_flow_from(self, direction: Direction) -> bool:
         return Direction.opposite(direction) in self.direction_change
+
 
 PIPES = {
     "|": Pipe([Direction.UP, Direction.DOWN]),

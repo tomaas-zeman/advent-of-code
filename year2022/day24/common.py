@@ -1,6 +1,6 @@
 import numpy as np
 
-from common.utils import Numpy, flatten
+from aocutils import Numpy, flatten
 
 
 def next_state(valley: np.ndarray):

@@ -1,6 +1,5 @@
-from common.matrix import Point, Matrix
-from common.utils import as_ints, flatten
-
+from aocutils import as_ints, flatten
+from aocutils.matrix import Point, Matrix
 
 MATRIX_SIDE_PADDING = 200
 MATRIX_BOTTOM_PADDING = 2

@@ -1,4 +1,5 @@
 import math
+
 from year2023.day20.common import parse, Pulse, push_button, PART2_END_MODULE
 
 

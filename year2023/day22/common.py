@@ -1,7 +1,9 @@
 from __future__ import annotations
+
 import numpy as np
 from portion import closed
-from common.utils import Numpy
+
+from aocutils import Numpy
 
 
 #

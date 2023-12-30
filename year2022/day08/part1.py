@@ -1,5 +1,6 @@
 from typing import Callable
-from common.matrix import matrix_from_data, Matrix as Forest, Point as Tree
+
+from aocutils.matrix import matrix_from_data, Matrix as Forest, Point as Tree
 
 
 def flag_visible_trees(forest: Forest):

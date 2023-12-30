@@ -1,7 +1,9 @@
 from functools import reduce
-from year2023.day19.common import Workflow, parse
 from operator import lt, mul
+
 from portion import Interval, CLOSED, OPEN, closedopen, openclosed, closed
+
+from year2023.day19.common import Workflow, parse
 
 
 def interval_length(interval: Interval) -> int:

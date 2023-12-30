@@ -1,5 +1,7 @@
-import sympy.geometry as sg
 from itertools import combinations
+
+import sympy.geometry as sg
+
 from year2023.day24.common import intersects_within_range, parse
 
 

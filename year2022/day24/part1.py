@@ -1,5 +1,5 @@
+from aocutils import Numpy
 from year2022.day24.common import find_path
-from common.utils import Numpy
 
 
 def run(data: list[str], is_test: bool):

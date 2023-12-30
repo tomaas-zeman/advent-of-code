@@ -1,6 +1,7 @@
-from year2022.day15.common import parse_input, to_polygons
-from shapely.ops import unary_union, clip_by_rect
 from shapely.geometry import Polygon, Point
+from shapely.ops import unary_union, clip_by_rect
+
+from year2022.day15.common import parse_input, to_polygons
 
 
 def run(data: list[str], is_test: bool):
