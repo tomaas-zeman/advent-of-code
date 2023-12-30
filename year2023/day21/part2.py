@@ -14,7 +14,7 @@ def run(data: list[str], is_test: bool):
     # Screw this task! After the attempt to fix off-by-one errors,
     # plotting multiple random results showed a quadratic relationship.
     #
-    # ... which has also been PITA because it cannot be solved with normal methods
+    # ... which has also been PITA because it couldn't be solved with normal methods (sympy)
 
     y = [len(walk(extended_maze(maze, factor + i), (width // 2) + (width * i))) for i in range(3)]
     a = (y[2] - (2 * y[1]) + y[0]) // 2
