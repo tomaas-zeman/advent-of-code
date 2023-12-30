@@ -274,7 +274,7 @@ class Direction(Enum):
         return [cls.UP, cls.DOWN, cls.LEFT, cls.RIGHT]
 
     @classmethod
-    def opposite(cls, direction):
+    def opposite(cls, direction: Direction):
         return {
             cls.UP: cls.DOWN,
             cls.DOWN: cls.UP,
