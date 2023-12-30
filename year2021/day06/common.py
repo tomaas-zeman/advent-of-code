@@ -1,3 +1,5 @@
-def get_data():
-    with open("year2021/day06/data") as f:
-        return [int(x) for x in f.readline().strip().split(",")]
+from aocutils import as_ints
+
+
+def parse(data: list[str]):
+    return as_ints(data[0].split(","))

@@ -1,10 +1,10 @@
-from year2021.day02.common import get_data
+from year2021.day02.common import parse
 
 
-def run():
+def run(data: list[str], is_test: bool):
     horizontal_change = 0
     vertical_change = 0
-    for direction, value in get_data():
+    for direction, value in parse(data):
         if direction == "forward":
             horizontal_change += value
         elif direction == "up":

@@ -1,13 +1,13 @@
-from year2021.day06.common import get_data
+from year2021.day06.common import parse
 
 
 def rotate(array):
     return array[1:] + array[:1]
 
 
-def run():
-    fish_per_counter = [0 for counter in range(9)]
-    for counter in get_data():
+def run(data: list[str], is_test: bool):
+    fish_per_counter = [0] * 9
+    for counter in parse(data):
         fish_per_counter[counter] += 1
 
     for day in range(256):

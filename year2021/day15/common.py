@@ -5,7 +5,7 @@ from queue import PriorityQueue
 from typing import Callable, Any, Generic, TypeVar
 
 from aocutils import flatten
-from aocutils.matrix import matrix_from_file
+from aocutils.matrix import matrix_from_file, matrix_from_data
 
 V = TypeVar("V")
 F = TypeVar("F")
@@ -143,5 +143,5 @@ def dijkstra(matrix: Matrix, graph: DijkstraGraph, starting_point_id: int):
     return distances
 
 
-def get_data():
-    return matrix_from_file("year2021/day15/data")
+def parse(data: list[str]):
+    return matrix_from_data(data, convert_value=lambda x: int(x))

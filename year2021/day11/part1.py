@@ -1,8 +1,8 @@
-from year2021.day11.common import get_data, add_flashing_capability, flash, reset_flashing
+from year2021.day11.common import add_flashing_capability, flash, reset_flashing, parse
 
 
-def run():
-    matrix = get_data()
+def run(data: list[str], is_test: bool):
+    matrix = parse(data)
     octopuses = matrix.all_points()
     add_flashing_capability(octopuses)
 

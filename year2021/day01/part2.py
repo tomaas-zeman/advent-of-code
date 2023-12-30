@@ -1,14 +1,14 @@
 from collections import deque
 
-from year2021.day01.common import get_data
+from aocutils import as_ints
 
 
-def run():
+def run(data: list[str], is_test: bool):
     increases = 0
     buffer_a = deque([], 3)
     buffer_b = deque([], 3)
 
-    for value in get_data():
+    for value in as_ints(data):
         if len(buffer_a) == 0:
             buffer_a.append(value)
             continue

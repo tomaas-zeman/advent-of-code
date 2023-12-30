@@ -1,4 +1,4 @@
-from year2021.day03.common import get_data
+from year2021.day03.common import parse
 
 
 def find_rating(data, bit, compare):
@@ -11,8 +11,8 @@ def find_rating(data, bit, compare):
     return find_rating(ones if compare(len(ones), len(zeros)) else zeros, bit + 1, compare)
 
 
-def run():
-    data = get_data()
+def run(data: list[str], is_test: bool):
+    data = parse(data)
     oxygen_rating = find_rating(data, 0, lambda x, y: x >= y)
     co2_rating = find_rating(data, 0, lambda x, y: x <= y)
 

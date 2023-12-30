@@ -1,8 +1,4 @@
-def get_data():
-    with open("year2021/day14/data") as f:
-        sequence = [c for c in f.readline().strip()]
-        rules = {
-            pair: insert
-            for pair, insert in [line.strip().split(" -> ") for line in f.readlines() if len(line.strip()) > 0]
-        }
-        return [sequence, rules]
+def parse(data: list[str]):
+    sequence = [c for c in data[0]]
+    rules = {pair: insert for pair, insert in [line.strip().split(" -> ") for line in data[2:]]}
+    return [sequence, rules]

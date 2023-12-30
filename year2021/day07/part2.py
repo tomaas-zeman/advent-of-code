@@ -1,5 +1,5 @@
-from year2021.day07.common import get_data, count_lowest_cost
+from year2021.day07.common import parse, count_lowest_cost
 
 
-def run():
-    return count_lowest_cost(get_data(), lambda x, y: sum(range(1, abs(x - y) + 1)))
+def run(data: list[str], is_test: bool):
+    return count_lowest_cost(parse(data), lambda x, y: sum(range(1, abs(x - y) + 1)))

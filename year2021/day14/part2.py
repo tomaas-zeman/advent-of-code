@@ -1,10 +1,10 @@
 from collections import Counter
 
-from year2021.day14.common import get_data
+from year2021.day14.common import parse
 
 
-def run():
-    [seq, rules] = get_data()
+def run(data: list[str], is_test: bool):
+    [seq, rules] = parse(data)
 
     # empty
     chars = Counter(seq)

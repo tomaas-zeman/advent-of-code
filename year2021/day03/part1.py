@@ -1,9 +1,9 @@
-from year2021.day03.common import get_data
+from year2021.day03.common import parse
 
 
-def run():
+def run(data: list[str], is_test: bool):
     counter = None
-    for bits in get_data():
+    for bits in parse(data):
         if counter is None:
             counter = [0 for x in range(0, len(bits))]
 

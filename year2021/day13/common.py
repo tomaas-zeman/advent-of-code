@@ -39,9 +39,9 @@ def fold_matrix(data, fold_once=False):
             if row_diff < 0:
                 current_m2_rows = current_m2_rows[:row_diff]
             elif row_diff > 0:
-                additonal_row = [Point.simple(0, 0, False) for n in range(m1.num_cols)]
+                additional_row = [Point.simple(0, 0, False) for n in range(m1.num_cols)]
                 for i in range(row_diff):
-                    current_m2_rows.append(additonal_row)
+                    current_m2_rows.append(additional_row)
 
             new_m2_rows = []
             for i in range(fold.value):
@@ -77,33 +77,32 @@ def fold_matrix(data, fold_once=False):
     return matrix
 
 
-def get_data():
-    with open("year2021/day13/data") as f:
-        folds = []
-        points = []
+def parse(data: list[str]):
+    folds = []
+    points = []
 
-        for line in f.readlines():
-            if len(line.strip()) == 0:
-                continue
+    for line in data:
+        if len(line.strip()) == 0:
+            continue
 
-            if line.startswith("fold"):
-                [axis, value] = line.strip().replace("fold along ", "").split("=")
-                folds.append(Fold(axis, int(value)))
-                continue
+        if line.startswith("fold"):
+            [axis, value] = line.strip().replace("fold along ", "").split("=")
+            folds.append(Fold(axis, int(value)))
+            continue
 
-            [col, row] = line.strip().split(",")
-            points.append(Point.simple(int(row), int(col), True))
+        [col, row] = line.strip().split(",")
+        points.append(Point.simple(int(row), int(col), True))
 
-        num_rows = reduce(max, [point.row for point in points], -1)
-        num_cols = reduce(max, [point.column for point in points], -1)
+    num_rows = reduce(max, [point.row for point in points], -1)
+    num_cols = reduce(max, [point.column for point in points], -1)
 
-        rows = []
-        for row_index in range(num_rows + 1):
-            row = []
-            for col_index in range(num_cols + 1):
-                point = Point.simple(row_index, col_index, 0)
-                point.value = point in points
-                row.append(point)
-            rows.append(row)
+    rows = []
+    for row_index in range(num_rows + 1):
+        row = []
+        for col_index in range(num_cols + 1):
+            point = Point.simple(row_index, col_index, 0)
+            point.value = point in points
+            row.append(point)
+        rows.append(row)
 
-        return [Matrix(rows), folds]
+    return [Matrix(rows), folds]

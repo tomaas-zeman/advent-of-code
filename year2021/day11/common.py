@@ -1,4 +1,4 @@
-from aocutils.matrix import matrix_from_file
+from aocutils.matrix import matrix_from_data
 
 
 def add_flashing_capability(octopuses):
@@ -18,5 +18,5 @@ def flash(octopus):
         neighbor.value += 1
 
 
-def get_data():
-    return matrix_from_file("year2021/day11/data")
+def parse(data: list[str]):
+    return matrix_from_data(data, convert_value=lambda x: int(x))

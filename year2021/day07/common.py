@@ -1,3 +1,6 @@
+from aocutils import as_ints
+
+
 def count_lowest_cost(crabs, cost_fn):
     min_cost = None
 
@@ -9,6 +12,5 @@ def count_lowest_cost(crabs, cost_fn):
     return min_cost
 
 
-def get_data():
-    with open("year2021/day07/data") as f:
-        return [int(x) for x in f.readline().strip().split(",")]
+def parse(data: list[str]):
+    return as_ints(data[0].split(","))

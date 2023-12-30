@@ -1,5 +1,5 @@
-from year2021.day12.common import find_all_paths
+from year2021.day12.common import find_all_paths, parse
 
 
-def run():
-    return len(find_all_paths(can_visit_small_cave_twice=True))
+def run(data: list[str], is_test: bool):
+    return len(find_all_paths(parse(data), can_visit_small_cave_twice=True))

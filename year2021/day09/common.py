@@ -1,4 +1,4 @@
-from aocutils.matrix import matrix_from_file
+from aocutils.matrix import matrix_from_data
 
 
 def find_low_points(grid):
@@ -13,5 +13,5 @@ def find_low_points(grid):
     return low_points
 
 
-def get_data():
-    return matrix_from_file("year2021/day09/data")
+def parse(data: list[str]):
+    return matrix_from_data(data, convert_value=lambda x: int(x))

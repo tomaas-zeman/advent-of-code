@@ -1,4 +1,4 @@
-from year2021.day15.common import get_data, dijkstra, DijkstraGraph
+from year2021.day15.common import dijkstra, DijkstraGraph, parse
 
 
 def compute_risk(matrix):
@@ -23,5 +23,5 @@ def compute_risk(matrix):
     return dijkstra(matrix, graph, 0)[matrix.num_rows * matrix.num_cols - 1]
 
 
-def run():
-    return compute_risk(get_data())
+def run(data: list[str], is_test: bool):
+    return compute_risk(parse(data))

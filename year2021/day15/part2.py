@@ -1,5 +1,5 @@
 from aocutils.matrix import Point, Matrix
-from year2021.day15.common import get_data
+from year2021.day15.common import parse
 from year2021.day15.part1 import compute_risk
 
 data_repeats = 5
@@ -13,8 +13,8 @@ def repeated_point(point, repeat, num_cols, num_rows, row_repeat):
     return Point(row_index, column_index, value + repeat_addition, point.id)
 
 
-def run():
-    matrix = get_data()
+def run(data: list[str], is_test: bool):
+    matrix = parse(data)
     huge_matrix_rows = []
 
     # repeat columns

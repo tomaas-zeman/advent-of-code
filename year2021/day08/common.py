@@ -50,13 +50,9 @@ def decode_line_patterns(patterns, output):
     return decoded_output
 
 
-def get_data():
-    with open("year2021/day08/data") as f:
-        data = []
-
-        lines = [x.strip() for x in f.readlines()]
-        for line in lines:
-            [patterns, output] = line.split("|")
-            data.append((patterns.strip().split(" "), output.strip().split(" ")))
-
-        return data
+def parse(data: list[str]):
+    result = []
+    for line in data:
+        [patterns, output] = line.split("|")
+        result.append((patterns.strip().split(" "), output.strip().split(" ")))
+    return result

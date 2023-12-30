@@ -1,17 +1,14 @@
 from collections import deque
 
-from year2021.day10.common import get_data
-
 opening = "([{<"
 closing = ")]}>"
 points = {")": 1, "]": 2, "}": 3, ">": 4}
 
 
-def run():
-    lines = get_data()
+def run(data: list[str], is_test: bool):
     total_points = []
 
-    for line in lines:
+    for line in data:
         stack = deque()
 
         invalid_line = False

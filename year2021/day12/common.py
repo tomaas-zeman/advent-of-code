@@ -77,8 +77,7 @@ def can_still_visit_small_caves(path):
     return True
 
 
-def find_all_paths(can_visit_small_cave_twice=False):
-    graph = get_data()
+def find_all_paths(graph: Graph, can_visit_small_cave_twice=False):
     paths = set()
 
     # bfs
@@ -107,14 +106,13 @@ def find_all_paths(can_visit_small_cave_twice=False):
     return paths
 
 
-def get_data():
-    with open("year2021/day12/data") as f:
-        graph = Graph()
+def parse(data: list[str]):
+    graph = Graph()
 
-        for line in f.readlines():
-            [n1, n2] = [graph.get_node(id) for id in line.strip().split("-")]
-            n1.link_with(n2)
-            graph.set(n1)
-            graph.set(n2)
+    for line in data:
+        [n1, n2] = [graph.get_node(id) for id in line.strip().split("-")]
+        n1.link_with(n2)
+        graph.set(n1)
+        graph.set(n2)
 
-        return graph
+    return graph

@@ -1,11 +1,11 @@
-from year2021.day01.common import get_data
+from aocutils import as_ints
 
 
-def run():
+def run(data: list[str], is_test: bool):
     increases = 0
     previous_value = None
 
-    for value in get_data():
+    for value in as_ints(data):
         if previous_value is not None and value > previous_value:
             increases += 1
         previous_value = value

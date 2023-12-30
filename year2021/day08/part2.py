@@ -1,11 +1,8 @@
-from year2021.day08.common import get_data, decode_line_patterns
+from year2021.day08.common import parse, decode_line_patterns
 
 
-def run():
-    data = get_data()
-
+def run(data: list[str], is_test: bool):
     result = 0
-    for patterns, output in data:
+    for patterns, output in parse(data):
         result += int("".join([str(n) for n in decode_line_patterns(patterns, output)]))
-
     return result

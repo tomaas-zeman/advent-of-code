@@ -45,20 +45,19 @@ class Board:
         return sum
 
 
-def get_data():
-    with open("year2021/day04/data") as f:
-        numbers = None
-        boards = []
-        board = Board()
-        for line in f.readlines():
-            if numbers is None:
-                numbers = [int(x) for x in line.strip().split(",")]
-                continue
+def parse(data: list[str]):
+    numbers = None
+    boards = []
+    board = Board()
+    for line in data:
+        if numbers is None:
+            numbers = [int(x) for x in line.strip().split(",")]
+            continue
 
-            if len(line.strip()) == 0:
-                board = Board()
-                boards.append(board)
-            else:
-                board.add_row([int(x) for x in re.split("[ ]+", line.strip())])
+        if len(line.strip()) == 0:
+            board = Board()
+            boards.append(board)
+        else:
+            board.add_row([int(x) for x in re.split("[ ]+", line.strip())])
 
-        return numbers, boards
+    return numbers, boards

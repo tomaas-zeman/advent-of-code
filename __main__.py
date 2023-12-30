@@ -37,15 +37,11 @@ def download_input_file():
 
 @measure_time
 def compute_solution(module: str, part: int, data: list[str], is_test: bool):
-    # 2021 does not support autoparse
-    if year == "2021":
-        return (import_module(module).run(), None)
-
     runnable = import_module(module).run
     data = data if getattr(runnable, "uses_raw_input", False) else [line.strip() for line in data]
     test_solution_prefix = "# part"
 
-    if len(data) > 2 and data[0].startswith(test_solution_prefix) and data[1].startswith(test_solution_prefix):
+    if len(data) > 2 and all(line.startswith(test_solution_prefix) for line in data[0:2]):
         expected_test_solution = data[part - 1].split(" = ")[1].strip()
         solution = runnable(data[2:], is_test=is_test)
         return solution, expected_test_solution
@@ -61,6 +57,10 @@ def run_with_file(filename: str, part: int):
     run_result = True
     is_test = filename.startswith("testdata")
     input_file = f"year{year}/day{day}/{filename}"
+
+    # skip tests if we don't have test data
+    if is_test and not exists(input_file):
+        return True
 
     # support different testdata for each part
     if part == 2 and filename == "testdata" and exists(f"{input_file}2"):
@@ -164,11 +164,7 @@ if __name__ == "__main__":
         print(Console.with_color(f"#             PART {part}             #", Console.Color.BOLD_CYAN))
         print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))
 
-        # 2021 does not support testdata
-        if year == "2021":
+        if run_with_file("testdata", part):
             run_with_file("data", part)
         else:
-            if run_with_file("testdata", part):
-                run_with_file("data", part)
-            else:
-                break
+            break

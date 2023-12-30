@@ -64,17 +64,16 @@ def get_intersection_count(grid, points):
     return intersection_count
 
 
-def get_data(include_diagonals):
-    with open("year2021/day05/data") as f:
-        data = []
-        for line in f.readlines():
-            [src, dest] = line.strip().split(" -> ")
-            [p1x, p1y] = src.split(",")
-            [p2x, p2y] = dest.split(",")
+def parse(data: list[str], include_diagonals: bool):
+    result = []
+    for line in data:
+        [src, dest] = line.strip().split(" -> ")
+        [p1x, p1y] = src.split(",")
+        [p2x, p2y] = dest.split(",")
 
-            # skip invalid diagonals
-            if not include_diagonals and p1x != p2x and p1y != p2y:
-                continue
+        # skip invalid diagonals
+        if not include_diagonals and p1x != p2x and p1y != p2y:
+            continue
 
-            data.append(Path(Point(p1x, p1y), Point(p2x, p2y)))
-        return data
+        result.append(Path(Point(p1x, p1y), Point(p2x, p2y)))
+    return result
