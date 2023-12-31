@@ -14,7 +14,11 @@ def run(data: list[str], is_test: bool):
     #
     # It seems Sympy has issues with simplification when we have division in it due to possible zeros in denominator,
     # and we should change it to: (r_px - h_px) * (h_vy - t_vy) = (r_py - h_py) * (h_vx - t_vx) etc.
-    r_px, r_py, r_pz, r_vx, r_vy, r_vz = symbols("r_px r_py r_pz r_vx r_vy r_vz")
+    #
+    # Docs
+    # https://docs.sympy.org/latest/tutorials/intro-tutorial/gotchas.html#two-final-notes-and
+    # https://docs.sympy.org/latest/guides/assumptions.html#predicates
+    r_px, r_py, r_pz, r_vx, r_vy, r_vz = symbols("r_px r_py r_pz r_vx r_vy r_vz", integer=True)
 
     equations = []
     for hailstone in hailstones:
@@ -24,11 +28,7 @@ def run(data: list[str], is_test: bool):
         equations.append(Eq((r_py - h_py) * (h_vz - r_vz), (r_pz - h_pz) * (h_vy - r_vy)))
 
         try:
-            results = solve(equations)
-
-            # We can get valid non-integer solutions as well, and we need to filter them out
-            for result in results:
-                if all(int(result[n]) == result[n] for n in [r_px, r_py, r_pz, r_vx, r_vy, r_vz]):
-                    return int(result[r_px]) + int(result[r_py]) + int(result[r_pz])
+            result = solve(equations)[0]
+            return int(result[r_px]) + int(result[r_py]) + int(result[r_pz])
         except:
             pass  # need more equations
