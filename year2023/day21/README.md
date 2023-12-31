@@ -1,4 +1,4 @@
-# --- Day 21: Step Counter ---
+# Day 21: Step Counter
 
 You manage to catch the airship right as it's dropping someone else off on their all-expenses-paid trip to Desert
 Island! It even helpfully drops you off near the gardener and his massive farm.
