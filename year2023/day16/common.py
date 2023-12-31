@@ -4,7 +4,7 @@ from aocutils import Direction, Numpy
 
 
 def merge(c1: tuple[int, int], c2: tuple[int, int]) -> tuple[int, int]:
-    return (c1[0] + c2[0], c1[1] + c2[1])
+    return c1[0] + c2[0], c1[1] + c2[1]
 
 
 class Beam:

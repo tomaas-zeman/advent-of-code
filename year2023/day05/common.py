@@ -7,7 +7,7 @@ class Map:
 
     def get_dest(self, number: int):
         for src, dest, range in self.configs:
-            if number >= src and number < src + range:
+            if src <= number < src + range:
                 return dest + (number - src)
         return number
 

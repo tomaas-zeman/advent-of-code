@@ -5,7 +5,7 @@ from aocutils import memoize
 
 
 @memoize
-def process(springs: str, conditions: tuple[str]) -> int:
+def process(springs: str, conditions: tuple[int, ...]) -> int:
     if len(conditions) == 0:
         return 0 if "#" in springs else 1
 
@@ -30,7 +30,7 @@ def process(springs: str, conditions: tuple[str]) -> int:
     return count
 
 
-def get_arrangement_count(data: list[str], parse_line: Callable[[str], tuple[str, tuple[int]]]) -> int:
+def get_arrangement_count(data: list[str], parse_line: Callable[[str], tuple[str, tuple[int, ...]]]) -> int:
     combinations = 0
 
     for line in data:

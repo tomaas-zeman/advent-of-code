@@ -37,12 +37,9 @@ def parse(data: list[str]) -> tuple[dict[str, Workflow], list[Part]]:
     workflows = {}
     for rw in raw_workflows:
         name = rw.split("{")[0]
-        rules = [Rule(*m) for m in re.findall("(\w+)([<>])(\d+):(\w+)", rw)]
+        rules = [Rule(*m) for m in re.findall(r"(\w+)([<>])(\d+):(\w+)", rw)]
         final_destination = rw.split(",")[-1][:-1]
         workflows[name] = Workflow(rules, final_destination)
 
-    parts = [
-        Part({m[0]: int(m[1]) for m in re.findall("(\w)=(\d+)", rp)})
-        for rp in raw_parts
-    ]
+    parts = [Part({m[0]: int(m[1]) for m in re.findall(r"(\w)=(\d+)", rp)}) for rp in raw_parts]
     return workflows, parts

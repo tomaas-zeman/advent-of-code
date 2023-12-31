@@ -22,7 +22,7 @@ def compute_focusing_power(boxes: dict[int, list[str]]) -> int:
 def run(data: list[str], is_test: bool):
     boxes = {i: [] for i in range(256)}
 
-    for instruction in re.finditer(r"(\w+)([-=]){1}(\d*),?", data[0]):
+    for instruction in re.finditer(r"(\w+)([-=])(\d*),?", data[0]):
         label, op = instruction.group(1), instruction.group(2)
         key = hash(label)
         index = index_of(key, label, boxes)

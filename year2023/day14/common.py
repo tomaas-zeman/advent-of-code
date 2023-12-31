@@ -12,7 +12,8 @@ def tilt(grid: np.ndarray):
             if grid[row, col] == chars["#"]:
                 grid[start : row + 1, col].sort()
                 start = row + 1
-        grid[start : row + 1, col].sort()
+            if row == grid.shape[0] - 1:
+                grid[start : row + 1, col].sort()
 
 
 def parse(data: list[str]):

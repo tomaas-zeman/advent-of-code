@@ -49,7 +49,7 @@ def create_bridge_polygon(last_polygon_coords, new_polygon_coords):
     )
 
 
-def get_area(data: list[str], line_parser: Callable[[str], tuple[str, int]]) -> Polygon:
+def get_area(data: list[str], line_parser: Callable[[str], tuple[str, int]]) -> int:
     polygons = [Polygon([(0, 0), (1, 0), (1, 1), (0, 1)])]
 
     for line in data:
@@ -64,6 +64,5 @@ def get_area(data: list[str], line_parser: Callable[[str], tuple[str, int]]) -> 
         polygons.append(create_bridge_polygon(last_polygon_coords, new_polygon_coords))
         polygons.append(Polygon(new_polygon_coords))
 
-        shape = unary_union(polygons)
-
+    shape = unary_union(polygons)
     return int(shape.area + Polygon(get_interior_ring(shape, 0)).area)

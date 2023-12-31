@@ -15,11 +15,7 @@ def parse(data: list[str]):
 
 
 def empty_space(i: int, j: int, empty_indexes: list[int], expand_factor: int):
-    empty_space = 0
-    for empty_index in empty_indexes:
-        if min(i, j) < empty_index < max(i, j):
-            empty_space += expand_factor - 1
-    return empty_space
+    return sum(expand_factor - 1 for empty_index in empty_indexes if min(i, j) < empty_index < max(i, j))
 
 
 def sum_of_shortest_paths(data, expand_factor):

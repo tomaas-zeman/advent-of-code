@@ -52,7 +52,7 @@ def dijkstra(matrix: np.ndarray, starting_point: Point, max_straight_length: int
                 next_coord, direction, 1 if direction != state.last_direction else state.steps_in_one_direction + 1
             )
 
-            if not next_state in distances:
+            if next_state not in distances:
                 distances[next_state] = sys.maxsize
 
             current_distance = distances[next_state]
@@ -63,5 +63,5 @@ def dijkstra(matrix: np.ndarray, starting_point: Point, max_straight_length: int
                 queue.put((new_distance, next_state))
 
     return min(
-        [distance for state, distance in distances.items() if state.point == (matrix.shape[0] - 1, matrix.shape[1] - 1)]
+        distance for state, distance in distances.items() if state.point == (matrix.shape[0] - 1, matrix.shape[1] - 1)
     )

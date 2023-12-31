@@ -13,7 +13,7 @@ class Card:
 def parse(data: list[str]) -> list[Card]:
     cards = []
     for line in data:
-        match = re.search("Card *(\d+): ([\d ]+) \| ([\d ]+)", line)
+        match = re.search(r"Card *(\d+): ([\d ]+) \| ([\d ]+)", line)
         if match is not None:
             winning_numbers = [int(n) for n in match.group(2).split()]
             scratched_numbers = [int(n) for n in match.group(3).split()]
