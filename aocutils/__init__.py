@@ -229,7 +229,7 @@ class BinaryTreeNode(Generic[T, U]):
 ###########
 
 
-class Console:
+class _Console:
     class Color:
         RED = "0;31"
         GREEN = "0;32"
@@ -247,6 +247,12 @@ class Console:
         BOLD_CYAN = "1;36"
         WHITE = "1;37"
 
+    def __getattr__(self, color: str):
+        def apply(text):
+            print(Console.with_color(text, getattr(Console.Color, color.upper())))
+
+        return apply
+
     @staticmethod
     def clear():
         os.system("cls" if os.name == "nt" else "clear")
@@ -257,6 +263,8 @@ class Console:
             return text
         return f"\x1B[{color}m{text}\x1B[0m"
 
+
+Console = _Console()
 
 ########
 # MISC #

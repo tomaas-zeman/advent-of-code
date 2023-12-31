@@ -5,7 +5,7 @@ from year2023.day20.common import parse, Pulse, push_button, PART2_END_MODULE
 
 def run(data: list[str], is_test: bool):
     if is_test:
-        return "None"
+        return True
 
     modules = parse(data)
 

@@ -110,13 +110,9 @@ def get_correct_answer(part: str):
 def send_answer(part: str, answer: str):
     if get_correct_answer(part) is not None:
         if get_correct_answer(part) == answer:
-            print(Console.with_color("> You already submitted a correct answer for this part.", Console.Color.YELLOW))
+            Console.yellow("> you already submitted a correct answer for this part.")
         else:
-            print(
-                Console.with_color(
-                    "> You already submitted a correct answer for this part but it's incorrect NOW", Console.Color.RED
-                )
-            )
+            Console.red("> You already submitted a correct answer for this part but it's incorrect NOW")
         return
 
     choice = input(f"> Send answer '{answer}' to AOC for verification? [y/N] ")
@@ -133,36 +129,32 @@ def send_answer(part: str, answer: str):
 
         if response.ok:
             if "You gave an answer too recently" in response.text:
-                print(
-                    Console.with_color(
-                        "> You submitted an answer too recently. Try again in a few minutes.", Console.Color.RED
-                    )
-                )
+                Console.red("> You submitted an answer too recently. Try again in a few minutes.")
             elif "not the right answer" in response.text:
                 if "too low" in response.text:
-                    print(Console.with_color("> Incorrect answer - too low.", Console.Color.RED))
+                    Console.red("> Incorrect answer - too low.")
                 elif "too high" in response.text:
-                    print(Console.with_color("> Incorrect answer - too high.", Console.Color.RED))
+                    Console.red("> Incorrect answer - too high.")
                 else:
-                    print(Console.with_color("> Incorrect answer", Console.Color.RED))
+                    Console.red("> Incorrect answer")
                 wait_before_retry = re.search(r"([Pp]lease wait .* trying again\.)", response.text).group(1)
-                print(Console.with_color(f"> {wait_before_retry}", Console.Color.YELLOW))
+                Console.yellow(f"> {wait_before_retry}")
             elif "seem to be solving the right level." in response.text:
-                print(Console.with_color("> Wrong level or already solved.", Console.Color.YELLOW))
+                Console.yellow("> Wrong level or already solved.")
             else:
-                print(Console.with_color("> CORRECT!", Console.Color.GREEN))
+                Console.green("> CORRECT!")
                 save_correct_answer(part, answer)
         else:
-            print(Console.with_color(f"> {response.text}", Console.Color.RED))
+            Console.red(f"> {response.text}")
 
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
 
     for part in parts:
-        print(Console.with_color("\n##################################", Console.Color.BOLD_CYAN))
-        print(Console.with_color(f"#             PART {part}             #", Console.Color.BOLD_CYAN))
-        print(Console.with_color("##################################\n", Console.Color.BOLD_CYAN))
+        Console.bold_cyan("\n##################################")
+        Console.bold_cyan(f"#             PART {part}             #")
+        Console.bold_cyan("##################################\n")
 
         if run_with_file("testdata", part):
             run_with_file("data", part)

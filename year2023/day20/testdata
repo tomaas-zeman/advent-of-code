@@ -1,5 +1,5 @@
 # part1 = 11687500
-# part2 = None
+# part2 = True
 broadcaster -> a
 %a -> inv, con
 &inv -> b
