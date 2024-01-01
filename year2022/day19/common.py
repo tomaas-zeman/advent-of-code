@@ -5,7 +5,7 @@ import sys
 from dataclasses import dataclass
 from enum import Enum
 from functools import reduce
-from operator import ge, lt, eq, le, gt
+from operator import ge, lt, eq
 
 from aocutils import Tuple, memoize
 
@@ -46,14 +46,8 @@ class Resources:
     def __ge__(self, other: Resources):
         return self._compare(other, ge)
 
-    def __gt__(self, other: Resources):
-        return self._compare(other, gt)
-
     def __lt__(self, other: Resources):
         return self._compare(other, lt)
-
-    def __le__(self, other: Resources):
-        return self._compare(other, le)
 
     def __mul__(self, multiplier: int) -> Resources:
         if not isinstance(multiplier, int):
