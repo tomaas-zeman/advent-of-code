@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from sympy import Point2D
 
-from aocutils import Coord
+from aocutils import Tuple
 
 
 class Hailstone:
@@ -13,7 +13,7 @@ class Hailstone:
 
     def position(self, time: int):
         change = tuple([n * time for n in list(self.velocity)])
-        return Coord.add(self._position, change)
+        return Tuple.add(self._position, change)
 
 
 def parse(data: list[str]) -> list[Hailstone]:

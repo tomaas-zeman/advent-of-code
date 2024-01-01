@@ -6,7 +6,7 @@ from queue import PriorityQueue
 
 import numpy as np
 
-from aocutils import Direction, Numpy, Coord, Point
+from aocutils import Direction, Numpy, Tuple, Point
 
 
 @dataclass(frozen=True)
@@ -38,7 +38,7 @@ def dijkstra(matrix: np.ndarray, starting_point: Point, max_straight_length: int
         for direction in [
             d for d in Direction.all() if state.last_direction is None or d != Direction.opposite(state.last_direction)
         ]:
-            next_coord = Coord.add(state.point, Direction.coord_change(direction))
+            next_coord = Tuple.add(state.point, Direction.coord_change(direction))
             if not Numpy.is_valid_point(next_coord, matrix):
                 continue
 

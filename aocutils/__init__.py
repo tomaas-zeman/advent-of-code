@@ -320,10 +320,18 @@ class Direction(Enum):
             return Direction.LEFT if diff[1] > 0 else Direction.RIGHT
 
 
-class Coord:
+class Tuple:
     @staticmethod
-    def add(*points: Point):
-        return tuple(map(sum, zip(*points)))
+    def add(*tuples: tuple[int, ...]):
+        return tuple(map(sum, zip(*tuples)))
+
+    @staticmethod
+    def sub(*tuples: tuple[int, ...]):
+        return tuple(map(lambda t: t[0] - t[1], zip(*tuples)))
+
+    @staticmethod
+    def mul(t: tuple[int, ...], multiplier: int):
+        return tuple(n * multiplier for n in t)
 
 
 ##########
