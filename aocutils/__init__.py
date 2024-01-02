@@ -68,7 +68,7 @@ def flatten(list_of_lists: list[list[T]]):
     return [item for sublist in list_of_lists for item in sublist]
 
 
-def as_ints(list: list[str] | Iterator[str]):
+def as_ints(list: list[str] | Iterator[str] | tuple[str, ...]):
     return [int(x) for x in list]
 
 
