@@ -80,7 +80,10 @@ def as_ints(list: list[str] | Iterator[str] | tuple[str, ...]):
 class Numpy:
     @staticmethod
     def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x, separator=""):
-        print(np.array2string(matrix, separator=separator, formatter={"str_kind": str_formatter}))  # type: ignore
+        for row in range(matrix.shape[0]):
+            for col in range(matrix.shape[1]):
+                print(f"{str_formatter(str(matrix[row, col]))}{separator}", end="")
+            print()
 
     @staticmethod
     def from_input(data: list[str], dtype: T, value_convertor: Callable[[str], T]) -> np.ndarray[T]:
