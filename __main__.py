@@ -110,7 +110,7 @@ def get_correct_answer(part: str):
 def send_answer(part: str, answer: str):
     if get_correct_answer(part) is not None:
         if get_correct_answer(part) == answer:
-            Console.yellow("> you already submitted a correct answer for this part.")
+            Console.yellow("> You already submitted a correct answer for this part.")
         else:
             Console.red("> You already submitted a correct answer for this part but it's incorrect NOW")
         return
