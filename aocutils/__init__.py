@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import time
 from enum import Enum
+from itertools import groupby
 from random import randint
 from typing import Any, Generic, Iterator, TypeVar, Callable
 
@@ -68,8 +69,12 @@ def flatten(list_of_lists: list[list[T]]):
     return [item for sublist in list_of_lists for item in sublist]
 
 
-def as_ints(list: list[str] | Iterator[str] | tuple[str, ...]):
-    return [int(x) for x in list]
+def as_ints(l: list[str] | Iterator[str] | tuple[str, ...]):
+    return [int(x) for x in l]
+
+
+def split_list_by(l: list[T], splitter: str):
+    return [list(g) for key, g in groupby(l, key=lambda x: x != splitter) if key]
 
 
 ############
