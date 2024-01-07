@@ -53,3 +53,5 @@
 2020-21-2=pbhthx,sqdsxhb,dgvqv,csnfnl,dnlsjr,xzb,lkdg,rsvlb
 2020-22-1=31754
 2020-22-2=35436
+2020-24-1=351
+2020-24-2=3869
