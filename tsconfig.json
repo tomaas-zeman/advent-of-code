@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "rootDir": "./",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["year2024", "index.ts"]
+}
