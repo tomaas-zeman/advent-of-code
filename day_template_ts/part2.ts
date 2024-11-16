@@ -1,4 +1,4 @@
-export function run(data: string[]): string | number {
+export function run(data: string[], isTest?: boolean): string | number {
   return '';
 }
 

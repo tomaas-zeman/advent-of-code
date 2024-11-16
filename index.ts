@@ -131,9 +131,9 @@ async function sendAnswer(year: string, day: string, part: string, answer: strin
 }
 
 async function run() {
-  const { year, day } = await parseArgs();
+  const { year, day, partOverride } = await parseArgs();
 
-  for (let part of ['1', '2']) {
+  for (let part of (partOverride ? [partOverride] : ['1', '2'])) {
     console.log(color.cyan.bold('\n##################################'));
     console.log(color.cyan.bold(`#             PART ${part}             #`));
     console.log(color.cyan.bold('##################################\n'));
@@ -141,14 +141,14 @@ async function run() {
     const solver: Solver = await import(`./year${year}/day${day}/part${part}.ts`);
 
     const start = new Date().getTime();
-    const testResult = solver.run(await getTestInput(year, day, part));
+    const testResult = solver.run(await getTestInput(year, day, part), true);
     if (testResult != solver.testResult) {
       console.error(color.red(`✘ year ${year} | day ${day} | part ${part} => ${testResult}`));
       console.error(color.yellow(`> Expected result: ${solver.testResult}`));
       return;
     }
 
-    const result = solver.run(await getRealInput(year, day));
+    const result = solver.run(await getRealInput(year, day), false);
     console.log(color.green(`✔ year ${year} | day ${day} | part ${part} => ${result}`));
 
     const stop = new Date().getTime();
