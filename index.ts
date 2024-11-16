@@ -25,7 +25,7 @@ async function ensureRealInputFile(year: string, day: string) {
     return;
   }
 
-  const response = await fetch(`https://adventofcode.com/${year}/day/${day[1]}/input`, {
+  const response = await fetch(`https://adventofcode.com/${year}/day/${parseInt(day, 10)}/input`, {
     headers: {
       Cookie: `session=${SESSION}`,
     },
@@ -71,7 +71,7 @@ function getCorrectAnswer(year: string, day: string, part: string) {
 async function sendAnswer(year: string, day: string, part: string, answer: string) {
   const correctAnswer = getCorrectAnswer(year, day, part);
   if (correctAnswer) {
-    if (correctAnswer === answer) {
+    if (correctAnswer == answer) {
       console.log(color.yellow('> You already submitted a correct answer for this part.'));
     } else {
       console.log(color.red("> You already submitted a correct answer for this part but it's incorrect NOW"));
@@ -90,10 +90,11 @@ async function sendAnswer(year: string, day: string, part: string, answer: strin
     return;
   }
 
-  const response = await fetch(
-    `https://adventofcode.com/${year}/day/${day[1]}/answer?${new URLSearchParams({ level: part, answer: answer })}`,
-    { headers: { Cookie: `session=${SESSION}` } },
-  );
+  const response = await fetch(`https://adventofcode.com/${year}/day/${parseInt(day, 10)}/answer`, {
+    headers: { Cookie: `session=${SESSION}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+    method: 'POST',
+    body: new URLSearchParams({ level: part, answer }).toString(),
+  });
 
   if (!response.ok) {
     throw new Error(`Failed to submit the answer: ${response.status} ${response.statusText}`);
@@ -135,7 +136,7 @@ async function run() {
     const solver: Solver = await import(`./year${year}/day${day}/part${part}.ts`);
 
     const testResult = solver.run(await getTestInput(year, day));
-    if (testResult !== solver.testResult) {
+    if (testResult != solver.testResult) {
       console.error(color.red(`✘ year ${year} | day ${day} | part ${part} => ${testResult}`));
       console.error(color.yellow(`> Expected result: ${solver.testResult}`));
       return;
