@@ -1,4 +1,4 @@
-export function run(data: string[]): string {
+export function run(data: string[]): string | number {
   return '';
 }
 

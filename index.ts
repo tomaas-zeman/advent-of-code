@@ -39,13 +39,16 @@ async function ensureRealInputFile(year: string, day: string) {
   fs.writeFileSync(file, body);
 }
 
-function readInputFile(year: string, day: string, file: string) {
-  const path = `./year${year}/day${day}/${file}`;
+function readInputFile(year: string, day: string, file: string, part='') {
+  let path = `./year${year}/day${day}/${file}`;
+  if (!fs.existsSync(path)){
+    path += part;
+  }
   return fs.readFileSync(path, 'utf-8').split('\n');
 }
 
-async function getTestInput(year: string, day: string) {
-  return readInputFile(year, day, 'testdata');
+async function getTestInput(year: string, day: string, part: string) {
+  return readInputFile(year, day, 'testdata', part);
 }
 
 async function getRealInput(year: string, day: string) {
@@ -53,7 +56,7 @@ async function getRealInput(year: string, day: string) {
   return readInputFile(year, day, 'data');
 }
 
-function saveCorrectAnswer(year: string, day: string, part: string, answer: string) {
+function saveCorrectAnswer(year: string, day: string, part: string, answer: string | number) {
   const line = `${year}-${day}-${part}=${answer}\n`;
   fs.appendFileSync(ANSWERS_FILE_PATH, line, 'utf-8');
 }
@@ -68,7 +71,7 @@ function getCorrectAnswer(year: string, day: string, part: string) {
   }
 }
 
-async function sendAnswer(year: string, day: string, part: string, answer: string) {
+async function sendAnswer(year: string, day: string, part: string, answer: string | number) {
   const correctAnswer = getCorrectAnswer(year, day, part);
   if (correctAnswer) {
     if (correctAnswer == answer) {
@@ -93,7 +96,7 @@ async function sendAnswer(year: string, day: string, part: string, answer: strin
   const response = await fetch(`https://adventofcode.com/${year}/day/${parseInt(day, 10)}/answer`, {
     headers: { Cookie: `session=${SESSION}`, 'Content-Type': 'application/x-www-form-urlencoded' },
     method: 'POST',
-    body: new URLSearchParams({ level: part, answer }).toString(),
+    body: new URLSearchParams({ level: part, answer: answer.toString() }).toString(),
   });
 
   if (!response.ok) {
@@ -135,7 +138,7 @@ async function run() {
 
     const solver: Solver = await import(`./year${year}/day${day}/part${part}.ts`);
 
-    const testResult = solver.run(await getTestInput(year, day));
+    const testResult = solver.run(await getTestInput(year, day, part));
     if (testResult != solver.testResult) {
       console.error(color.red(`✘ year ${year} | day ${day} | part ${part} => ${testResult}`));
       console.error(color.yellow(`> Expected result: ${solver.testResult}`));
