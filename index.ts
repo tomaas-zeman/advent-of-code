@@ -39,9 +39,9 @@ async function ensureRealInputFile(year: string, day: string) {
   fs.writeFileSync(file, body);
 }
 
-function readInputFile(year: string, day: string, file: string, part='') {
+function readInputFile(year: string, day: string, file: string, part = '') {
   let path = `./year${year}/day${day}/${file}`;
-  if (!fs.existsSync(path)){
+  if (!fs.existsSync(path)) {
     path += part;
   }
   return fs.readFileSync(path, 'utf-8').split('\n');
@@ -77,7 +77,9 @@ async function sendAnswer(year: string, day: string, part: string, answer: strin
     if (correctAnswer == answer) {
       console.log(color.yellow('> You already submitted a correct answer for this part.'));
     } else {
-      console.log(color.red("> You already submitted a correct answer for this part but it's incorrect NOW"));
+      console.log(
+        color.red("> You already submitted a correct answer for this part but it's incorrect NOW"),
+      );
     }
     return;
   }
@@ -138,6 +140,7 @@ async function run() {
 
     const solver: Solver = await import(`./year${year}/day${day}/part${part}.ts`);
 
+    const start = new Date().getTime();
     const testResult = solver.run(await getTestInput(year, day, part));
     if (testResult != solver.testResult) {
       console.error(color.red(`✘ year ${year} | day ${day} | part ${part} => ${testResult}`));
@@ -147,6 +150,10 @@ async function run() {
 
     const result = solver.run(await getRealInput(year, day));
     console.log(color.green(`✔ year ${year} | day ${day} | part ${part} => ${result}`));
+
+    const stop = new Date().getTime();
+    console.log(`> Computation took ${(stop - start) / 1000} seconds`);
+
     await sendAnswer(year, day, part, result);
   }
 }
