@@ -4,7 +4,7 @@ import fs from 'fs';
 import color from 'cli-color';
 import { fetchInputData } from './ts-runner/aocapi';
 import { sendAnswer } from './ts-runner/answers';
-import { startWebSocketServer } from './ts-runner/wsserver';
+import { closeWebSocketServer, startWebSocketServer, sendData } from './ts-runner/wsserver';
 import './polyfills';
 
 type Solver = typeof import('./templates/day_template_ts/part1');
@@ -78,6 +78,11 @@ async function run() {
     console.log(`> Computation took ${(stop - start) / 1000} seconds`);
 
     await sendAnswer(year, day, part, result);
+    sendData(JSON.stringify({ year, day, result }));
+  }
+
+  if (ws) {
+    closeWebSocketServer();
   }
 }
 
