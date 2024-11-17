@@ -2,13 +2,12 @@ import process from 'process';
 import yargs from 'yargs';
 import fs from 'fs';
 import color from 'cli-color';
-import readline from 'readline';
+import { fetchInputData } from './ts-runner/aocapi';
+import { sendAnswer } from './ts-runner/answers';
+import { startWebSocketServer } from './ts-runner/wsserver';
 import './polyfills';
 
 type Solver = typeof import('./templates/day_template_ts/part1');
-
-const ANSWERS_FILE_PATH = './answers.txt';
-const SESSION = fs.readFileSync('.session', 'utf-8').trim();
 
 function parseArgs() {
   return yargs(process.argv)
@@ -16,6 +15,7 @@ function parseArgs() {
       year: { type: 'string', demandOption: true },
       day: { type: 'string', demandOption: true },
       partOverride: { type: 'string' },
+      ws: { type: 'boolean' },
     })
     .parse();
 }
@@ -27,16 +27,7 @@ async function ensureRealInputFile(year: string, day: string) {
     return;
   }
 
-  const response = await fetch(`https://adventofcode.com/${year}/day/${parseInt(day, 10)}/input`, {
-    headers: {
-      Cookie: `session=${SESSION}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`);
-  }
-
+  const response = await fetchInputData(year, day);
   const body = (await response.text()).trim();
   fs.writeFileSync(file, body);
 }
@@ -58,82 +49,12 @@ async function getRealInput(year: string, day: string) {
   return readInputFile(year, day, 'data');
 }
 
-function saveCorrectAnswer(year: string, day: string, part: string, answer: string | number) {
-  const line = `${year}-${day}-${part}=${answer}\n`;
-  fs.appendFileSync(ANSWERS_FILE_PATH, line, 'utf-8');
-}
-
-function getCorrectAnswer(year: string, day: string, part: string) {
-  const data = fs.readFileSync(ANSWERS_FILE_PATH, 'utf-8');
-  const lines = data.split('\n');
-  for (const line of lines) {
-    if (line.startsWith(`${year}-${day}-${part}=`)) {
-      return line.split('=')[1].trim();
-    }
-  }
-}
-
-async function sendAnswer(year: string, day: string, part: string, answer: string | number) {
-  const correctAnswer = getCorrectAnswer(year, day, part);
-  if (correctAnswer) {
-    if (correctAnswer == answer) {
-      console.log(color.yellow('> You already submitted a correct answer for this part.'));
-    } else {
-      console.log(
-        color.red("> You already submitted a correct answer for this part but it's incorrect NOW"),
-      );
-    }
-    return;
-  }
-
-  const prompt = readline.createInterface({ input: process.stdin, output: process.stdout });
-  const choice = await new Promise<string>((resolve) => {
-    prompt.question(`> Send answer '${answer}' to AOC for verification? [y/N] `, (answer) => {
-      prompt.close();
-      resolve(answer);
-    });
-  });
-  if (choice.toLowerCase() !== 'y') {
-    return;
-  }
-
-  const response = await fetch(`https://adventofcode.com/${year}/day/${parseInt(day, 10)}/answer`, {
-    headers: { Cookie: `session=${SESSION}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-    method: 'POST',
-    body: new URLSearchParams({ level: part, answer: answer.toString() }).toString(),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to submit the answer: ${response.status} ${response.statusText}`);
-  }
-
-  const responseText = await response.text();
-
-  if (responseText.includes('You gave an answer too recently')) {
-    console.log(color.red('> You submitted an answer too recently. Try again in a few minutes.'));
-  } else if (responseText.includes('not the right answer')) {
-    if (responseText.includes('too low')) {
-      console.log(color.red('> Incorrect answer - too low.'));
-    } else if (responseText.includes('too high')) {
-      console.log(color.red('> Incorrect answer - too high.'));
-    } else {
-      console.log(color.red('> Incorrect answer'));
-    }
-
-    const waitBeforeRetry = responseText.match(/([Pp]lease wait .*? trying again\.)/);
-    if (waitBeforeRetry) {
-      console.log(color.yellow(`> ${waitBeforeRetry[1]}`));
-    }
-  } else if (responseText.includes('seem to be solving the right level.')) {
-    console.log(color.yellow('> Wrong level or already solved.'));
-  } else {
-    console.log(color.green('> CORRECT!'));
-    saveCorrectAnswer(year, day, part, answer);
-  }
-}
-
 async function run() {
-  const { year, day, partOverride } = await parseArgs();
+  const { year, day, partOverride, ws } = await parseArgs();
+
+  if (ws) {
+    await startWebSocketServer();
+  }
 
   for (let part of partOverride ? [partOverride] : ['1', '2']) {
     console.log(color.cyan.bold('\n##################################'));
