@@ -3,6 +3,9 @@ import yargs from 'yargs';
 import fs from 'fs';
 import color from 'cli-color';
 import readline from 'readline';
+import { enableMathJSPolyfills } from './aocutils/polyfills';
+
+enableMathJSPolyfills();
 
 type Solver = typeof import('./day_template_ts/part1');
 
@@ -14,6 +17,7 @@ function parseArgs() {
     .options({
       year: { type: 'string', demandOption: true },
       day: { type: 'string', demandOption: true },
+      partOverride: { type: 'string' },
     })
     .parse();
 }
@@ -133,7 +137,7 @@ async function sendAnswer(year: string, day: string, part: string, answer: strin
 async function run() {
   const { year, day, partOverride } = await parseArgs();
 
-  for (let part of (partOverride ? [partOverride] : ['1', '2'])) {
+  for (let part of partOverride ? [partOverride] : ['1', '2']) {
     console.log(color.cyan.bold('\n##################################'));
     console.log(color.cyan.bold(`#             PART ${part}             #`));
     console.log(color.cyan.bold('##################################\n'));
