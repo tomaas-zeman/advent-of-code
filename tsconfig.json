@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "rootDir": "./",
-    "typeRoots": ["aocutils", "node_modules/@types"]
+    "typeRoots": ["polyfills", "node_modules/@types"]
   },
-  "include": ["year2024", "index.ts"]
+  "include": ["year2024", "index.ts", "polyfills"]
 }

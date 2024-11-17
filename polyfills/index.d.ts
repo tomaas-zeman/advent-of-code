@@ -1,4 +1,4 @@
-import * as m from 'mathjs';
+import 'mathjs';
 
 //-------------------
 //     MATRICES     -
@@ -6,7 +6,7 @@ import * as m from 'mathjs';
 
 declare module 'mathjs' {
   interface Matrix {
-    getRow(rowIndex: number): m.Matrix;
-    getColumn(colIndex: number): m.Matrix;
+    getRow(rowIndex: number): Matrix;
+    getColumn(colIndex: number): Matrix;
   }
 }

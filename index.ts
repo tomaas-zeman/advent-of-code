@@ -3,9 +3,7 @@ import yargs from 'yargs';
 import fs from 'fs';
 import color from 'cli-color';
 import readline from 'readline';
-import { enableMathJSPolyfills } from './aocutils/polyfills';
-
-enableMathJSPolyfills();
+import './polyfills';
 
 type Solver = typeof import('./day_template_ts/part1');
 

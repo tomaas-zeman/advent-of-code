@@ -1,9 +1,9 @@
 import { manhattan, parse, Point } from './common';
-import * as m from 'mathjs';
+import { matrix, zeros } from 'mathjs';
 
 export function run(data: string[], isTest?: boolean): string | number {
   const points = parse(data);
-  const space = m.matrix(isTest ? m.zeros(15, 15) : m.zeros(1000, 1000));
+  const space = matrix(isTest ? zeros(15, 15) : zeros(1000, 1000));
 
   let result = 0;
   for (let row = 0; row < space.size()[0]; row++) {
