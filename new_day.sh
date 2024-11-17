@@ -10,4 +10,4 @@ if [[ -z "$year" ]] || [[ -z "$day" ]] || [[ -z "$lang" ]]; then
 fi
 
 mkdir -p year${year}/day${day}
-cp day_template_${lang}/* year${year}/day${day}
+cp templates/day_template_${lang}/* year${year}/day${day}

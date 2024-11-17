@@ -5,7 +5,7 @@ import color from 'cli-color';
 import readline from 'readline';
 import './polyfills';
 
-type Solver = typeof import('./day_template_ts/part1');
+type Solver = typeof import('./templates/day_template_ts/part1');
 
 const ANSWERS_FILE_PATH = './answers.txt';
 const SESSION = fs.readFileSync('.session', 'utf-8').trim();
