@@ -4,7 +4,7 @@ import fs from 'fs';
 import color from 'cli-color';
 import { fetchInputData } from './ts-runner/aocapi';
 import { sendAnswer } from './ts-runner/answers';
-import { closeWebSocketServer, startWebSocketServer, sendData } from './ts-runner/wsserver';
+import { closeWebSocketServer, startWebSocketServer, Data } from './ts-runner/wsserver';
 import './polyfills';
 
 type Solver = typeof import('./templates/day_template_ts/part1');
@@ -51,9 +51,10 @@ async function getRealInput(year: string, day: string) {
 
 async function run() {
   const { year, day, partOverride, ws } = await parseArgs();
+  let setRequestMetadata: (data: Data) => void = () => {};
 
   if (ws) {
-    await startWebSocketServer();
+    setRequestMetadata = await startWebSocketServer();
   }
 
   for (let part of partOverride ? [partOverride] : ['1', '2']) {
@@ -63,6 +64,7 @@ async function run() {
 
     const solver: Solver = await import(`./year${year}/day${day}/part${part}.ts`);
 
+    setRequestMetadata({ year, day, part, isTest: true });
     const start = new Date().getTime();
     const testResult = solver.run(await getTestInput(year, day, part), true);
     if (testResult != solver.testResult) {
@@ -71,6 +73,7 @@ async function run() {
       return;
     }
 
+    setRequestMetadata({ year, day, part, isTest: false });
     const result = solver.run(await getRealInput(year, day), false);
     console.log(color.green(`✔ year ${year} | day ${day} | part ${part} => ${result}`));
 
@@ -78,7 +81,6 @@ async function run() {
     console.log(`> Computation took ${(stop - start) / 1000} seconds`);
 
     await sendAnswer(year, day, part, result);
-    sendData(JSON.stringify({ year, day, result }));
   }
 
   if (ws) {
