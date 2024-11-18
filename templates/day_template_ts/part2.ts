@@ -1,4 +1,6 @@
-export function run(data: string[], isTest?: boolean): string | number {
+import { Config } from '../..';
+
+export async function run(data: string[], config: Config): Promise<string | number> {
   return '';
 }
 

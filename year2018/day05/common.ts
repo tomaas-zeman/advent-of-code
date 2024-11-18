@@ -1,29 +1,27 @@
-import { visualize as sendData } from '../../ts-runner/wsserver';
+import { Config } from '../..';
 
-function visualize(data: any, isTest?: boolean) {
-  if (!isTest) {
-    return;
+export async function collapsePolymer(initialPolymer: string, config: Config) {
+  const { visualization, part } = config;
+  if (part !== '1') {
+    visualization.skip();
   }
-  sendData(data);
-}
 
-export function collapsePolymer(initialPolymer: string, isTest?: boolean) {
   const polymer = initialPolymer.split('');
-  visualize({ start: true }, isTest);
+  await visualization.start();
 
   for (let i = 0; i < polymer.length - 1; i++) {
-    visualize({ polymer: polymer.join(''), index: i }, isTest);
+    visualization.sendData({ polymer: polymer.join(''), index: i });
     const l = polymer[i];
     const r = polymer[i + 1];
 
     if (l !== r && l.toLowerCase() === r.toLowerCase()) {
-      visualize({ index: i, nextIndex: Math.max(-1, i - 2) }, isTest);
+      visualization.sendData({ index: i, nextIndex: Math.max(-1, i - 2) });
       polymer.splice(i, 2);
       i = Math.max(-1, i - 2);
     }
   }
 
-  visualize({ stop: true }, isTest);
+  visualization.stop();
 
   return polymer.length;
 }

@@ -1,6 +1,7 @@
+import { Config } from '../..';
 import { parse } from './common';
 
-export function run(data: string[]): string | number {
+export async function run(data: string[], config: Config): Promise<string | number> {
   const [pointOverlaps, claims] = parse(data);
   for (let claim of claims) {
     if (claim.points().every((point) => pointOverlaps[point.hash()] === 1)) {

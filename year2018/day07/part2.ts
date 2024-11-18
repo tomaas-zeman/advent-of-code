@@ -1,9 +1,10 @@
+import { Config } from '../..';
 import { parse, pickNextStep, Step } from './common';
 
-export function run(data: string[], isTest?: boolean): string | number {
+export async function run(data: string[], config: Config): Promise<string | number> {
   const steps = parse(data);
   const available = new Set(Object.values(steps));
-  const workers: (Step | undefined)[] = new Array(isTest ? 2 : 5);
+  const workers: (Step | undefined)[] = new Array(config.isTest ? 2 : 5);
 
   let seconds = 0;
 

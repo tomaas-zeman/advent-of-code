@@ -1,4 +1,6 @@
-export function run(data: string[]): string | number {
+import { Config } from "../..";
+
+export async function run(data: string[], config: Config): Promise<string | number> {
   const frequencies = new Set();
 
   let frequency = 0;

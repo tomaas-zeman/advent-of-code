@@ -1,6 +1,7 @@
+import { Config } from '../..';
 import { parse, pickNextStep } from './common';
 
-export function run(data: string[]): string | number {
+export async function run(data: string[], config: Config): Promise<string | number> {
   const steps = parse(data);
   const available = new Set(Object.values(steps));
 

@@ -1,7 +1,8 @@
+import { Config } from '../..';
 import { collapsePolymer } from './common';
 
-export function run(data: string[], isTest?: boolean): string | number {
-  return collapsePolymer(data[0], isTest);
+export async function run(data: string[], config: Config): Promise<string | number> {
+  return collapsePolymer(data[0], config);
 }
 
 export const testResult = 10;
