@@ -5,7 +5,7 @@ export type Data = { [key: string]: string | number | boolean };
 
 export class NoVisualization {
   setRequestMetadata(metadata: Data) {}
-  sendData(data: Data) {}
+  sendData(data: Data | (() => Data)) {}
   start(): Promise<void> {
     return Promise.resolve();
   }
@@ -41,12 +41,12 @@ export class Visualization {
     console.log('Client disconnected.');
   }
 
-  sendData(data: Data) {
+  sendData(data: Data | (() => Data)) {
     if (this.skipped) {
       return;
     }
     this.wss?.clients.forEach((client) => {
-      const payload = { ...this.config, ...data };
+      const payload = { ...this.config, ...(typeof data === 'function' ? data() : data) };
       // @ts-ignore
       delete payload.visualization;
       client.send(JSON.stringify(payload));

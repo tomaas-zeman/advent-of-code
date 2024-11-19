@@ -1,8 +1,8 @@
 import { Config } from '../..';
 
 export async function collapsePolymer(initialPolymer: string, config: Config) {
-  const { visualization, part } = config;
-  if (part !== '1') {
+  const { visualization, isTest } = config;
+  if (!isTest) {
     visualization.skip();
   }
 
@@ -10,7 +10,7 @@ export async function collapsePolymer(initialPolymer: string, config: Config) {
   await visualization.start();
 
   for (let i = 0; i < polymer.length - 1; i++) {
-    visualization.sendData({ polymer: polymer.join(''), index: i });
+    visualization.sendData(() => ({ polymer: polymer.join(''), index: i }));
     const l = polymer[i];
     const r = polymer[i + 1];
 
