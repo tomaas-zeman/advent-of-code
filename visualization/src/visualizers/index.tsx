@@ -1,7 +1,7 @@
 import Visualizer_2018_05 from './2018-05';
 
 export type VisualizerProps = {
-  buffer: string[];
+  buffer: any[];
 };
 
 export type Visualizer = React.FunctionComponent<VisualizerProps>;

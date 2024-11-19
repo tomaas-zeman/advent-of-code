@@ -10,13 +10,14 @@ export class NoVisualization {
     return Promise.resolve();
   }
   stop() {}
-  skip() {}
+  enable() {}
+  disable() {}
 }
 
 export class Visualization {
   private wsPort = 3333;
   private config: Config;
-  private skipped: boolean = false;
+  private disabled: boolean = false;
 
   private wss: WebSocketServer | null = null;
 
@@ -42,7 +43,7 @@ export class Visualization {
   }
 
   sendData(data: Data | (() => Data)) {
-    if (this.skipped) {
+    if (this.disabled) {
       return;
     }
     this.wss?.clients.forEach((client) => {
@@ -54,7 +55,7 @@ export class Visualization {
   }
 
   async start(): Promise<void> {
-    if (this.skipped) {
+    if (this.disabled) {
       return;
     }
     await this.startWebSocketServer();
@@ -62,14 +63,18 @@ export class Visualization {
   }
 
   stop() {
-    if (this.skipped) {
+    if (this.disabled) {
       return;
     }
     this.sendData({ stop: true });
     this.stopWebSocketServer();
   }
 
-  skip() {
-    this.skipped = true;
+  enable() {
+    this.disabled = false;
+  }
+
+  disable() {
+    this.disabled = true;
   }
 }

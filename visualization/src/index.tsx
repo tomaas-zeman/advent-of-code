@@ -10,10 +10,11 @@ enum State {
 }
 
 function App() {
-  const buffer = useRef<string[]>([]);
+  const buffer = useRef<any[]>([]);
   const visualizer = useRef<Visualizer>(NoVisualization);
   const [state, setState] = useState<State>(State.IDLE);
   const [date, setDate] = useState<string>('');
+  const [bufferSize, setBufferSize] = useState(0);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:3333');
@@ -27,7 +28,8 @@ function App() {
       } else if (data.stop) {
         setState(State.DATA_LOADED);
       } else {
-        buffer.current.push(event.data);
+        buffer.current.push(data);
+        setBufferSize(buffer.current.length);
       }
     });
     return () => ws.close();
@@ -42,7 +44,7 @@ function App() {
       <hr className="mb-6" />
       {state === State.DATA_LOADED && <Visualizer buffer={buffer.current} />}
       {state !== State.DATA_LOADED && (
-        <div className="text-xl">Waiting for visualization data ...</div>
+        <div className="text-xl">Waiting for visualization data ... buffer size: {bufferSize}</div>
       )}
     </div>
   );
