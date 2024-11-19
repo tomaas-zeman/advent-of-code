@@ -158,3 +158,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Tailwind
+/visualization/src/index.css
