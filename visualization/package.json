@@ -11,6 +11,7 @@
     "tailwind:dev": "npx tailwindcss -i ./styles/index.css -o ./src/index.css --watch"
   },
   "dependencies": {
+    "@observablehq/plot": "^0.6.16",
     "cytoscape": "^3.30.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
