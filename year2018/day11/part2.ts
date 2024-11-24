@@ -8,11 +8,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
   let bestGridPower = 0;
   let bestGridSize = 1;
 
-  // TODO
-  // This is obviously not a complete solution since the max grid size is 20 and not 300.
-  // Luckily, the solution was found earlier. If it didn't, we would have to optimize the 
-  //algorithm as it gets really slow with the larger grid size.
-  for (let gridSize = 1; gridSize <= 20; gridSize++) {
+  for (let gridSize = 1; gridSize <= 300; gridSize++) {
     const { index, power } = findBestGridPower(fuelCells, gridSize);
     if (power > bestGridPower) {
       bestGridIndex = index;
@@ -21,7 +17,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
     }
   }
 
-  return [...bestGridIndex.map((i) => i + 1), bestGridSize].join(',');
+  return [...bestGridIndex, bestGridSize].join(',');
 }
 
 export const testResult = '90,269,16';
