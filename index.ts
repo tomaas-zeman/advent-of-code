@@ -37,7 +37,7 @@ async function ensureRealInputFile(year: string, day: string) {
   }
 
   const response = await fetchInputData(year, day);
-  const body = (await response.text()).trim();
+  const body = await response.text();
   fs.writeFileSync(file, body);
 }
 
