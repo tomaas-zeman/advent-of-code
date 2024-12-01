@@ -35,6 +35,17 @@ function App() {
     return () => ws.close();
   }, []);
 
+  // For demo purposes
+  // useEffect(() => {
+  //   visualizer.current = visualizers['2024']['01'];
+  //   buffer.current.push({
+  //     counts: {3: 3, 4: 1, 5: 1, 9: 1},
+  //     numbers: [3, 4, 2, 1, 3, 3]
+  //   })
+  //   setBufferSize(buffer.current.length);
+  //   setState(State.DATA_LOADED);
+  // }, []);
+
   const Visualizer = visualizer.current;
 
   return (
