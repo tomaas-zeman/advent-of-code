@@ -9,5 +9,6 @@
     "rootDir": "./",
     "typeRoots": ["polyfills", "node_modules/@types"]
   },
-  "include": ["year2024", "index.ts", "polyfills", "aocutils"]
+  "include": ["year2024", "index.ts", "polyfills", "aocutils"],
+  "files": ["polyfills/index.d.ts"]
 }
