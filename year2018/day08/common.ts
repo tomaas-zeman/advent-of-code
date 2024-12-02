@@ -1,4 +1,4 @@
-import { sum } from 'mathjs';
+import { sum } from "../../aocutils";
 
 export function treeValue(
   numbers: number[],

@@ -5,7 +5,6 @@ import color from 'cli-color';
 import { fetchInputData } from './ts-runner/aocapi';
 import { sendAnswer } from './ts-runner/answers';
 import { Visualization, NoVisualization } from './ts-runner/visualization';
-import './polyfills';
 
 type Solver = typeof import('./templates/day_template_ts/part1');
 

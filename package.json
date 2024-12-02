@@ -4,7 +4,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "start": "tsx index.ts --year 2024 --day 02"
+    "start": "tsx index.ts --year 2018 --day 11"
   },
   "devDependencies": {
     "@types/cli-color": "^2.0.6",
@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "cli-color": "^2.0.4",
-    "mathjs": "^13.2.2",
     "ws": "^8.18.0",
     "yargs": "^17.7.2"
   },

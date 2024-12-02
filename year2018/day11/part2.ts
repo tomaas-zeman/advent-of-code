@@ -1,11 +1,11 @@
 import { Config } from '../..';
+import { range } from '../../aocutils';
 import { findBestGridPower } from './common';
-import { range } from 'mathjs';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
   const { index, gridSize } = findBestGridPower(
     parseInt(data[0]),
-    range(1, 300).toArray() as number[],
+    range(1, 300),
   );
   return [...index, gridSize].join(',');
 }

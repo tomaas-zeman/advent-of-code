@@ -1,3 +1,7 @@
+//-------------------
+//     MATRICES     -
+//-------------------
+
 export type MatrixEntry<T> = [number, number, T];
 
 export class Matrix<T> {
@@ -11,14 +15,36 @@ export class Matrix<T> {
     this.cols = data[0].length;
   }
 
-  entries() {
-    const entries: MatrixEntry<T>[] = [];
+  static create<T>(numRows: number, numCols: number, defaultValue: T): Matrix<T> {
+    const rows: T[][] = [];
+    for (let row = 0; row < numRows; row++) {
+      const cols: T[] = [];
+      for (let col = 0; col < numCols; col++) {
+        cols.push(defaultValue);
+      }
+      rows.push(cols);
+    }
+    return new Matrix(rows);
+  }
+
+  *positions(): Generator<[number, number]> {
     for (let row = 0; row < this.rows; row++) {
       for (let col = 0; col < this.cols; col++) {
-        entries.push([row, col, this.data[row][col]]);
+        yield [row, col];
       }
     }
-    return entries;
+  }
+
+  *entries(): Generator<[number, number, T]> {
+    for (const [row, col] of this.positions()) {
+      yield [row, col, this.data[row][col]];
+    }
+  }
+
+  *values(): Generator<T> {
+    for (const [row, col] of this.positions()) {
+      yield this.data[row][col];
+    }
   }
 
   get(row: number, col: number): T {
@@ -27,6 +53,18 @@ export class Matrix<T> {
 
   set(row: number, col: number, value: T) {
     this.data[row][col] = value;
+  }
+
+  getRow(row: number): T[] {
+    return this.data[row];
+  }
+
+  getColumn(col: number): T[] {
+    const data: T[] = [];
+    for (let row = 0; row < this.rows; row++) {
+      data.push(this.data[row][col]);
+    }
+    return data;
   }
 
   neighbors(row: number, col: number): T[] {
@@ -60,6 +98,10 @@ export class Matrix<T> {
   }
 }
 
+//-----------------
+//     ARRAYS     -
+//-----------------
+
 export function zip<T, U>(arr1: T[], arr2: T[], callback: (a: T, b: T) => U): U[] {
   if (arr1.length !== arr2.length) {
     throw new Error('Arrays must have the same length to zip.');
@@ -75,6 +117,18 @@ export function zip<T, U>(arr1: T[], arr2: T[], callback: (a: T, b: T) => U): U[
 export function sum(arr: number[]): number {
   return arr.reduce((sum, n) => sum + n, 0);
 }
+
+export function range(from: number, to: number): number[] {
+  const numbers: number[] = [];
+  for (let n = from; n < to; n++) {
+    numbers.push(n);
+  }
+  return numbers;
+}
+
+//--------------------
+//     UTILITIES     -
+//--------------------
 
 export function counter<T extends string | number>(arr: T[]) {
   return arr.reduce(
