@@ -152,6 +152,14 @@ export function groupBy<T, U extends string | number>(arr: T[], groupingFn: (ite
   );
 }
 
+export function pairwise<T>(arr: T[]): [T, T][] {
+  const pairs: [T, T][] = [];
+  for (let i = 1; i < arr.length; i++) {
+    pairs.push([arr[i - 1], arr[i]]);
+  }
+  return pairs;
+}
+
 //--------------------
 //     UTILITIES     -
 //--------------------
