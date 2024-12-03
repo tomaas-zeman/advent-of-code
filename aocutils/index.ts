@@ -138,6 +138,20 @@ export function arraysEqual(arr1: number[], arr2: number[]) {
   return true;
 }
 
+export function groupBy<T, U extends string | number>(arr: T[], groupingFn: (item: T) => U) {
+  return arr.reduce(
+    (groups, item) => {
+      const group = groupingFn(item);
+      if (!groups[group]) {
+        groups[group] = [];
+      }
+      groups[group].push(item);
+      return groups;
+    },
+    {} as { [group in U]: T[] },
+  );
+}
+
 //--------------------
 //     UTILITIES     -
 //--------------------
