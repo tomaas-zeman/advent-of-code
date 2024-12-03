@@ -1,5 +1,5 @@
 import { Config } from '../..';
-import { Instruction, instructions } from './common';
+import { Instruction, instructions } from './../day16/common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
   let registers = [0, 0, 0, 0, 0, 0];

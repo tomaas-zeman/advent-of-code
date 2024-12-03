@@ -9,7 +9,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
 
   for (const [row, col] of space.positions()) {
     const pointsByDistance = points
-      .map<[Point, number]>((p) => [p, manhattan(new Point(0, row, col), p)])
+      .map<[Point, number]>((p) => [p, manhattan({ id: 0, row, col }, p)])
       .sort(([_, dist1], [__, dist2]) => dist1 - dist2);
     const shortestDistance = pointsByDistance[0][1];
     const closestPoints = pointsByDistance.filter(([p, dist]) => dist === shortestDistance);

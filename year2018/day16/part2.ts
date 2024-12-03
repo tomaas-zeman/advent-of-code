@@ -1,5 +1,6 @@
 import { Config } from '../..';
-import { arraysEqual, Instruction, parseInput } from './common';
+import { arraysEqual } from '../../aocutils';
+import { Instruction, parseInput } from './common';
 import { instructions } from './common';
 
 const OPCODES_COUNT = 16;
@@ -20,7 +21,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
     }, {});
 
   for (let sample of samples) {
-    for (let instruction of instructions) {
+    for (let instruction of Object.values(instructions)) {
       const result = instruction.eval(sample.before, sample.a, sample.b, sample.c);
       const expectedResult = sample.after;
       if (arraysEqual(result, expectedResult)) {

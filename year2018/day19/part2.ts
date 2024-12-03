@@ -1,5 +1,5 @@
 import { Config } from '../..';
-import { Instruction, instructions } from './common';
+import { Instruction, instructions } from './../day16/common';
 
 //     THE MAIN SUBLOOP
 //

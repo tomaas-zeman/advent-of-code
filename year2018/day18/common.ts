@@ -1,4 +1,4 @@
-import { Matrix } from '../../aocutils';
+import { counter, Matrix } from '../../aocutils';
 
 enum Type {
   OPEN = '.',
@@ -8,13 +8,6 @@ enum Type {
 
 function parseMatrix(data: string[]): Matrix<string> {
   return new Matrix<string>(data.map((line) => line.split('')));
-}
-
-function countByType(items: string[]): { [type: string]: number } {
-  return items.reduce((acc, n) => {
-    acc[n] = (acc[n] || 0) + 1;
-    return acc;
-  }, {});
 }
 
 export function calculateResourceValue(data: string[], minutes: number): number {
@@ -30,7 +23,7 @@ export function calculateResourceValue(data: string[], minutes: number): number 
 
     for (let row = 0; row < forest.rows; row++) {
       for (let col = 0; col < forest.cols; col++) {
-        const neighbors = countByType(forest.neighbors(row, col));
+        const neighbors = counter(forest.neighbors(row, col));
 
         switch (forest.get(row, col)) {
           case Type.OPEN:
@@ -63,6 +56,6 @@ export function calculateResourceValue(data: string[], minutes: number): number 
     states[hash] = time;
   }
 
-  const acres = countByType(forest.data.flatMap((row) => row));
+  const acres = counter(forest.data.flatMap((row) => row));
   return acres[Type.LUMBERYARD] * acres[Type.TREE] || 0;
 }

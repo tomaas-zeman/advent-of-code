@@ -9,7 +9,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
 
   let result = 0;
   for (const [row, col] of space.positions()) {
-    const point1 = new Point(0, row, col);
+    const point1 = { id: 0, row, col };
     const sumOfDistances = points.reduce((sum, point2) => sum + manhattan(point1, point2), 0);
     if (sumOfDistances < (config.isTest ? 32 : 10000)) {
       result++;
