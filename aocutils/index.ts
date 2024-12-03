@@ -67,6 +67,35 @@ export class Matrix<T> {
     return data;
   }
 
+  /**
+   * Slice the matrix.
+   * 
+   * Intervals are always [start, end), e.i. unbounded end if provided.
+   */
+  slice(rowStart: number = 0, rowEnd?: number, colStart: number = 0, colEnd?: number): T[][] {
+    rowEnd = rowEnd ?? this.rows;
+    colEnd = colEnd ?? this.cols;
+    return this.data.slice(rowStart, rowEnd).map((row) => row.slice(colStart, colEnd));
+  }
+
+  diagonal(secondary = false) {
+    if (this.rows !== this.cols) {
+      throw new Error('Only square matrix is supported for diagonal');
+    }
+
+    const d: T[] = [];
+    if (!secondary) {
+      for (let i = 0; i < this.cols; i++) {
+        d.push(this.data[i][i]);
+      }
+    } else {
+      for (let i = 0; i < this.cols; i++) {
+        d.push(this.data[this.cols - 1 - i][this.cols - 1 - i]);
+      }
+    }
+    return d;
+  }
+
   neighbors(row: number, col: number): T[] {
     return [
       row - 1 >= 0 && col - 1 >= 0 && this.data[row - 1][col - 1],
@@ -126,7 +155,7 @@ export function range(from: number, to: number): number[] {
   return numbers;
 }
 
-export function arraysEqual(arr1: number[], arr2: number[]) {
+export function arraysEqual<T>(arr1: T[], arr2: T[]) {
   if (arr1.length !== arr2.length) {
     return false;
   }
@@ -152,10 +181,10 @@ export function groupBy<T, U extends string | number>(arr: T[], groupingFn: (ite
   );
 }
 
-export function pairwise<T>(arr: T[]): [T, T][] {
-  const pairs: [T, T][] = [];
-  for (let i = 1; i < arr.length; i++) {
-    pairs.push([arr[i - 1], arr[i]]);
+export function pairwise<T>(arr: T[], length = 2): T[][] {
+  const pairs: T[][] = [];
+  for (let i = 0; i < arr.length - (length - 1); i++) {
+    pairs.push(arr.slice(i, i + length));
   }
   return pairs;
 }
