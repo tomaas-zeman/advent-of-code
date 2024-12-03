@@ -1,5 +1,5 @@
 import { Config } from '../..';
-import { Matrix } from '../../aocutils';
+import { counter, Matrix } from '../../aocutils';
 import { manhattan, parse, Point } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
@@ -26,18 +26,8 @@ export async function run(data: string[], config: Config): Promise<string | numb
     ...space.getColumn(space.cols - 1),
   ]);
 
-  const counter: { [id: number]: number } = {};
-  for (const value of space.values()) {
-    if (infinitePoints.has(value)) {
-      continue;
-    }
-    if (!counter[value]) {
-      counter[value] = 0;
-    }
-    counter[value]++;
-  }
-
-  return Math.max(...Object.values(counter));
+  const counts = counter([...space.values()], (value) => !infinitePoints.has(value));
+  return Math.max(...Object.values(counts));
 }
 
 export const testResult = 17;

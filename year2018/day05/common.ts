@@ -1,7 +1,7 @@
 import { Config } from '../..';
 
 export async function collapsePolymer(initialPolymer: string, config: Config) {
-  const { visualization, isTest } = config;
+  const { visualization } = config;
 
   const polymer = initialPolymer.split('');
   await visualization.start();

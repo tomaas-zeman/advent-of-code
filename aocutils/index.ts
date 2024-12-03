@@ -156,12 +156,23 @@ export function groupBy<T, U extends string | number>(arr: T[], groupingFn: (ite
 //     UTILITIES     -
 //--------------------
 
-export function counter<T extends string | number>(arr: T[]) {
+export function counter<T extends string | number>(
+  arr: T[],
+  condition: (item: T) => boolean = () => true,
+) {
   return arr.reduce(
     (counts, x) => {
-      counts[x] = (counts[x] || 0) + 1;
+      if (condition(x)) {
+        counts[x] = (counts[x] || 0) + 1;
+      }
       return counts;
     },
     {} as { [key in T]: number },
   );
+}
+
+// Modulo that produces positive results for negative numbers.
+// For example -3 mod 5 = 2
+export function mod(number: number, base: number) {
+  return ((number % base) + base) % base;
 }

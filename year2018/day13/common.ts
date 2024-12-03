@@ -1,4 +1,4 @@
-import { Matrix } from '../../aocutils';
+import { Matrix, mod } from '../../aocutils';
 
 const TURN_ORDER = ['<', '^', '>', 'v'];
 const POSITION_CHANGE = {
@@ -8,11 +8,6 @@ const POSITION_CHANGE = {
   v: [1, 0],
 };
 
-// Modulo that produces positive results for negative numbers.
-// For example -3 mod 5 = 2
-function mod(number: number, base: number) {
-  return ((number % base) + base) % base;
-}
 
 export class Cart {
   direction: string;
