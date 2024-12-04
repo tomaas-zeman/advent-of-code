@@ -1,3 +1,5 @@
+import { CartesianProduct } from 'js-combinatorics';
+
 //-------------------
 //     MATRICES     -
 //-------------------
@@ -8,6 +10,10 @@ export class Matrix<T> {
   data: T[][];
   rows: number;
   cols: number;
+
+  private neighborChanges = new CartesianProduct([-1, 0, 1], [-1, 0, 1])
+    .toArray()
+    .filter(([x, y]) => x !== 0 || y !== 0);
 
   constructor(data: T[][]) {
     this.data = data;
@@ -72,7 +78,7 @@ export class Matrix<T> {
    *
    * Intervals are always [start, end), e.i. unbounded.
    */
-  slice(rowStart: number = 0, rowEnd: number, colStart: number = 0, colEnd: number): T[][] {
+  slice(rowStart: number, rowEnd: number, colStart: number, colEnd: number): T[][] {
     return this.data.slice(rowStart, rowEnd).map((row) => row.slice(colStart, colEnd));
   }
 
@@ -81,30 +87,29 @@ export class Matrix<T> {
       throw new Error('Only square matrix is supported for diagonal');
     }
 
-    const d: T[] = [];
+    const items: T[] = [];
     if (!secondary) {
       for (let i = 0; i < this.cols; i++) {
-        d.push(this.data[i][i]);
+        items.push(this.data[i][i]);
       }
     } else {
       for (let i = 0; i < this.cols; i++) {
-        d.push(this.data[this.cols - 1 - i][i]);
+        items.push(this.data[this.cols - 1 - i][i]);
       }
     }
-    return d;
+    return items;
   }
 
   neighbors(row: number, col: number): T[] {
-    return [
-      row - 1 >= 0 && col - 1 >= 0 && this.data[row - 1][col - 1],
-      row - 1 >= 0 && this.data[row - 1][col],
-      row - 1 >= 0 && col + 1 < this.cols && this.data[row - 1][col + 1],
-      col - 1 >= 0 && this.data[row][col - 1],
-      col + 1 < this.cols && this.data[row][col + 1],
-      row + 1 < this.rows && col - 1 >= 0 && this.data[row + 1][col - 1],
-      row + 1 < this.rows && this.data[row + 1][col],
-      row + 1 < this.rows && col + 1 < this.cols && this.data[row + 1][col + 1],
-    ].filter(Boolean) as T[];
+    return this.neighborChanges
+      .map(([dx, dy]) => {
+        const newRow = row + dx;
+        const newCol = col + dy;
+        return newRow >= 0 && newRow < this.rows && newCol >= 0 && newCol < this.cols
+          ? this.data[newRow][newCol]
+          : null;
+      })
+      .filter(Boolean) as T[];
   }
 
   clone(): Matrix<T> {
@@ -117,6 +122,9 @@ export class Matrix<T> {
     console.log(this.data.map((row) => row.map(pad).join('')).join('\n'), '\n');
   }
 
+  /**
+   * BEWARE! Use only for small matrices.
+   */
   hash(): string {
     return this.data.flatMap((row) => row).join('');
   }
