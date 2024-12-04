@@ -69,7 +69,7 @@ export class Matrix<T> {
 
   /**
    * Slice the matrix.
-   * 
+   *
    * Intervals are always [start, end), e.i. unbounded end if provided.
    */
   slice(rowStart: number = 0, rowEnd?: number, colStart: number = 0, colEnd?: number): T[][] {
@@ -90,7 +90,7 @@ export class Matrix<T> {
       }
     } else {
       for (let i = 0; i < this.cols; i++) {
-        d.push(this.data[this.cols - 1 - i][this.cols - 1 - i]);
+        d.push(this.data[this.cols - 1 - i][i]);
       }
     }
     return d;
@@ -114,12 +114,9 @@ export class Matrix<T> {
   }
 
   print(padSize = 0): void {
-    console.log(
-      this.data
-        .map((row) => row.map((col) => (col as string).padStart(padSize, ' ')).join(''))
-        .join('\n'),
-      '\n',
-    );
+    const pad = (value: T) =>
+      (typeof value === 'string' ? (value as String) : String(value)).padStart(padSize, ' ');
+    console.log(this.data.map((row) => row.map(pad).join('')).join('\n'), '\n');
   }
 
   hash(): string {
