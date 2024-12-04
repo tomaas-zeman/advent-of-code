@@ -70,11 +70,9 @@ export class Matrix<T> {
   /**
    * Slice the matrix.
    *
-   * Intervals are always [start, end), e.i. unbounded end if provided.
+   * Intervals are always [start, end), e.i. unbounded.
    */
-  slice(rowStart: number = 0, rowEnd?: number, colStart: number = 0, colEnd?: number): T[][] {
-    rowEnd = rowEnd ?? this.rows;
-    colEnd = colEnd ?? this.cols;
+  slice(rowStart: number = 0, rowEnd: number, colStart: number = 0, colEnd: number): T[][] {
     return this.data.slice(rowStart, rowEnd).map((row) => row.slice(colStart, colEnd));
   }
 
