@@ -10,6 +10,7 @@
     "@types/cli-color": "^2.0.6",
     "@types/cytoscape": "^3.21.8",
     "@types/js-combinatorics": "^0.5.32",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^22.9.0",
     "@types/ws": "^8.5.13",
     "@types/yargs": "^17.0.33",
@@ -21,6 +22,7 @@
     "cli-color": "^2.0.4",
     "cytoscape": "^3.30.4",
     "js-combinatorics": "^2.1.2",
+    "lodash": "^4.17.21",
     "ws": "^8.18.0",
     "yargs": "^17.7.2"
   },
