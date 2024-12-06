@@ -45,7 +45,7 @@ export function parse(data: string[]): [{ [point: string]: number }, Claim[]] {
     if (!match) {
       throw new Error('Unsupported input data! ' + line);
     }
-    const [id, row, col, width, height] = match.slice(1).map((value) => parseInt(value, 10));
+    const [id, row, col, width, height] = match.slice(1).asInt();
     return new Claim(id, row, col, width, height);
   });
 

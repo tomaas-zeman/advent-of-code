@@ -153,54 +153,8 @@ export class Matrix<T> {
 //     ARRAYS     -
 //-----------------
 
-export function zip<T, U>(arr1: T[], arr2: T[], callback: (a: T, b: T) => U): U[] {
-  if (arr1.length !== arr2.length) {
-    throw new Error('Arrays must have the same length to zip.');
-  }
-
-  const result: U[] = [];
-  for (let i = 0; i < arr1.length; i++) {
-    result.push(callback(arr1[i], arr2[i]));
-  }
-  return result;
-}
-
 export function sum(arr: number[]): number {
   return arr.reduce((sum, n) => sum + n, 0);
-}
-
-export function range(from: number, to: number): number[] {
-  const numbers: number[] = [];
-  for (let n = from; n < to; n++) {
-    numbers.push(n);
-  }
-  return numbers;
-}
-
-export function arraysEqual<T>(arr1: T[], arr2: T[]) {
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      return false;
-    }
-  }
-  return true;
-}
-
-export function groupBy<T, U extends string | number>(arr: T[], groupingFn: (item: T) => U) {
-  return arr.reduce(
-    (groups, item) => {
-      const group = groupingFn(item);
-      if (!groups[group]) {
-        groups[group] = [];
-      }
-      groups[group].push(item);
-      return groups;
-    },
-    {} as { [group in U]: T[] },
-  );
 }
 
 export function pairwise<T>(arr: T[], length = 2): T[][] {
@@ -215,23 +169,14 @@ export function pairwise<T>(arr: T[], length = 2): T[][] {
 //     UTILITIES     -
 //--------------------
 
-export function counter<T extends string | number>(
-  arr: T[],
-  condition: (item: T) => boolean = () => true,
-) {
-  return arr.reduce(
-    (counts, x) => {
-      if (condition(x)) {
-        counts[x] = (counts[x] || 0) + 1;
-      }
-      return counts;
-    },
-    {} as { [key in T]: number },
-  );
-}
-
 // Modulo that produces positive results for negative numbers.
 // For example -3 mod 5 = 2
 export function mod(number: number, base: number) {
   return ((number % base) + base) % base;
+}
+
+export function loadPolyfills() {
+  Array.prototype.asInt = function () {
+    return this.map((value) => parseInt(value));
+  };
 }

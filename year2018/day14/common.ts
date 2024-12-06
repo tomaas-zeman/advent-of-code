@@ -11,7 +11,7 @@ export function processRecipes(
     const newRecipes = (recipes[currentRecipesIndexes[0]] + recipes[currentRecipesIndexes[1]])
       .toString()
       .split('')
-      .map((val) => parseInt(val));
+      .asInt();
 
     recipes.push(...newRecipes);
 

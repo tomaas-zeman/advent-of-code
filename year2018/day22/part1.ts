@@ -21,7 +21,7 @@ function parse(data: string[]): [number, Coord] {
   const [row, col] = data[1]
     .split(' ')[1]
     .split(',')
-    .map((v) => parseInt(v));
+    .asInt();
   return [depth, { row, col }];
 }
 

@@ -1,5 +1,5 @@
+import range from 'lodash/range';
 import { Config } from '../..';
-import { range } from '../../aocutils';
 import { findBestGridPower } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {

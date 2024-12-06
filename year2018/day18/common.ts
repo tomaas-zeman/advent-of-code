@@ -1,4 +1,5 @@
-import { counter, Matrix } from '../../aocutils';
+import countBy from 'lodash/countBy';
+import { Matrix } from '../../aocutils';
 
 enum Type {
   OPEN = '.',
@@ -23,7 +24,7 @@ export function calculateResourceValue(data: string[], minutes: number): number 
 
     for (let row = 0; row < forest.rows; row++) {
       for (let col = 0; col < forest.cols; col++) {
-        const neighbors = counter(forest.neighbors(row, col));
+        const neighbors = countBy(forest.neighbors(row, col));
 
         switch (forest.get(row, col)) {
           case Type.OPEN:
@@ -56,6 +57,6 @@ export function calculateResourceValue(data: string[], minutes: number): number 
     states[hash] = time;
   }
 
-  const acres = counter(forest.data.flatMap((row) => row));
+  const acres = countBy(forest.data.flatMap((row) => row));
   return acres[Type.LUMBERYARD] * acres[Type.TREE] || 0;
 }

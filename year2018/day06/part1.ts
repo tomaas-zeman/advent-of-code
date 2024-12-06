@@ -1,5 +1,6 @@
+import countBy from 'lodash/countBy';
 import { Config } from '../..';
-import { counter, Matrix } from '../../aocutils';
+import { Matrix } from '../../aocutils';
 import { manhattan, parse, Point } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
@@ -26,7 +27,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
     ...space.getColumn(space.cols - 1),
   ]);
 
-  const counts = counter([...space.values()], (value) => !infinitePoints.has(value));
+  const counts = countBy([...space.values()].filter((value) => !infinitePoints.has(value)));
   return Math.max(...Object.values(counts));
 }
 

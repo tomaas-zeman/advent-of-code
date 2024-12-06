@@ -22,11 +22,11 @@ export function parseInput(data: string[]): [Sample[], Operation[]] {
     if (data[i].startsWith('Before')) {
       const before = eval(data[i].split(': ')[1]) as number[];
       const after = eval(data[i + 2].split(': ')[1]) as number[];
-      const [opcode, a, b, c] = data[i + 1].split(' ').map((value) => parseInt(value));
+      const [opcode, a, b, c] = data[i + 1].split(' ').asInt();
       samples.push({ id: samples.length, before, after, opcode, a, b, c });
       i += 2;
     } else {
-      const [opcode, a, b, c] = data[i].split(' ').map((value) => parseInt(value));
+      const [opcode, a, b, c] = data[i].split(' ').asInt();
       operations.push({ opcode, a, b, c });
     }
   }

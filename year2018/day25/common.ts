@@ -5,5 +5,5 @@ export function manhattan(p1: Point, p2: Point) {
 }
 
 export function parse(data: string[]): Point[] {
-  return data.map((line) => line.split(',').map((value) => parseInt(value)) as Point);
+  return data.map((line) => line.split(',').asInt() as Point);
 }

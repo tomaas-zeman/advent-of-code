@@ -11,7 +11,7 @@ export function parse(data: string[]): Point[] {
     const [px, py, vx, vy] = line
       .match(/position=< *(-?\d+), *(-?\d+)> velocity=< *(-?\d+), *(-?\d+)>/)!
       .slice(1)
-      .map((value) => parseInt(value));
+      .asInt();
     return { position: [px, py], velocity: [vx, vy] };
   });
 }

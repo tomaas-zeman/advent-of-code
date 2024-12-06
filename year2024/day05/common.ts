@@ -20,10 +20,10 @@ export function parse(data: string[]): [Rules, Update[]] {
 
   for (const line of data) {
     if (line.includes('|')) {
-      const [x, y] = line.split('|').map((v) => parseInt(v));
+      const [x, y] = line.split('|').asInt();
       add(x, y);
     } else if (line.includes(',')) {
-      updates.push(line.split(',').map((v) => parseInt(v)));
+      updates.push(line.split(',').asInt());
     }
   }
 

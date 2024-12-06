@@ -66,9 +66,6 @@ export function computeScores(players: number, marbles: number) {
 }
 
 export function parseData(data: string[]): [number, number] {
-  const [_, players, marbles] = data[0]
-    .match(/(\d+) players.*worth (\d+) points/)
-    ?.map((value) => parseInt(value))!;
-
+  const [_, players, marbles] = data[0].match(/(\d+) players.*worth (\d+) points/)?.asInt()!;
   return [players, marbles];
 }

@@ -1,5 +1,5 @@
+import isEqual from 'lodash/isEqual';
 import { Config } from '../..';
-import { arraysEqual } from '../../aocutils';
 import { Instruction, parseInput } from './common';
 import { instructions } from './common';
 
@@ -24,7 +24,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
     for (let instruction of Object.values(instructions)) {
       const result = instruction.eval(sample.before, sample.a, sample.b, sample.c);
       const expectedResult = sample.after;
-      if (arraysEqual(result, expectedResult)) {
+      if (isEqual(result, expectedResult)) {
         opcodeInstruction[sample.opcode].add(instruction);
       }
     }

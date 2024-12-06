@@ -1,10 +1,10 @@
+import countBy from 'lodash/countBy';
 import { Config } from '../..';
-import { counter } from '../../aocutils';
 import { parseInput } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
   const [list1, list2] = parseInput(data);
-  const list2Counts = counter(list2);
+  const list2Counts = countBy(list2);
 
   const { visualization } = config;
   await visualization.start();
