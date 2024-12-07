@@ -1,5 +1,4 @@
-type Sample = {
-  id: number;
+export type Sample = {
   before: number[];
   after: number[];
 } & Operation;
@@ -23,7 +22,7 @@ export function parseInput(data: string[]): [Sample[], Operation[]] {
       const before = eval(data[i].split(': ')[1]) as number[];
       const after = eval(data[i + 2].split(': ')[1]) as number[];
       const [opcode, a, b, c] = data[i + 1].split(' ').asInt();
-      samples.push({ id: samples.length, before, after, opcode, a, b, c });
+      samples.push({ before, after, opcode, a, b, c });
       i += 2;
     } else {
       const [opcode, a, b, c] = data[i].split(' ').asInt();
