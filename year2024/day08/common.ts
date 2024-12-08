@@ -1,0 +1,52 @@
+import { Combination } from 'js-combinatorics';
+
+type Antennas = { [frequency: string]: [number, number][] };
+
+export function parse(data: string[]): [Antennas, [number, number]] {
+  const antennas: Antennas = {};
+
+  for (let x = 0; x < data.length; x++) {
+    for (let y = 0; y < data[0].length; y++) {
+      const tile = data[x].charAt(y);
+      if (tile === '.') {
+        continue;
+      }
+      if (!antennas[tile]) {
+        antennas[tile] = [];
+      }
+      antennas[tile].push([x, y]);
+    }
+  }
+
+  return [antennas, [data.length, data[0].length]];
+}
+
+export function countAntinodes(
+  antennas: Antennas,
+  areaSize: [number, number],
+  multiples: number[],
+) {
+  const [width, height] = areaSize;
+  const antinodes = new Set();
+
+  for (const frequency in antennas) {
+    for (const pair of new Combination(antennas[frequency], 2)) {
+      const [[x1, y1], [x2, y2]] = pair;
+      const vector = [x2 - x1, y2 - y1];
+
+      for (const multiple of multiples) {
+        const options = [
+          [x1 - vector[0] * multiple, y1 - vector[1] * multiple],
+          [x2 + vector[0] * multiple, y2 + vector[1] * multiple],
+        ];
+        options.forEach(([x, y]) => {
+          if (x >= 0 && x < width && y >= 0 && y < height) {
+            antinodes.add(`${x}:${y}`);
+          }
+        });
+      }
+    }
+  }
+
+  return antinodes.size;
+}
