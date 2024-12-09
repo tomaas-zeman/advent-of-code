@@ -31,7 +31,7 @@ export default function Visualizer(props: VisualizerProps) {
 
       setPolymer(item.polymer);
       setIndex(item.index);
-    }, 200);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [props.runVisualization]);
@@ -43,7 +43,7 @@ export default function Visualizer(props: VisualizerProps) {
         <div
           className="
           absolute inset-0 
-          transition ease-in-out duration-300 
+          transition ease-in-out duration-[400] 
           border-solid border-4 border-green-200 rounded-md 
           w-[3.5rem] h-10 
           -left-[0.8rem] -top-[0.4rem] 
