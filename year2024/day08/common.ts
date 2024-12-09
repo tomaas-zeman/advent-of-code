@@ -8,7 +8,7 @@ export function parse(data: string[]): [Antennas, [number, number]] {
 
   for (let x = 0; x < data.length; x++) {
     for (let y = 0; y < data[0].length; y++) {
-      const tile = data[x].charAt(y);
+      const tile = data[x][y];
       if (tile === '.') {
         continue;
       }
