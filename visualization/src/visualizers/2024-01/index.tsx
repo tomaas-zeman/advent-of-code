@@ -60,7 +60,7 @@ function processCircle(
       },
       { once: true },
     );
-  }, 100);
+  }, 300);
 }
 
 const Circle = forwardRef<HTMLDivElement, CircleProps>(({ number, count }, ref) => {
@@ -82,7 +82,7 @@ const Circle = forwardRef<HTMLDivElement, CircleProps>(({ number, count }, ref) 
       style={{
         left: `${position.x}vw`,
         top: `${position.y}vh`,
-        transition: 'transform 1s ease, opacity 0.5s ease',
+        transition: 'transform 2s ease, opacity 0.5s ease',
       }}
     >
       <span className="font-bold text-lg">{number}</span>
@@ -98,7 +98,6 @@ export default function Visualizer(props: VisualizerProps) {
   const resultDivRef = useRef<HTMLDivElement>(null);
   const circleRefs = useRef({} as CircleRefs);
 
-  const [runVisualization, setRunVisualization] = useState(false);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -109,7 +108,7 @@ export default function Visualizer(props: VisualizerProps) {
 
   useEffect(() => {
     const resultDiv = resultDivRef.current;
-    if (runVisualization && resultDiv) {
+    if (props.runVisualization && resultDiv) {
       while (true) {
         if (numbersIndex.current >= numbers.length) {
           return;
@@ -131,20 +130,10 @@ export default function Visualizer(props: VisualizerProps) {
       );
       numbersIndex.current++;
     }
-  }, [total, runVisualization]);
+  }, [total, props.runVisualization]);
 
   return (
     <>
-      <button
-        className="
-          rounded-md uppercase py-3 px-6 mb-6
-          bg-blue-500 active:bg-blue-600 disabled:bg-green-500"
-        onClick={() => setRunVisualization(!runVisualization)}
-      >
-        {!runVisualization && 'Start counting!'}
-        {runVisualization && 'In progress ...'}
-      </button>
-
       <div className="w-full h-[50vh]">
         <div
           ref={resultDivRef}

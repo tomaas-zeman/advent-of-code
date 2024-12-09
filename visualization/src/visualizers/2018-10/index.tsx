@@ -31,11 +31,10 @@ export default function Visualizer(props: VisualizerProps) {
   const timeStep = useRef(100);
 
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [runVisualization, setRunVisualization] = useState(false);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (!runVisualization) {
+    if (!props.runVisualization) {
       return;
     }
 
@@ -59,8 +58,8 @@ export default function Visualizer(props: VisualizerProps) {
       }
       if (height < (buffer.current[0].isTest ? 9 : 10)) {
         clearInterval(interval);
-        setRunVisualization(false);
         setDone(true);
+        props.onVisualizationEnd();
       }
 
       setElapsedTime(time.current);
@@ -68,20 +67,11 @@ export default function Visualizer(props: VisualizerProps) {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [runVisualization]);
+  }, [props.runVisualization]);
 
   return (
     <>
-      <button
-        className="
-        rounded-md uppercase py-3 px-6 mb-6
-        bg-blue-500 active:bg-blue-600 disabled:bg-green-500"
-        onClick={() => setRunVisualization(!runVisualization)}
-        disabled={done}
-      >
-        {!runVisualization && !done && 'Move points!'}
-        {(runVisualization || done) && `Elapsed time: ${elapsedTime}`}
-      </button>
+      {(props.runVisualization || done) && `Elapsed time: ${elapsedTime}`}
       <div className="w-full h-[50vh]" ref={chartRef} />
     </>
   );

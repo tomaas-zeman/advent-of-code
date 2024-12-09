@@ -15,6 +15,7 @@ function App() {
   const [state, setState] = useState<State>(State.IDLE);
   const [date, setDate] = useState<string>('');
   const [bufferSize, setBufferSize] = useState(0);
+  const [runVisualization, setRunVisualization] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:3333');
@@ -37,11 +38,18 @@ function App() {
 
   // For demo purposes
   // useEffect(() => {
-  //   visualizer.current = visualizers['2024']['01'];
+  //   visualizer.current = visualizers['2024']['08'];
   //   buffer.current.push({
-  //     counts: {3: 3, 4: 1, 5: 1, 9: 1},
-  //     numbers: [3, 4, 2, 1, 3, 3]
-  //   })
+  //     areaSize: [12, 12],
+  //     antennas: {
+  //       A: [
+  //         [3, 5],
+  //         [8, 9],
+  //         [10, 10],
+  //       ],
+  //     },
+  //   });
+  //   buffer.current.push({ antinode: [1, 2] });
   //   setBufferSize(buffer.current.length);
   //   setState(State.DATA_LOADED);
   // }, []);
@@ -50,10 +58,26 @@ function App() {
 
   return (
     <div className="container m-20">
-      <h1 className="text-5xl mb-6">Advent of Code Visualization</h1>
-      <h2 className="text-xl italic mb-6">{date}</h2>
+      <div className="flex">
+        <div>
+          <h1 className="text-5xl mb-6">Advent of Code Visualization</h1>
+          <h2 className="text-xl italic mb-6">{date}</h2>
+        </div>
+        <button
+          className="rounded-md bg-blue-500 py-3 px-6 uppercase mb-6 active:bg-blue-600 ml-10 h-min"
+          onClick={() => setRunVisualization(!runVisualization)}
+        >
+          Toggle visualization
+        </button>
+      </div>
       <hr className="mb-6" />
-      {state === State.DATA_LOADED && <Visualizer buffer={buffer.current} />}
+      {state === State.DATA_LOADED && (
+        <Visualizer
+          buffer={buffer.current}
+          runVisualization={runVisualization}
+          onVisualizationEnd={() => setRunVisualization(false)}
+        />
+      )}
       {state !== State.DATA_LOADED && (
         <div className="text-xl">Waiting for visualization data ... buffer size: {bufferSize}</div>
       )}

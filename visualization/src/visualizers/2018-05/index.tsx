@@ -8,13 +8,11 @@ type Data = {
 
 export default function Visualizer(props: VisualizerProps) {
   const buffer = useRef(props.buffer as Data[]);
-
-  const [runVisualization, setRunVisualization] = useState(false);
   const [polymer, setPolymer] = useState('');
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (!runVisualization) {
+    if (!props.runVisualization) {
       const item = buffer.current.shift();
       if (!item) {
         return;
@@ -36,16 +34,10 @@ export default function Visualizer(props: VisualizerProps) {
     }, 200);
 
     return () => clearInterval(interval);
-  }, [runVisualization]);
+  }, [props.runVisualization]);
 
   return (
     <>
-      <button
-        className="rounded-md bg-blue-500 py-3 px-6 uppercase mb-6 active:bg-blue-600"
-        onClick={() => setRunVisualization(true)}
-      >
-        Reduce polymer!
-      </button>
       <div className="relative tracking-[0.5rem] font-mono text-xl">
         {polymer}
         <div

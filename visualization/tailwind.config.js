@@ -4,5 +4,10 @@ export default {
   theme: {
     extend: {},
   },
+  safelist: [
+    {
+      pattern: /border-(red|gray|green)-\d00/,
+    },
+  ],
   plugins: [],
 };

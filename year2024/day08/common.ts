@@ -1,4 +1,5 @@
 import { Combination } from 'js-combinatorics';
+import { Config } from '../..';
 
 type Antennas = { [frequency: string]: [number, number][] };
 
@@ -21,13 +22,18 @@ export function parse(data: string[]): [Antennas, [number, number]] {
   return [antennas, [data.length, data[0].length]];
 }
 
-export function countAntinodes(
+export async function countAntinodes(
   antennas: Antennas,
   areaSize: [number, number],
   multiples: number[],
+  config: Config,
 ) {
   const [width, height] = areaSize;
   const antinodes = new Set();
+
+  const { visualization } = config;
+  await visualization.start();
+  visualization.sendData({ areaSize, antennas })
 
   for (const frequency in antennas) {
     for (const pair of new Combination(antennas[frequency], 2)) {
@@ -41,12 +47,15 @@ export function countAntinodes(
         ];
         options.forEach(([x, y]) => {
           if (x >= 0 && x < width && y >= 0 && y < height) {
+            visualization.sendData({ antinode: [x, y] });
             antinodes.add(`${x}:${y}`);
           }
         });
       }
     }
   }
+
+  visualization.stop();
 
   return antinodes.size;
 }
