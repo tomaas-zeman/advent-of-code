@@ -24,6 +24,10 @@ export async function run(data: string[], config: Config): Promise<string | numb
   let [fs, blockId] = parse(data);
   let right = fs.length - 1;
 
+  const { visualization } = config;
+  await visualization.start();
+  visualization.sendData({ fs });
+
   while (blockId > 0) {
     const block = [];
     while (fs[right] !== blockId) {
@@ -38,10 +42,17 @@ export async function run(data: string[], config: Config): Promise<string | numb
     if (left >= 0) {
       const nulls = fs.splice(left, block.length, ...block);
       fs.splice(right + 1, block.length, ...nulls);
+      visualization.sendData({
+        length: block.length,
+        source: right + 1,
+        destination: left,
+      });
     }
 
     blockId--;
   }
+
+  visualization.stop();
 
   return computeCheckSum(fs);
 }

@@ -38,18 +38,11 @@ function App() {
 
   // For demo purposes
   // useEffect(() => {
-  //   visualizer.current = visualizers['2024']['08'];
+  //   visualizer.current = visualizers['2024']['09'];
   //   buffer.current.push({
-  //     areaSize: [12, 12],
-  //     antennas: {
-  //       A: [
-  //         [3, 5],
-  //         [8, 9],
-  //         [10, 10],
-  //       ],
-  //     },
+  //     fs: new Array(100000).fill(1),
   //   });
-  //   buffer.current.push({ antinode: [1, 2] });
+  //   buffer.current.push({ source: 40, destination: 2, length: 2 });
   //   setBufferSize(buffer.current.length);
   //   setState(State.DATA_LOADED);
   // }, []);
