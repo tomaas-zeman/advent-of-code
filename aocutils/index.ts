@@ -14,6 +14,7 @@ export class Matrix<T> {
   private neighborChanges = new CartesianProduct([-1, 0, 1], [-1, 0, 1])
     .toArray()
     .filter(([x, y]) => x !== 0 || y !== 0);
+  private neighborChangesOrthogonal = this.neighborChanges.filter(([x, y]) => x === 0 || y === 0);
 
   constructor(data: T[][]) {
     this.data = data;
@@ -100,16 +101,23 @@ export class Matrix<T> {
     return items;
   }
 
-  neighbors(row: number, col: number): T[] {
-    return this.neighborChanges
+  neighbors(row: number, col: number, includeDiagonal = true): T[] {
+    return this.neighborPositions(row, col, includeDiagonal).map(
+      ([row, col]) => this.data[row][col],
+    );
+  }
+
+  neighborPositions(row: number, col: number, includeDiagonal = true): [number, number][] {
+    const changes = includeDiagonal ? this.neighborChanges : this.neighborChangesOrthogonal;
+    return changes
       .map(([dx, dy]) => {
         const newRow = row + dx;
         const newCol = col + dy;
         return newRow >= 0 && newRow < this.rows && newCol >= 0 && newCol < this.cols
-          ? this.data[newRow][newCol]
+          ? [newRow, newCol]
           : null;
       })
-      .filter(Boolean) as T[];
+      .filter(Boolean) as [number, number][];
   }
 
   search(value: T): [number, number] | null {
@@ -178,5 +186,11 @@ export function mod(number: number, base: number) {
 export function loadPolyfills() {
   Array.prototype.asInt = function () {
     return this.map((value) => parseInt(value));
+  };
+  Array.prototype.get = function (index: number) {
+    if (index >= 0) {
+      return this[index];
+    }
+    return this[this.length + index];
   };
 }
