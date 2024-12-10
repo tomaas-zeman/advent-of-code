@@ -62,11 +62,11 @@ export class Matrix<T> {
     this.data[row][col] = value;
   }
 
-  getRow(row: number): T[] {
+  row(row: number): T[] {
     return this.data[row];
   }
 
-  getColumn(col: number): T[] {
+  column(col: number): T[] {
     const data: T[] = [];
     for (let row = 0; row < this.rows; row++) {
       data.push(this.data[row][col]);

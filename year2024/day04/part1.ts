@@ -13,12 +13,12 @@ export async function run(data: string[], config: Config): Promise<string | numb
 
   // Rows
   for (let row = 0; row < board.rows; row++) {
-    count += countValid(...pairwise(board.getRow(row), WORD_LENGTH));
+    count += countValid(...pairwise(board.row(row), WORD_LENGTH));
   }
 
   // Columns
   for (let col = 0; col < board.cols; col++) {
-    count += countValid(...pairwise(board.getColumn(col), WORD_LENGTH));
+    count += countValid(...pairwise(board.column(col), WORD_LENGTH));
   }
 
   // Diagonals

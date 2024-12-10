@@ -21,10 +21,10 @@ export async function run(data: string[], config: Config): Promise<string | numb
   }
 
   const infinitePoints = new Set([
-    ...space.getRow(0),
-    ...space.getRow(space.rows - 1),
-    ...space.getColumn(0),
-    ...space.getColumn(space.cols - 1),
+    ...space.row(0),
+    ...space.row(space.rows - 1),
+    ...space.column(0),
+    ...space.column(space.cols - 1),
   ]);
 
   const counts = countBy([...space.values()].filter((value) => !infinitePoints.has(value)));
