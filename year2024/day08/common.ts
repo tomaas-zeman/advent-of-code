@@ -1,21 +1,18 @@
 import { Combination } from 'js-combinatorics';
 import { Config } from '../..';
+import { DefaultMap } from '../../aocutils';
 
-type Antennas = { [frequency: string]: [number, number][] };
+type Antennas = DefaultMap<string, number[][]>;
 
 export function parse(data: string[]): [Antennas, [number, number]] {
-  const antennas: Antennas = {};
+  const antennas = new DefaultMap<string, number[][]>(() => []);
 
   for (let x = 0; x < data.length; x++) {
     for (let y = 0; y < data[0].length; y++) {
       const tile = data[x][y];
-      if (tile === '.') {
-        continue;
+      if (tile !== '.') {
+        antennas.get(tile).push([x, y]);
       }
-      if (!antennas[tile]) {
-        antennas[tile] = [];
-      }
-      antennas[tile].push([x, y]);
     }
   }
 
@@ -33,10 +30,10 @@ export async function countAntinodes(
 
   const { visualization } = config;
   await visualization.start();
-  visualization.sendData({ areaSize, antennas })
+  visualization.sendData({ areaSize, antennas });
 
   for (const frequency in antennas) {
-    for (const pair of new Combination(antennas[frequency], 2)) {
+    for (const pair of new Combination(antennas.get(frequency), 2)) {
       const [[x1, y1], [x2, y2]] = pair;
       const vector = [x2 - x1, y2 - y1];
 

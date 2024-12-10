@@ -173,6 +173,34 @@ export function pairwise<T>(arr: T[], length = 2): T[][] {
   return pairs;
 }
 
+//---------------
+//     MAPS     -
+//---------------
+
+type DefaultValue<T> = T | (() => T);
+
+export class DefaultMap<K, V> extends Map<K, V> {
+  private defaultValue: DefaultValue<V>;
+
+  constructor(defaultValue: DefaultValue<V>, iterable?: Iterable<[K, V]>) {
+    super(iterable);
+    this.defaultValue = defaultValue;
+  }
+
+  private getDefaultValue() {
+    return isFunction(this.defaultValue) ? this.defaultValue() : this.defaultValue;
+  }
+
+  get(key: K): V {
+    let value = super.get(key);
+    if (value === undefined) {
+      value = this.getDefaultValue();
+      super.set(key, value);
+    }
+    return value;
+  }
+}
+
 //--------------------
 //     UTILITIES     -
 //--------------------
@@ -193,4 +221,8 @@ export function loadPolyfills() {
     }
     return this[this.length + index];
   };
+}
+
+export function isFunction(variable: any): variable is Function {
+  return typeof variable === 'function';
 }

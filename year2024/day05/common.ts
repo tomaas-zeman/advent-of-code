@@ -1,27 +1,18 @@
-import { sum } from '../../aocutils';
+import { DefaultMap, sum } from '../../aocutils';
 
-type Rules = { [key: number]: { before: Set<number>; after: Set<number> } };
+type Rule = { before: Set<number>; after: Set<number> };
+type Rules = DefaultMap<number, Rule>;
 type Update = number[];
 
 export function parse(data: string[]): [Rules, Update[]] {
-  const rules: Rules = {};
+  const rules = new DefaultMap<number, Rule>(() => ({ before: new Set(), after: new Set() }));
   const updates: Update[] = [];
-
-  function add(x: number, y: number) {
-    if (!rules[x]) {
-      rules[x] = { before: new Set(), after: new Set() };
-    }
-    if (!rules[y]) {
-      rules[y] = { before: new Set(), after: new Set() };
-    }
-    rules[x].after.add(y);
-    rules[y].before.add(x);
-  }
 
   for (const line of data) {
     if (line.includes('|')) {
       const [x, y] = line.split('|').asInt();
-      add(x, y);
+      rules.get(x).after.add(y);
+      rules.get(y).before.add(x);
     } else if (line.includes(',')) {
       updates.push(line.split(',').asInt());
     }
@@ -32,9 +23,9 @@ export function parse(data: string[]): [Rules, Update[]] {
 
 export function sort(update: Update, rules: Rules) {
   return update.toSorted((a, b) => {
-    if (rules[a].before.has(b)) {
+    if (rules.get(a).before.has(b)) {
       return 1;
-    } else if (rules[a].after.has(b)) {
+    } else if (rules.get(a).after.has(b)) {
       return -1;
     } else {
       return 0;

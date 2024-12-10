@@ -1,4 +1,4 @@
-import { Matrix } from '../../aocutils';
+import { DefaultMap, Matrix } from '../../aocutils';
 
 export type Point = [number, number];
 
@@ -9,29 +9,19 @@ function parse(data: string[]): [Matrix<number>, Point[]] {
 }
 
 function calculateScores(completePaths: Point[][], pathHash: (path: Point[]) => string) {
-  const scores = completePaths.reduce(
-    (acc, path) => {
-      const trailheadHash = path[0].join(':');
-      if (!acc[trailheadHash]) {
-        acc[trailheadHash] = new Set();
-      }
-      acc[trailheadHash].add(pathHash(path));
-      return acc;
-    },
-    {} as { [trailhead: string]: Set<string> },
-  );
+  const scores = new DefaultMap<string, Set<string>>(() => new Set());
 
-  return Object.values(scores).reduce((sum, score) => sum + score.size, 0);
+  for (const path of completePaths) {
+    const trailheadHash = path[0].join(':');
+    scores.get(trailheadHash).add(pathHash(path));
+  }
+
+  return scores.values().reduce((sum, score) => sum + score.size, 0);
 }
 
-export function calculateTrailheadRatings(data: string[], hash: (path: Point[]) => string): number {
-  const [map, trailheads] = parse(data);
-
+function findAllPaths(map: Matrix<number>, trailheads: Point[]) {
   const completePaths: Point[][] = [];
-  const pathsInProgress = trailheads.reduce((paths, trailhead) => {
-    paths.push([trailhead]);
-    return paths;
-  }, [] as Point[][]);
+  const pathsInProgress = trailheads.map((trailhead) => [trailhead]);
 
   while (pathsInProgress.length > 0) {
     const path = pathsInProgress.pop()!;
@@ -47,5 +37,11 @@ export function calculateTrailheadRatings(data: string[], hash: (path: Point[]) 
     }
   }
 
-  return calculateScores(completePaths, hash);
+  return completePaths;
+}
+
+export function calculateTrailheadRatings(data: string[], hash: (path: Point[]) => string): number {
+  const [map, trailheads] = parse(data);
+  const paths = findAllPaths(map, trailheads);
+  return calculateScores(paths, hash);
 }
