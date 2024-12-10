@@ -1,4 +1,4 @@
-import { DefaultMap, Matrix } from '../../aocutils';
+import { DefaultMap, HashSet, Matrix } from '../../aocutils';
 
 export type Point = [number, number];
 
@@ -8,12 +8,12 @@ function parse(data: string[]): [Matrix<number>, Point[]] {
   return [map, trailheads];
 }
 
-function calculateScores(completePaths: Point[][], pathHash: (path: Point[]) => string) {
-  const scores = new DefaultMap<string, Set<string>>(() => new Set());
+function calculateScores(completePaths: Point[][], getItemToCount: (path: Point[]) => Point[] | Point) {
+  const scores = new DefaultMap<string, Set<Point[] | Point>>(() => new HashSet());
 
   for (const path of completePaths) {
     const trailheadHash = path[0].join(':');
-    scores.get(trailheadHash).add(pathHash(path));
+    scores.get(trailheadHash).add(getItemToCount(path));
   }
 
   return scores.values().reduce((sum, score) => sum + score.size, 0);
@@ -40,8 +40,8 @@ function findAllPaths(map: Matrix<number>, trailheads: Point[]) {
   return completePaths;
 }
 
-export function calculateTrailheadRatings(data: string[], hash: (path: Point[]) => string): number {
+export function calculateTrailheadRatings(data: string[], getItemToCount: (path: Point[]) => Point[] | Point): number {
   const [map, trailheads] = parse(data);
   const paths = findAllPaths(map, trailheads);
-  return calculateScores(paths, hash);
+  return calculateScores(paths, getItemToCount);
 }

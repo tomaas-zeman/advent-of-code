@@ -173,6 +173,40 @@ export function pairwise<T>(arr: T[], length = 2): T[][] {
   return pairs;
 }
 
+export type PriorityQueueItem<T> = { value: T; priority: number };
+
+export class PriorityQueue<T> {
+  private queue: PriorityQueueItem<T>[] = [];
+
+  enqueue(item: PriorityQueueItem<T>) {
+    if (this.size() === 0) {
+      this.queue.push(item);
+      return;
+    }
+
+    for (let i = 0; i < this.queue.length; i++) {
+      if (item.priority < this.queue[i].priority) {
+        this.queue.splice(i, 0, item);
+        return;
+      }
+    }
+
+    this.queue.push(item);
+  }
+
+  dequeue() {
+    return this.queue.shift();
+  }
+
+  peek(): PriorityQueueItem<T> | undefined {
+    return this.queue[0];
+  }
+
+  size() {
+    return this.queue.length;
+  }
+}
+
 //---------------
 //     MAPS     -
 //---------------
@@ -198,6 +232,30 @@ export class DefaultMap<K, V> extends Map<K, V> {
       super.set(key, value);
     }
     return value;
+  }
+}
+
+//---------------
+//     SETS     -
+//---------------
+
+export class HashSet<T> extends Set {
+  add(value: T) {
+    return super.add(JSON.stringify(value));
+  }
+
+  has(value: T) {
+    return super.has(JSON.stringify(value));
+  }
+
+  delete(value: T) {
+    return super.delete(JSON.stringify(value));
+  }
+
+  *values(): SetIterator<T> {
+    for (const item of super.values()) {
+      yield JSON.parse(item);
+    }
   }
 }
 
