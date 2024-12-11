@@ -173,10 +173,14 @@ export function pairwise<T>(arr: T[], length = 2): T[][] {
   return pairs;
 }
 
-export type PriorityQueueItem<T> = { value: T; priority: number };
+export type PriorityQueueItem<T> = { priority: number } & T;
 
 export class PriorityQueue<T> {
   private queue: PriorityQueueItem<T>[] = [];
+
+  constructor(initialItems: PriorityQueueItem<T>[] = []) {
+    initialItems.forEach((item) => this.enqueue(item));
+  }
 
   enqueue(item: PriorityQueueItem<T>) {
     if (this.size() === 0) {
@@ -240,6 +244,13 @@ export class DefaultMap<K, V> extends Map<K, V> {
 //---------------
 
 export class HashSet<T> extends Set {
+  constructor(initialItems: Iterable<T> = []) {
+    super();
+    for (const item of initialItems) {
+      this.add(item);
+    }
+  }
+
   add(value: T) {
     return super.add(JSON.stringify(value));
   }
