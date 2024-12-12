@@ -4,7 +4,7 @@ export type Point = [number, number];
 
 function parse(data: string[]): [Matrix<number>, Point[]] {
   const map = new Matrix(data.map((row) => row.split('').asInt()));
-  const trailheads = map.searchAll(0);
+  const trailheads = map.findAll(0);
   return [map, trailheads];
 }
 

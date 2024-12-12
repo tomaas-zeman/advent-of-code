@@ -22,7 +22,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
     }
   }
 
-  return map.searchAll(Tile.VISITED).length;
+  return map.findAll(Tile.VISITED).length;
 }
 
 export const testResult = 41;

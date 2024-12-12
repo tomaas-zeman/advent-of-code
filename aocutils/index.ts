@@ -120,7 +120,7 @@ export class Matrix<T> {
       .filter(Boolean) as [number, number][];
   }
 
-  search(value: T): [number, number] | null {
+  find(value: T): [number, number] | null {
     for (const [row, col, val] of this.entries()) {
       if (value === val) {
         return [row, col];
@@ -129,7 +129,7 @@ export class Matrix<T> {
     return null;
   }
 
-  searchAll(value: T): [number, number][] {
+  findAll(value: T): [number, number][] {
     const positions: [number, number][] = [];
     for (const [row, col, val] of this.entries()) {
       if (value === val) {

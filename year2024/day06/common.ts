@@ -15,6 +15,6 @@ export const MOVEMENT_CHANGES: [number, number][] = [
 
 export function parse(data: string[]): [Matrix<string>, [number, number]] {
   const startingMap = new Matrix(data.map((line) => line.split('')));
-  const startingPosition = startingMap.search(Tile.GUARD)!;
+  const startingPosition = startingMap.find(Tile.GUARD)!;
   return [startingMap, startingPosition];
 }
