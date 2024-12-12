@@ -237,6 +237,10 @@ export class DefaultMap<K, V> extends Map<K, V> {
     }
     return value;
   }
+
+  mapItem(key: K, mappingFn: (value: V) => V) {
+    this.set(key, mappingFn(this.get(key)));
+  }
 }
 
 //---------------

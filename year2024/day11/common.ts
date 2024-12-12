@@ -29,7 +29,7 @@ export function calculateStonesAfterBlinks(counts: DefaultMap<number, number>, b
     const newCounts = new DefaultMap<number, number>(0);
     for (const [number, count] of counts.entries()) {
       for (const newNumber of getNewStoneNumbers(number)) {
-        newCounts.set(newNumber, newCounts.get(newNumber) + count);
+        newCounts.mapItem(newNumber, (value) => value + count);
       }
     }
     counts = newCounts;
