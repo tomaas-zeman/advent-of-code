@@ -143,6 +143,14 @@ export class Matrix<T> {
     return new Matrix(this.data.map((row) => row.slice()));
   }
 
+  pad(padSize: number, padValue: T): Matrix<T> {
+    const padded = Matrix.create(this.rows + padSize * 2, this.cols + padSize * 2, padValue);
+    for (const [row, col, value] of this.entries()) {
+      padded.set(row + padSize, col + padSize, value);
+    }
+    return padded;
+  }
+
   print(padSize = 0): void {
     const pad = (value: T) =>
       (typeof value === 'string' ? (value as String) : String(value)).padStart(padSize, ' ');
