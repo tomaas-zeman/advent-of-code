@@ -38,11 +38,8 @@ function App() {
 
   // For demo purposes
   // useEffect(() => {
-  //   visualizer.current = visualizers['2024']['09'];
-  //   buffer.current.push({
-  //     fs: new Array(100000).fill(1),
-  //   });
-  //   buffer.current.push({ source: 40, destination: 2, length: 2 });
+  //   visualizer.current = visualizers['2024']['14'];
+  //   buffer.current.push(...demodata);
   //   setBufferSize(buffer.current.length);
   //   setState(State.DATA_LOADED);
   // }, []);
@@ -57,7 +54,11 @@ function App() {
           <h2 className="text-xl italic mb-6">{date}</h2>
         </div>
         <button
-          className="rounded-md bg-blue-500 py-3 px-6 uppercase mb-6 active:bg-blue-600 ml-10 h-min"
+          className={`
+            rounded-md py-3 px-6 uppercase mb-6 ml-10 h-min
+            ${runVisualization && 'bg-green-600 active:bg-green-700'}
+            ${!runVisualization && 'bg-gray-500 active:bg-gray-600'}
+          `}
           onClick={() => setRunVisualization(!runVisualization)}
         >
           Toggle visualization

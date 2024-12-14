@@ -28,7 +28,11 @@ export async function run(data: string[], config: Config): Promise<string | numb
     return 0;
   }
 
-  const [lobby, robots] = parse(data, 101, 103);
+  const { visualization } = config;
+  await visualization.start();
+
+  const [width, height] = [101, 103];
+  const [lobby, robots] = parse(data, width, height);
   const result = { step: 0, clustering: 0 };
 
   for (let step = 0; step < 10000; step++) {
@@ -36,14 +40,19 @@ export async function run(data: string[], config: Config): Promise<string | numb
       lobby.moveRobot(robot);
     }
 
+    visualization.sendData({ robots });
+
     const clustering = calculateClustering(lobby);
     if (clustering > result.clustering) {
       result.clustering = clustering;
-      result.step = step + 1;
+      result.step = step;
     }
   }
 
-  return result.step;
+  visualization.sendData({ width, height, step: result.step });
+  visualization.stop();
+
+  return result.step + 1;
 }
 
 export const testResult = 0;
