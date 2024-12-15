@@ -1,6 +1,9 @@
 import { CartesianProduct } from 'js-combinatorics';
 import blessed, { Widgets } from 'blessed';
 import color from 'cli-color';
+import GraphologyGraph from 'graphology';
+// import { renderToPNG } from 'graphology-canvas/node';
+// import forceLayout from 'graphology-layout-force';
 import { Config } from '..';
 
 //-------------------
@@ -295,6 +298,45 @@ export class HashSet<T> extends Set {
   }
 }
 
+//-----------------
+//     GRAPHS     -
+//-----------------
+
+export class Graph {
+  private directed: boolean;
+
+  private nodes: string[] = [];
+  private edges: [string, string, number][] = [];
+
+  constructor(directed = false) {
+    this.directed = directed;
+  }
+
+  addNode(node: string) {
+    this.nodes.push(node);
+  }
+
+  addEdge(source: string, target: string, weight: number = 0) {
+    this.edges.push([source, target, weight]);
+  }
+
+  asGraphologyGraph() {
+    const graph = new GraphologyGraph({
+      multi: true,
+      type: this.directed ? 'directed' : 'undirected',
+    });
+    this.nodes.forEach((node) => graph.addNode(node));
+    this.edges.forEach(([source, target, weight]) => graph.addEdge(source, target, { weight }));
+    return graph;
+  }
+
+  // draw() {
+  //   const graph = this.asGraphologyGraph();
+  //   forceLayout.assign(graph, 50);
+  //   renderToPNG(graph, 'graph.png', {}, () => {});
+  // }
+}
+
 //--------------------
 //     UTILITIES     -
 //--------------------
@@ -354,12 +396,12 @@ export class MatrixAnimation<T> {
     if (!this.config.visualization.isEnabled()) {
       return;
     }
-    
+
     let content = this.matrix.toString(0, this.animationConfig.colorMapping);
     Object.entries(this.animationConfig.characterMapping).forEach(([oldChar, newChar]) => {
       content = content.replaceAll(oldChar, newChar);
     });
-   
+
     this.box.setContent(content);
     this.screen.render();
     return new Promise((resolve) => {
