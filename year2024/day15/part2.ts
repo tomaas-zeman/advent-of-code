@@ -1,7 +1,6 @@
 import { Config } from '../..';
 import { Matrix } from '../../aocutils';
-import { organizeWarehouse, parse, sumGpsCoordinates, Type } from './common';
-
+import { merge, organizeWarehouse, parse, sumGpsCoordinates, Type } from './common';
 
 function getWholeBox(warehouse: Matrix<string>, part: [number, number]): [number, number][] {
   if (warehouse.get(...part) === Type.BOX_L) {
@@ -23,7 +22,7 @@ function determineBoxesToMove(
 
   while (queue.length > 0) {
     const currentPos = queue.shift()!;
-    const nextPos: [number, number] = [currentPos[0] + change[0], currentPos[1] + change[1]];
+    const nextPos = merge(currentPos, change);
     const nextVal = warehouse.get(...nextPos);
 
     if (nextVal === Type.WALL) {
@@ -34,20 +33,25 @@ function determineBoxesToMove(
     }
 
     const box = getWholeBox(warehouse, nextPos);
+    
+    // avoid duplicates
     if (!boxes.find(([row, col]) => row === box[0][0] && col === box[0][1])) {
       boxes.push(...box);
     }
-    
-    if (change[0] !== 0) { // up/down
+
+    if (change[0] !== 0) {
+      // up & down - add all boxes
       queue.push(...box);
-    } else if (change[1] === -1) { // left
+    } else if (change[1] === -1) {
+      // left - add left side of the box
       queue.push(box[0]);
-    } else if (change[1] === 1) { // right
+    } else if (change[1] === 1) {
+      // right - add right side of the box
       queue.push(box[1]);
     }
   }
 
-  return boxes
+  return boxes;
 }
 
 export async function run(data: string[], config: Config): Promise<string | number> {
@@ -57,4 +61,3 @@ export async function run(data: string[], config: Config): Promise<string | numb
 }
 
 export const testResult = 9021;
-

@@ -9,7 +9,7 @@ function determineBoxesToMove(
 ) {
   const boxes = [];
 
-  let nextPosition: [number, number] = [robotPosition[0] + change[0], robotPosition[1] + change[1]];
+  let nextPosition = merge(robotPosition, change);
   while (warehouse.get(...nextPosition) === Type.BOX) {
     boxes.push(nextPosition);
     nextPosition = merge(nextPosition, change);

@@ -44,11 +44,8 @@ export function sumGpsCoordinates(warehouse: Matrix<string>, config: Config): nu
     .reduce((sum, [row, col]) => sum + 100 * (row - 1) + (col - 1), 0);
 }
 
-export function merge(
-  position: [number, number],
-  positionChange: [number, number],
-): [number, number] {
-  return [position[0] + positionChange[0], position[1] + positionChange[1]];
+export function merge(position: [number, number], change: [number, number]): [number, number] {
+  return [position[0] + change[0], position[1] + change[1]];
 }
 
 function sortBoxes(boxes: [number, number][], positionChange: [number, number]) {
@@ -58,6 +55,11 @@ function sortBoxes(boxes: [number, number][], positionChange: [number, number]) 
     }
     return positionChange[1] * (col2 - col1);
   });
+}
+
+function moveObject(current: [number, number], next: [number, number], warehouse: Matrix<string>) {
+  warehouse.set(...next, warehouse.get(...current));
+  warehouse.set(...current, Type.FREE);
 }
 
 function animationConfig() {
@@ -96,8 +98,7 @@ export async function organizeWarehouse(
     const nextValue = warehouse.get(...nextPosition);
 
     if (nextValue === Type.FREE) {
-      warehouse.set(...robotPosition, Type.FREE);
-      warehouse.set(...nextPosition, Type.ROBOT);
+      moveObject(robotPosition, nextPosition, warehouse);
       robotPosition = nextPosition;
     } else if (nextValue === Type.BOX_L || nextValue === Type.BOX_R || nextValue === Type.BOX) {
       const boxesToMove = sortBoxes(
@@ -107,13 +108,11 @@ export async function organizeWarehouse(
 
       for (const orignalBoxPosition of boxesToMove) {
         const newBoxPosition = merge(orignalBoxPosition, positionChange);
-        warehouse.set(...newBoxPosition, warehouse.get(...orignalBoxPosition));
-        warehouse.set(...orignalBoxPosition, Type.FREE);
+        moveObject(orignalBoxPosition, newBoxPosition, warehouse);
       }
 
       if (boxesToMove.length > 0) {
-        warehouse.set(...robotPosition, Type.FREE);
-        warehouse.set(...nextPosition, Type.ROBOT);
+        moveObject(robotPosition, nextPosition, warehouse);
         robotPosition = nextPosition;
       }
     }
