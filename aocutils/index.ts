@@ -1,4 +1,7 @@
 import { CartesianProduct } from 'js-combinatorics';
+import blessed, { Widgets } from 'blessed';
+import color from 'cli-color';
+import { Config } from '..';
 
 //-------------------
 //     MATRICES     -
@@ -151,10 +154,20 @@ export class Matrix<T> {
     return padded;
   }
 
-  print(padSize = 0): void {
-    const pad = (value: T) =>
-      (typeof value === 'string' ? (value as String) : String(value)).padStart(padSize, ' ');
-    console.log(this.data.map((row) => row.map(pad).join('')).join('\n'), '\n');
+  print(padSize = 0) {
+    console.log(this.toString(padSize), '\n');
+  }
+
+  toString(padSize = 0, colorMapping: { [char: string]: number } = {}): string {
+    const processChar = (char: T) => {
+      const string = typeof char === 'string' ? (char as string) : String(char);
+      const padded = string.padStart(padSize, ' ');
+      if (string in colorMapping) {
+        return color.xterm(colorMapping[string])(padded);
+      }
+      return padded;
+    };
+    return this.data.map((row) => row.map(processChar).join('')).join('\n');
   }
 
   /**
@@ -306,4 +319,58 @@ export function loadPolyfills() {
 
 export function isFunction(variable: any): variable is Function {
   return typeof variable === 'function';
+}
+
+export type MatrixAnimationConfig = {
+  characterMapping: { [char: string]: string };
+  colorMapping: { [char: string]: number };
+};
+
+export class MatrixAnimation<T> {
+  private matrix: Matrix<T>;
+  private config: Config;
+  private animationConfig: MatrixAnimationConfig;
+
+  private screen!: Widgets.Screen;
+  private box!: Widgets.BoxElement;
+
+  constructor(matrix: Matrix<T>, config: Config, animationConfig: MatrixAnimationConfig) {
+    this.matrix = matrix;
+    this.config = config;
+    this.animationConfig = animationConfig;
+
+    if (!this.config.visualization.isEnabled()) {
+      return;
+    }
+    this.screen = blessed.screen({ smartCSR: true });
+    this.box = blessed.box();
+    this.screen.append(this.box);
+    this.screen.key(['escape', 'q', 'C-c'], function () {
+      return process.exit(0);
+    });
+  }
+
+  async render() {
+    if (!this.config.visualization.isEnabled()) {
+      return;
+    }
+    
+    let content = this.matrix.toString(0, this.animationConfig.colorMapping);
+    Object.entries(this.animationConfig.characterMapping).forEach(([oldChar, newChar]) => {
+      content = content.replaceAll(oldChar, newChar);
+    });
+   
+    this.box.setContent(content);
+    this.screen.render();
+    return new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
+  }
+
+  stop() {
+    if (!this.config.visualization.isEnabled()) {
+      return;
+    }
+    this.screen.destroy();
+  }
 }

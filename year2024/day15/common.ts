@@ -1,5 +1,5 @@
 import { Config } from '../..';
-import { Matrix } from '../../aocutils';
+import { Matrix, MatrixAnimation } from '../../aocutils';
 
 export enum Type {
   ROBOT = '@',
@@ -44,7 +44,10 @@ export function sumGpsCoordinates(warehouse: Matrix<string>, config: Config): nu
     .reduce((sum, [row, col]) => sum + 100 * (row - 1) + (col - 1), 0);
 }
 
-export function merge(position: [number, number], positionChange: [number, number]): [number, number] {
+export function merge(
+  position: [number, number],
+  positionChange: [number, number],
+): [number, number] {
   return [position[0] + positionChange[0], position[1] + positionChange[1]];
 }
 
@@ -57,7 +60,22 @@ function sortBoxes(boxes: [number, number][], positionChange: [number, number]) 
   });
 }
 
-export function organizeWarehouse(
+function animationConfig() {
+  return {
+    characterMapping: {
+      '#': '░',
+    },
+    colorMapping: {
+      '#': 26,
+      '[': 137,
+      ']': 137,
+      '.': 232,
+      '@': 48,
+    },
+  };
+}
+
+export async function organizeWarehouse(
   warehouse: Matrix<string>,
   moves: string[],
   determineBoxesToMove: (
@@ -65,8 +83,12 @@ export function organizeWarehouse(
     robotPosition: [number, number],
     positionChange: [number, number],
   ) => [number, number][],
+  config: Config,
 ) {
   let robotPosition = warehouse.find(Type.ROBOT)!;
+
+  const animation = new MatrixAnimation(warehouse, config, animationConfig());
+  await animation.render();
 
   for (const move of moves) {
     const positionChange = changes[move];
@@ -95,5 +117,9 @@ export function organizeWarehouse(
         robotPosition = nextPosition;
       }
     }
+
+    await animation.render();
   }
+
+  animation.stop();
 }

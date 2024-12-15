@@ -24,7 +24,7 @@ function determineBoxesToMove(
 
 export async function run(data: string[], config: Config): Promise<string | number> {
   const [warehouse, moves] = parse(data, config);
-  organizeWarehouse(warehouse, moves, determineBoxesToMove);
+  await organizeWarehouse(warehouse, moves, determineBoxesToMove, config);
   return sumGpsCoordinates(warehouse, config);
 }
 

@@ -12,6 +12,9 @@ export class NoVisualization {
   stop() {}
   enable() {}
   disable() {}
+  isEnabled() {
+    return false;
+  }
 }
 
 export class Visualization {
@@ -76,5 +79,9 @@ export class Visualization {
 
   disable() {
     this.disabled = true;
+  }
+
+  isEnabled() {
+    return !this.disabled;
   }
 }
