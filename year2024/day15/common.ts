@@ -58,8 +58,8 @@ function sortBoxes(boxes: [number, number][], positionChange: [number, number]) 
 }
 
 function moveObject(current: [number, number], next: [number, number], warehouse: Matrix<string>) {
-  warehouse.set(...next, warehouse.get(...current));
-  warehouse.set(...current, Type.FREE);
+  warehouse.set(next, warehouse.get(current));
+  warehouse.set(current, Type.FREE);
 }
 
 function animationConfig() {
@@ -95,7 +95,7 @@ export async function organizeWarehouse(
   for (const move of moves) {
     const positionChange = changes[move];
     const nextPosition = merge(robotPosition, positionChange);
-    const nextValue = warehouse.get(...nextPosition);
+    const nextValue = warehouse.get(nextPosition);
 
     if (nextValue === Type.FREE) {
       moveObject(robotPosition, nextPosition, warehouse);

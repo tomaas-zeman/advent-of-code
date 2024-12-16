@@ -52,7 +52,7 @@ export class Cart {
     this.position = position;
 
     // Turn if bend or intersection
-    const tile = tracks.get(...this.position);
+    const tile = tracks.get(this.position);
     if ('+\\/'.includes(tile)) {
       this.turn(tile);
     }

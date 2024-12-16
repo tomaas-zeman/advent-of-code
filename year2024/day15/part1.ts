@@ -10,12 +10,12 @@ function determineBoxesToMove(
   const boxes = [];
 
   let nextPosition = merge(robotPosition, change);
-  while (warehouse.get(...nextPosition) === Type.BOX) {
+  while (warehouse.get(nextPosition) === Type.BOX) {
     boxes.push(nextPosition);
     nextPosition = merge(nextPosition, change);
   }
 
-  if (warehouse.get(...nextPosition) !== Type.FREE) {
+  if (warehouse.get(nextPosition) !== Type.FREE) {
     return [];
   }
 

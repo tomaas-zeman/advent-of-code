@@ -66,7 +66,7 @@ export function calculateFencingPrice(
 }
 
 export function getFences(region: Region, garden: Matrix<Plot>) {
-  const name = garden.get(...region[0]).name;
+  const name = garden.get(region[0]).name;
 
   const fences: FenceConfiguration[] = [];
 

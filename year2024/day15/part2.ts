@@ -3,10 +3,10 @@ import { Matrix } from '../../aocutils';
 import { merge, organizeWarehouse, parse, sumGpsCoordinates, Type } from './common';
 
 function getWholeBox(warehouse: Matrix<string>, part: [number, number]): [number, number][] {
-  if (warehouse.get(...part) === Type.BOX_L) {
+  if (warehouse.get(part) === Type.BOX_L) {
     return [part, [part[0], part[1] + 1]];
   }
-  if (warehouse.get(...part) === Type.BOX_R) {
+  if (warehouse.get(part) === Type.BOX_R) {
     return [[part[0], part[1] - 1], part];
   }
   return [];
@@ -23,7 +23,7 @@ function determineBoxesToMove(
   while (queue.length > 0) {
     const currentPos = queue.shift()!;
     const nextPos = merge(currentPos, change);
-    const nextVal = warehouse.get(...nextPos);
+    const nextVal = warehouse.get(nextPos);
 
     if (nextVal === Type.WALL) {
       return [];

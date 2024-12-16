@@ -60,12 +60,18 @@ export class Matrix<T> {
     }
   }
 
-  get(row: number, col: number): T {
+  get(point: [number, number]): T;
+  get(row: number, col: number): T;
+  get(pointOrRow: [number, number] | number, colOrNothing?: number): T {
+    const { row, col } = this.extractParams(pointOrRow, colOrNothing);
     return this.data[row][col];
   }
 
-  set(row: number, col: number, value: T) {
-    this.data[row][col] = value;
+  set(point: [number, number], value: T): void;
+  set(row: number, col: number, value: T): void;
+  set(pointOrRow: [number, number] | number, colOrValue: number | T, valueOrNothing?: T) {
+    const { row, col, value } = this.extractParams(pointOrRow, colOrValue, valueOrNothing);
+    this.data[row][col] = value as T;
   }
 
   row(row: number): T[] {
@@ -107,14 +113,28 @@ export class Matrix<T> {
     return items;
   }
 
-  neighbors(row: number, col: number, includeDiagonal = true): T[] {
+  neighbors(point: [number, number], includeDiagonal: boolean): T[];
+  neighbors(row: number, col: number, includeDiagonal: boolean): T[];
+  neighbors(
+    pointOrRow: [number, number] | number,
+    colOrIncludeDiagonal: number | boolean,
+    includeDiagonal = true,
+  ): T[] {
+    const { row, col } = this.extractParams(pointOrRow, colOrIncludeDiagonal, includeDiagonal);
     return this.neighborPositions(row, col, includeDiagonal).map(
       ([row, col]) => this.data[row][col],
     );
   }
 
-  neighborPositions(row: number, col: number, includeDiagonal = true): [number, number][] {
-    const changes = includeDiagonal ? this.neighborChanges : this.neighborChangesOrthogonal;
+  neighborPositions(point: [number, number], includeDiagonal: boolean): [number, number][];
+  neighborPositions(row: number, col: number, includeDiagonal: boolean): [number, number][];
+  neighborPositions(
+    pointOrRow: [number, number] | number,
+    colOrIncludeDiagonal: number | boolean,
+    includeDiagonal = true,
+  ): [number, number][] {
+    const { row, col, value } = this.extractParams(pointOrRow, colOrIncludeDiagonal, includeDiagonal);
+    const changes = value ? this.neighborChanges : this.neighborChangesOrthogonal;
     return changes
       .map(([dx, dy]) => {
         const newRow = row + dx;
@@ -178,6 +198,19 @@ export class Matrix<T> {
    */
   hash(): string {
     return this.data.flatMap((row) => row).join('');
+  }
+
+  private extractParams<P>(
+    pointOrRow: [number, number] | number,
+    colOrValue: number | P,
+    value?: P,
+  ) {
+    if (TypeGuard.isTuple<number>(pointOrRow)) {
+      return { row: pointOrRow[0], col: pointOrRow[1], value: colOrValue as P };
+    } else if (TypeGuard.isNumber(pointOrRow) && TypeGuard.isNumber(colOrValue)) {
+      return { row: pointOrRow, col: colOrValue, value };
+    }
+    throw new Error('Invalid arguments');
   }
 }
 
@@ -250,7 +283,7 @@ export class DefaultMap<K, V> extends Map<K, V> {
   }
 
   private getDefaultValue() {
-    return isFunction(this.defaultValue) ? this.defaultValue() : this.defaultValue;
+    return TypeGuard.isFunction(this.defaultValue) ? this.defaultValue() : this.defaultValue;
   }
 
   get(key: K): V {
@@ -359,8 +392,22 @@ export function loadPolyfills() {
   };
 }
 
-export function isFunction(variable: any): variable is Function {
-  return typeof variable === 'function';
+export class TypeGuard {
+  static isFunction(variable: any): variable is Function {
+    return typeof variable === 'function';
+  }
+
+  static isNumber(variable: any): variable is number {
+    return typeof variable === 'number';
+  }
+
+  static isArray<T>(variable: any): variable is Array<T> {
+    return Array.isArray(variable);
+  }
+
+  static isTuple<T>(variable: any): variable is [T, T] {
+    return Array.isArray(variable) && variable.length === 2;
+  }
 }
 
 export type MatrixAnimationConfig = {

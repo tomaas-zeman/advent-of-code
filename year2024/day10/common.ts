@@ -26,11 +26,11 @@ function findAllPaths(map: Matrix<number>, trailheads: Point[]) {
   while (pathsInProgress.length > 0) {
     const path = pathsInProgress.pop()!;
     const currentPosition = path.get(-1);
-    const currentSlope = map.get(...currentPosition);
-    const nextPositions = map.neighborPositions(...currentPosition, false);
+    const currentSlope = map.get(currentPosition);
+    const nextPositions = map.neighborPositions(currentPosition, false);
 
     for (const nextPosition of nextPositions) {
-      const slope = map.get(...nextPosition);
+      const slope = map.get(nextPosition);
       if (currentSlope + 1 === slope) {
         (slope === 9 ? completePaths : pathsInProgress).push([...path, nextPosition]);
       }
