@@ -33,7 +33,7 @@ for (const [obstacleRow, obstacleCol] of positions) {
       break;
     }
 
-    const move = `${row}:${col}->${nextRow},${nextCol}`;
+    const move = `${row}:${col}->${nextRow}:${nextCol}`;
     if (moves.has(move)) {
       goodObstacles++;
       break;
