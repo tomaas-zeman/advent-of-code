@@ -133,7 +133,11 @@ export class Matrix<T> {
     colOrIncludeDiagonal: number | boolean,
     includeDiagonal = true,
   ): [number, number][] {
-    const { row, col, value } = this.extractParams(pointOrRow, colOrIncludeDiagonal, includeDiagonal);
+    const { row, col, value } = this.extractParams(
+      pointOrRow,
+      colOrIncludeDiagonal,
+      includeDiagonal,
+    );
     const changes = value ? this.neighborChanges : this.neighborChangesOrthogonal;
     return changes
       .map(([dx, dy]) => {
@@ -276,10 +280,12 @@ type DefaultValue<T> = T | (() => T);
 
 export class DefaultMap<K, V> extends Map<K, V> {
   private defaultValue: DefaultValue<V>;
+  private hashKeys: boolean;
 
-  constructor(defaultValue: DefaultValue<V>, iterable?: Iterable<[K, V]>) {
+  constructor(defaultValue: DefaultValue<V>, iterable?: Iterable<[K, V]>, hashKeys = false) {
     super(iterable);
     this.defaultValue = defaultValue;
+    this.hashKeys = hashKeys;
   }
 
   private getDefaultValue() {
@@ -287,12 +293,29 @@ export class DefaultMap<K, V> extends Map<K, V> {
   }
 
   get(key: K): V {
+    key = this.getKey(key);
     let value = super.get(key);
     if (value === undefined) {
       value = this.getDefaultValue();
       super.set(key, value);
     }
     return value;
+  }
+
+  set(key: K, value: V) {
+    return super.set(this.getKey(key), value);
+  }
+
+  has(key: K) {
+    return super.has(this.getKey(key));
+  }
+
+  delete(key: K) {
+    return super.delete(this.getKey(key));
+  }
+
+  private getKey(key: K) {
+    return this.hashKeys ? (JSON.stringify(key) as K) : key;
   }
 
   mapItem(key: K, mappingFn: (value: V) => V) {
@@ -328,6 +351,10 @@ export class HashSet<T> extends Set {
     for (const item of super.values()) {
       yield JSON.parse(item);
     }
+  }
+
+  clone(): HashSet<T> {
+    return new HashSet(this.values());
   }
 }
 
@@ -413,6 +440,7 @@ export class TypeGuard {
 export type MatrixAnimationConfig = {
   characterMapping: { [char: string]: string };
   colorMapping: { [char: string]: number };
+  padSize: number;
 };
 
 export class MatrixAnimation<T> {
@@ -423,10 +451,24 @@ export class MatrixAnimation<T> {
   private screen!: Widgets.Screen;
   private box!: Widgets.BoxElement;
 
-  constructor(matrix: Matrix<T>, config: Config, animationConfig: MatrixAnimationConfig) {
+  private defaultColorMapping = {
+    '#': 26,
+    '[': 137,
+    ']': 137,
+    '.': 232,
+    '@': 48,
+    '*': 96,
+  };
+
+  constructor(matrix: Matrix<T>, config?: Config, animationConfig?: Partial<MatrixAnimationConfig>) {
     this.matrix = matrix;
-    this.config = config;
-    this.animationConfig = animationConfig;
+    this.config = config ?? { visualization: { isEnabled: () => true } } as Config;
+    this.animationConfig = {
+      colorMapping: this.defaultColorMapping,
+      characterMapping: {},
+      padSize: 0,
+      ...animationConfig,
+    };
 
     if (!this.config.visualization.isEnabled()) {
       return;
@@ -444,7 +486,10 @@ export class MatrixAnimation<T> {
       return;
     }
 
-    let content = this.matrix.toString(0, this.animationConfig.colorMapping);
+    let content = this.matrix.toString(
+      this.animationConfig.padSize,
+      this.animationConfig.colorMapping,
+    );
     Object.entries(this.animationConfig.characterMapping).forEach(([oldChar, newChar]) => {
       content = content.replaceAll(oldChar, newChar);
     });

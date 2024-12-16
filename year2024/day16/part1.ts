@@ -1,7 +1,10 @@
 import { Config } from '../..';
+import { dijkstra, parse } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
-  return '';
+  const [maze, start, end] = parse(data);
+  const [distances] = dijkstra(maze, start);
+  return distances.get(end)
 }
 
-export const testResult = null;
+export const testResult = 11048;
