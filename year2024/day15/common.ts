@@ -89,7 +89,7 @@ export async function organizeWarehouse(
 ) {
   let robotPosition = warehouse.find(Type.ROBOT)!;
 
-  const animation = new MatrixAnimation(warehouse, config, animationConfig());
+  const animation = new MatrixAnimation(warehouse, animationConfig(), config);
   await animation.render();
 
   for (const move of moves) {

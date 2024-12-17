@@ -479,8 +479,8 @@ export class MatrixAnimation<T> {
 
   constructor(
     matrix: Matrix<T>,
-    config?: Config,
     animationConfig?: Partial<MatrixAnimationConfig>,
+    config?: Config,
   ) {
     this.matrix = matrix;
     this.config = config ?? ({ visualization: { isEnabled: () => true } } as Config);
