@@ -5,6 +5,7 @@ import GraphologyGraph from 'graphology';
 // import { renderToPNG } from 'graphology-canvas/node';
 // import forceLayout from 'graphology-layout-force';
 import { Config } from '..';
+import range from 'lodash/range';
 
 //-------------------
 //     MATRICES     -
@@ -181,11 +182,15 @@ export class Matrix<T> {
     return padded;
   }
 
-  print(padSize = 0) {
-    console.log(this.toString(padSize), '\n');
+  print(padSize = 0, showNumbers = false) {
+    console.log(this.toString(padSize, {}, showNumbers), '\n');
   }
 
-  toString(padSize = 0, colorMapping: { [char: string]: number } = {}): string {
+  toString(
+    padSize = 0,
+    colorMapping: { [char: string]: number } = {},
+    showNumbers = false,
+  ): string {
     const processChar = (char: T) => {
       const string = typeof char === 'string' ? (char as string) : String(char);
       const padded = string.padStart(padSize, ' ');
@@ -194,7 +199,19 @@ export class Matrix<T> {
       }
       return padded;
     };
-    return this.data.map((row) => row.map(processChar).join('')).join('\n');
+    const header = showNumbers
+      ? range(0, this.cols)
+          .map((n) => n.toString().padStart(padSize, ' '))
+          .join('')
+      : '';
+    const data = this.data
+      .map((row, i) => {
+        const rowNumber = showNumbers ? i.toString().padStart(padSize, ' ') : '';
+        const rowText = row.map(processChar).join('');
+        return `${rowNumber} ${rowText}`;
+      })
+      .join('\n');
+    return `${showNumbers ? ''.padStart(padSize + 1) : ''}${header}\n${data}`;
   }
 
   /**
@@ -460,9 +477,13 @@ export class MatrixAnimation<T> {
     '*': 96,
   };
 
-  constructor(matrix: Matrix<T>, config?: Config, animationConfig?: Partial<MatrixAnimationConfig>) {
+  constructor(
+    matrix: Matrix<T>,
+    config?: Config,
+    animationConfig?: Partial<MatrixAnimationConfig>,
+  ) {
     this.matrix = matrix;
-    this.config = config ?? { visualization: { isEnabled: () => true } } as Config;
+    this.config = config ?? ({ visualization: { isEnabled: () => true } } as Config);
     this.animationConfig = {
       colorMapping: this.defaultColorMapping,
       characterMapping: {},
