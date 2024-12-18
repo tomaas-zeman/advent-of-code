@@ -414,6 +414,42 @@ export class Graph {
   // }
 }
 
+export type Node = [number, number];
+export type Distances = DefaultMap<Node, number>;
+export type State = { priority: number; point: Node };
+
+export function dijkstra<T>(matrix: Matrix<T>, start: Node, visitableNodes: T[]): Distances {
+  const distances: Distances = new DefaultMap(Number.MAX_SAFE_INTEGER, [], true);
+  const nodes = matrix.entries().filter(([_, __, value]) => visitableNodes.includes(value));
+  for (const [row, col] of nodes) {
+    distances.set([row, col], row === start[0] && col === start[1] ? 0 : Number.MAX_SAFE_INTEGER);
+  }
+
+  const visited = new HashSet<Node>();
+
+  const queue = new PriorityQueue<State>([{ priority: 0, point: start }]);
+  while (queue.size() > 0) {
+    const { point: current } = queue.dequeue()!;
+
+    visited.add(current);
+
+    const neighbors = matrix
+      .neighborPositions(current, false)
+      .filter((node) => !visited.has(node) && visitableNodes.includes(matrix.get(node)));
+
+    for (const next of neighbors) {
+      const newDistance = distances.get(current) + 1;
+
+      if (newDistance < distances.get(next)) {
+        distances.set(next, newDistance);
+        queue.enqueue({ priority: newDistance, point: next });
+      }
+    }
+  }
+
+  return distances;
+}
+
 //--------------------
 //     UTILITIES     -
 //--------------------
@@ -527,5 +563,43 @@ export class MatrixAnimation<T> {
       return;
     }
     this.screen.destroy();
+  }
+}
+
+export type BisectRangeDirection = 'left' | 'right';
+
+export class BisectRange {
+  private left: number;
+  private right: number;
+  private direction: BisectRangeDirection;
+  
+  current: number;
+
+  constructor(left: number, right: number) {
+    this.left = left;
+    this.right = right;
+    this.current = right;
+    this.direction = 'left';
+  }
+
+  setDirection(direction: BisectRangeDirection) {
+    this.direction = direction;
+  }
+
+  next() {
+    switch (this.direction) {
+      case 'left':
+        this.right = this.current;
+        break;
+      case 'right':
+        this.left = this.current;
+        break;
+    }
+    this.current = Math.floor((this.left + this.right) / 2);
+    return this.current;
+  }
+
+  hasNext() {
+    return this.left < this.right - 1;
   }
 }

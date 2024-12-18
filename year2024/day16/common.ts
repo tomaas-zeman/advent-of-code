@@ -1,9 +1,7 @@
-import { DefaultMap, HashSet, Matrix, PriorityQueue } from '../../aocutils';
+import { DefaultMap, HashSet, Matrix, PriorityQueue, Node, Distances } from '../../aocutils';
 
-export type Node = [number, number];
 type State = { point: Node; direction: Direction };
 type Direction = 'up' | 'down' | 'left' | 'right';
-type Distances = DefaultMap<Node, number>;
 
 export function parse(data: string[]): [Matrix<string>, Node, Node] {
   const maze = new Matrix<string>(data.map((line) => line.split('')));
