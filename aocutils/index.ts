@@ -151,6 +151,25 @@ export class Matrix<T> {
       .filter(Boolean) as [number, number][];
   }
 
+  neighborEntries(point: [number, number], includeDiagonal: boolean): [number, number, T][];
+  neighborEntries(row: number, col: number, includeDiagonal: boolean): [number, number, T][];
+  neighborEntries(
+    pointOrRow: [number, number] | number,
+    colOrIncludeDiagonal: number | boolean,
+    includeDiagonal = true,
+  ): [number, number, T][] {
+    const { row, col, value } = this.extractParams(
+      pointOrRow,
+      colOrIncludeDiagonal,
+      includeDiagonal,
+    );
+    return this.neighborPositions(row, col, !!value).map(([row, col]) => [
+      row,
+      col,
+      this.data[row][col],
+    ]);
+  }
+
   find(value: T): [number, number] | null {
     for (const [row, col, val] of this.entries()) {
       if (value === val) {
@@ -329,6 +348,13 @@ export class DefaultMap<K, V> extends Map<K, V> {
 
   delete(key: K) {
     return super.delete(this.getKey(key));
+  }
+
+  keys() {
+    if (!this.hashKeys) {
+      return super.keys();
+    }
+    return super.keys().map((k) => JSON.parse(k as string) as K);
   }
 
   private getKey(key: K) {
@@ -572,7 +598,7 @@ export class BisectRange {
   private left: number;
   private right: number;
   private direction: BisectRangeDirection;
-  
+
   current: number;
 
   constructor(left: number, right: number) {
