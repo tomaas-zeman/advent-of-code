@@ -1,5 +1,4 @@
-import isEqual from 'lodash/isEqual';
-import { DefaultMap, Matrix, Node } from '../../aocutils';
+import { DefaultMap, isEqual, Matrix, Node } from '../../aocutils';
 
 export function parse(data: string[]) {
   const map = new Matrix<string>(data.map((line) => line.split('')));

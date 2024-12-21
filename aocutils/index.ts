@@ -270,6 +270,16 @@ export function pairwise<T>(arr: T[], length = 2): T[][] {
   return pairs;
 }
 
+// Significantly faster than lodash/isEqual
+export function isEqual<T>(a: T[], b: T[]) {
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export type PriorityQueueItem<T> = { priority: number } & T;
 
 export class PriorityQueue<T> {

@@ -1,5 +1,5 @@
-import isEqual from 'lodash/isEqual';
 import { Config } from '../..';
+import { isEqual } from '../../aocutils';
 import { Instruction, parseInput } from './common';
 import { instructions } from './common';
 

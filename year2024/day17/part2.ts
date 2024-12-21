@@ -1,5 +1,5 @@
-import isEqual from 'lodash/isEqual';
 import { Config } from '../..';
+import { isEqual } from '../../aocutils';
 import { Computer, parse, Registers } from './common';
 
 function isInvalidNumber(program: number[], output: number[]) {

@@ -1,8 +1,7 @@
-import isEqual from 'lodash/isEqual';
 import { Config } from '../..';
 import { parseInput, Sample } from './common';
 import { instructions } from './common';
-import { DefaultMap } from '../../aocutils';
+import { DefaultMap, isEqual } from '../../aocutils';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
   const [samples, _] = parseInput(data);
