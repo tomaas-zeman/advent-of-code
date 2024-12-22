@@ -72,6 +72,8 @@ class Module {
   sequencesFor(initialSequences: string[]): string[] {
     let sequences: string[] = [];
     let shortestSequence = Number.MAX_SAFE_INTEGER;
+    
+    const cache = new Map<string, number>(); // try caching parts ...A and count them
 
     const explore = (sequence: string, currentChar: string, remainingChars: string) => {
       if (remainingChars.length === 0) {
