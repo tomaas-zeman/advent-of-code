@@ -12,7 +12,7 @@ export class Step {
   }
 }
 
-function ensureSteps(stepNames: string[], steps: { [name: string]: Step }) {
+function ensureSteps(stepNames: string[], steps: Record<string, Step>) {
   for (let stepName of stepNames) {
     if (!steps[stepName]) {
       steps[stepName] = new Step(stepName);
@@ -21,7 +21,7 @@ function ensureSteps(stepNames: string[], steps: { [name: string]: Step }) {
 }
 
 export function parse(data: string[]) {
-  const steps: { [name: string]: Step } = {};
+  const steps: Record<string, Step> = {};
 
   for (let line of data) {
     const match = line.match(/Step (.) must be finished before step (.) can begin/);

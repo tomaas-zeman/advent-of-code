@@ -17,7 +17,7 @@ class Marble {
 }
 
 class Scores {
-  scores: { [player: number]: number } = {};
+  scores: Record<number, number> = {};
 
   add(player: number, score: number) {
     if (!this.scores[player]) {

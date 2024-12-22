@@ -1,7 +1,7 @@
 import { WebSocketServer } from 'ws';
 import { Config } from '..';
 
-export type Data = { [key: string]: any };
+export type Data = Record<string, any>;
 
 export class NoVisualization {
   setRequestMetadata(metadata: Data) {}

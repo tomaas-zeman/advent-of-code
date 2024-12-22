@@ -10,7 +10,7 @@ export enum Type {
   BOX_R = ']',
 }
 
-const changes: { [move: string]: [number, number] } = {
+const changes: Record<string, [number, number]> = {
   '<': [0, -1],
   '>': [0, 1],
   '^': [-1, 0],

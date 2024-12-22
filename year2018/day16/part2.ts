@@ -13,7 +13,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
   const [samples, operations] = parseInput(data);
 
   // Group instructions by possible opcodes
-  const opcodeInstruction: { [opcode: number]: Set<Instruction> } = new Array(OPCODES_COUNT)
+  const opcodeInstruction: Record<number, Set<Instruction>> = new Array(OPCODES_COUNT)
     .fill(0)
     .reduce((acc, _, opcode) => {
       acc[opcode] = new Set();

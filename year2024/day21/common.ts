@@ -2,7 +2,7 @@ import { BaseN } from 'js-combinatorics';
 import { DefaultMap } from '../../aocutils';
 import range from 'lodash/range';
 
-type Mapping = { [key: string]: { [direction: string]: string } };
+type Mapping = Record<string, Record<string, string>>;
 type Paths = DefaultMap<string, Map<string, string[]>>;
 
 const keypadMapping: Mapping = {

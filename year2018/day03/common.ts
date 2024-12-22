@@ -38,7 +38,7 @@ class Point {
   }
 }
 
-export function parse(data: string[]): [{ [point: string]: number }, Claim[]] {
+export function parse(data: string[]): [Record<string, number>, Claim[]] {
   const claims = data.map((line) => {
     // #3 @ 5,5: 2x2
     const match = line.match(/#(\d+) @ (\d+),(\d+): (\d+)x(\d+)/);
@@ -49,7 +49,7 @@ export function parse(data: string[]): [{ [point: string]: number }, Claim[]] {
     return new Claim(id, row, col, width, height);
   });
 
-  const points: { [point: string]: number } = {};
+  const points: Record<string, number> = {};
 
   for (let claim of claims) {
     for (let point of claim.points()) {

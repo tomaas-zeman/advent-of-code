@@ -12,7 +12,7 @@ function parseMatrix(data: string[]): Matrix<string> {
 }
 
 export function calculateResourceValue(data: string[], minutes: number): number {
-  const states: { [state: string]: number } = {};
+  const states: Record<string, number> = {};
   let forest = parseMatrix(data);
 
   for (let time = 0; time < minutes; time++) {

@@ -165,7 +165,7 @@ class Eqrr implements Instruction {
   }
 }
 
-export const instructions: { [name: string]: Instruction } = {
+export const instructions: Record<string, Instruction> = {
   addr: new Addr(),
   addi: new Addi(),
   mulr: new Mulr(),

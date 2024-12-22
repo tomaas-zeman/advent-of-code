@@ -82,7 +82,7 @@ export function parse(data: string[]) {
   const sortedLines = data.sort((l1, l2) => parseDate(l1).getTime() - parseDate(l2).getTime());
 
   const guardPattern = /Guard #(\d+) begins shift/;
-  const guards: { [id: string]: Guard } = {};
+  const guards: Record<string, Guard> = {};
   let guard: Guard | null = null;
 
   for (let line of sortedLines) {

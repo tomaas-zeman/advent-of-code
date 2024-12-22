@@ -205,11 +205,7 @@ export class Matrix<T> {
     console.log(this.toString(padSize, {}, showNumbers), '\n');
   }
 
-  toString(
-    padSize = 0,
-    colorMapping: { [char: string]: number } = {},
-    showNumbers = false,
-  ): string {
+  toString(padSize = 0, colorMapping: Record<string, number> = {}, showNumbers = false): string {
     const processChar = (char: T) => {
       const string = typeof char === 'string' ? (char as string) : String(char);
       const padded = string.padStart(padSize, ' ');
@@ -238,6 +234,13 @@ export class Matrix<T> {
    */
   hash(): string {
     return this.data.flatMap((row) => row).join('');
+  }
+
+  isInRange(point: [number, number]): boolean;
+  isInRange(row: number, col: number): boolean;
+  isInRange(pointOrRow: [number, number] | number, colOrNothing?: number): boolean {
+    const { row, col } = this.extractParams(pointOrRow, colOrNothing);
+    return row >= 0 && row < this.rows && col >= 0 && col < this.cols;
   }
 
   private extractParams<P>(
@@ -527,8 +530,8 @@ export class TypeGuard {
 }
 
 export type MatrixAnimationConfig = {
-  characterMapping: { [char: string]: string };
-  colorMapping: { [char: string]: number };
+  characterMapping: Record<string, string>;
+  colorMapping: Record<string, number>;
   padSize: number;
 };
 
