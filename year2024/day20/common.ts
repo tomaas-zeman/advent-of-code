@@ -11,7 +11,7 @@ export function parse(data: string[]) {
 }
 
 function getDistances(map: Matrix<string>, start: Node, end: Node) {
-  const distances = new DefaultMap<Node, number>(0, [], true);
+  const distances = new DefaultMap<Node, number>(0, true);
 
   let current = start;
   while (true) {

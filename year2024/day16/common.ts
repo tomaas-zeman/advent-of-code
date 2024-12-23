@@ -9,7 +9,7 @@ export function parse(data: string[]): [Matrix<string>, Node, Node] {
 }
 
 export function dijkstra(maze: Matrix<string>, start: Node): Distances {
-  const distances: Distances = new DefaultMap(Number.MAX_SAFE_INTEGER, [], true);
+  const distances: Distances = new DefaultMap(Number.MAX_SAFE_INTEGER, true);
   for (const [row, col, value] of maze.entries().filter(([_, __, value]) => value !== '#')) {
     distances.set([row, col], value === maze.get(start) ? 0 : Number.MAX_SAFE_INTEGER);
   }

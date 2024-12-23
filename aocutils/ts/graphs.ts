@@ -43,7 +43,7 @@ export type Distances = DefaultMap<Node, number>;
 export type State = { priority: number; point: Node };
 
 export function dijkstra<T>(matrix: Matrix<T>, start: Node, visitableNodes: T[]): Distances {
-  const distances: Distances = new DefaultMap(Number.MAX_SAFE_INTEGER, [], true);
+  const distances: Distances = new DefaultMap(Number.MAX_SAFE_INTEGER, true);
   const nodes = matrix.entries().filter(([_, __, value]) => visitableNodes.includes(value));
   for (const [row, col] of nodes) {
     distances.set([row, col], row === start[0] && col === start[1] ? 0 : Number.MAX_SAFE_INTEGER);

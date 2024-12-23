@@ -2,7 +2,7 @@ import blessed, { Widgets } from 'blessed';
 import { Config } from '../..';
 import color from 'cli-color';
 import { CartesianProduct } from 'js-combinatorics';
-import { range } from 'lodash';
+import range from 'lodash/range';
 import { TypeGuard } from './utils';
 
 export type MatrixAnimationConfig = {

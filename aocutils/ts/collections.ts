@@ -48,10 +48,16 @@ export class DefaultMap<K, V> extends Map<K, V> {
   private defaultValue: DefaultValue<V>;
   private hashKeys: boolean;
 
-  constructor(defaultValue: DefaultValue<V>, iterable?: Iterable<[K, V]>, hashKeys = false) {
-    super(iterable);
+  constructor(defaultValue: DefaultValue<V>, hashKeys?: boolean);
+  constructor(defaultValue: DefaultValue<V>, array: [K, V][], hashKeys?: boolean);
+  constructor(
+    defaultValue: DefaultValue<V>,
+    arrayOrHashKeys?: [K, V][] | boolean,
+    hashKeys?: boolean,
+  ) {
+    super(TypeGuard.isArray(arrayOrHashKeys) ? arrayOrHashKeys : []);
     this.defaultValue = defaultValue;
-    this.hashKeys = hashKeys;
+    this.hashKeys = !!(TypeGuard.isArray(arrayOrHashKeys) ? hashKeys : arrayOrHashKeys);
   }
 
   private getDefaultValue() {
