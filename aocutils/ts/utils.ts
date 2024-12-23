@@ -2,6 +2,9 @@
 //     UTILITIES     -
 //--------------------
 
+export type Node = [number, number];
+export type Point = Node;
+
 // Modulo that produces positive results for negative numbers.
 // For example -3 mod 5 = 2
 export function mod(number: number, base: number) {
