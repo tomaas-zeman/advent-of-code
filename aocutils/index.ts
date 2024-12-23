@@ -421,7 +421,7 @@ export class HashSet<T> extends Set {
 export class Graph {
   private directed: boolean;
 
-  private nodes: string[] = [];
+  private nodes: Set<string> = new Set();
   private edges: [string, string, number][] = [];
 
   constructor(directed = false) {
@@ -429,16 +429,19 @@ export class Graph {
   }
 
   addNode(node: string) {
-    this.nodes.push(node);
+    this.nodes.add(node);
   }
 
   addEdge(source: string, target: string, weight: number = 0) {
+    for (const node of [source, target]) {
+      this.addNode(node);
+    }
     this.edges.push([source, target, weight]);
   }
 
   asGraphologyGraph() {
     const graph = new GraphologyGraph({
-      multi: true,
+      multi: this.directed,
       type: this.directed ? 'directed' : 'undirected',
     });
     this.nodes.forEach((node) => graph.addNode(node));
