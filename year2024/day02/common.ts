@@ -1,4 +1,4 @@
-import { pairwise } from "../../aocutils";
+import { pairwise } from '../../aocutils';
 
 export function parseReports(data: string[]) {
   return data.map((line) => line.split(' ').asInt());

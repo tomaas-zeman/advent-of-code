@@ -1,7 +1,6 @@
-import range from 'lodash/range';
 import { Config } from '../..';
 import { DefaultMap, pairwise, sum } from '../../aocutils';
-import { getSecretNumbers, STEPS } from './common';
+import { getSecretNumbers } from './common';
 
 function processNumbers(numbers: number[], step: number): [any, any] {
   const lastDigits = numbers.slice(step, step + 5).map((n) => n % 10);

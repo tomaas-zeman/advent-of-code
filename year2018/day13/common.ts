@@ -8,7 +8,6 @@ const POSITION_CHANGE = {
   v: [1, 0],
 };
 
-
 export class Cart {
   direction: string;
   position: [number, number];
