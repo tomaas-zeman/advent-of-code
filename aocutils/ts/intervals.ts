@@ -1,4 +1,7 @@
-export type BisectRangeDirection = 'left' | 'right';
+export enum BisectRangeDirection {
+  LEFT,
+  RIGHT,
+}
 
 export class BisectRange {
   private left: number;
@@ -11,7 +14,7 @@ export class BisectRange {
     this.left = left;
     this.right = right;
     this.current = right;
-    this.direction = 'left';
+    this.direction = BisectRangeDirection.LEFT;
   }
 
   setDirection(direction: BisectRangeDirection) {
@@ -20,10 +23,10 @@ export class BisectRange {
 
   next() {
     switch (this.direction) {
-      case 'left':
+      case BisectRangeDirection.LEFT:
         this.right = this.current;
         break;
-      case 'right':
+      case BisectRangeDirection.RIGHT:
         this.left = this.current;
         break;
     }

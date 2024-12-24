@@ -1,5 +1,5 @@
 import { Config } from '../..';
-import { BisectRange, dijkstra, Matrix } from '../../aocutils';
+import { BisectRange, BisectRangeDirection, dijkstra, Matrix } from '../../aocutils';
 import { parse } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
@@ -15,7 +15,9 @@ export async function run(data: string[], config: Config): Promise<string | numb
     }
     const distances = dijkstra(memory, [0, 0], ['.']);
     const cost = distances.get([width - 1, height - 1]);
-    bisect.setDirection(cost === Number.MAX_SAFE_INTEGER ? 'left' : 'right');
+    bisect.setDirection(
+      cost === Number.MAX_SAFE_INTEGER ? BisectRangeDirection.LEFT : BisectRangeDirection.RIGHT,
+    );
   }
 
   return bytes[bisect.current].join(',');
