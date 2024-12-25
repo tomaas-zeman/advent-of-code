@@ -23,7 +23,7 @@ export function getCorrectAnswer(year: string, day: string, part: string) {
       return line.split('=')[1].trim();
     }
   }
-}
+} 
 
 export async function sendAnswer(year: string, day: string, part: string, answer: string | number) {
   const correctAnswer = getCorrectAnswer(year, day, part);
