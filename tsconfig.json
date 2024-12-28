@@ -8,6 +8,6 @@
     "resolveJsonModule": true,
     "rootDir": "./"
   },
-  "include": ["year2024", "year2018", "index.ts", "ts-runner", "aocutils"],
+  "include": ["year2024", "year2018", "year2017", "index.ts", "ts-runner", "aocutils"],
   "files": ["aocutils/index.d.ts"]
 }
