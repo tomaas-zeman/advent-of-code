@@ -4,7 +4,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "start": "tsx index.ts --year 2017 --day 01"
+    "start": "tsx index.ts --year 2017 --day 02"
   },
   "devDependencies": {
     "@types/big.js": "^6.2.2",
