@@ -47,6 +47,9 @@ export function pairwise<T>(arr: T[], length = 2): T[][] {
 
 // Significantly faster than lodash/isEqual
 export function isEqual<T>(a: T[], b: T[]) {
+  if (a.length !== b.length) {
+    return false;
+  }
   for (let i = 0; i < a.length; i++) {
     if (a[i] !== b[i]) {
       return false;
