@@ -1,10 +1,10 @@
-export function processStream(data: string[]) {
+export function processStream(data: string[]): [number, number] {
   const stack: string[] = [];
   let score = 0;
   let garbage = 0;
 
   for (const el of data[0].split('')) {
-    const top = stack.get(-1);
+    const top = stack[stack.length - 1];
 
     if (top === '<') {
       if (el === '>') {
@@ -14,19 +14,12 @@ export function processStream(data: string[]) {
       } else {
         garbage++;
       }
-      continue;
     } else if (top === '!') {
       stack.pop();
-      continue;
-    } else if (top === '{') {
-      if (el === '}') {
-        score += stack.length;
-        stack.pop();
-        continue;
-      }
-    }
-
-    if ('{}<!'.includes(el)) {
+    } else if (top === '{' && el === '}') {
+      score += stack.length;
+      stack.pop();
+    } else if ('{}<!'.includes(el)) {
       stack.push(el);
     }
   }
