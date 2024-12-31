@@ -10,7 +10,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
 
     const nextRow = row + MOVEMENT_CHANGES[movement][0];
     const nextCol = col + MOVEMENT_CHANGES[movement][1];
-    if (!map.isInRange(nextRow, nextCol)) {
+    if (!map.isInBounds(nextRow, nextCol)) {
       break;
     }
 

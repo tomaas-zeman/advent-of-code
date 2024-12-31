@@ -311,9 +311,9 @@ export class Matrix<T> {
     return this.data.flatMap((row) => row).join('');
   }
 
-  isInRange(point: [number, number]): boolean;
-  isInRange(row: number, col: number): boolean;
-  isInRange(pointOrRow: [number, number] | number, colOrNothing?: number): boolean {
+  isInBounds(point: [number, number]): boolean;
+  isInBounds(row: number, col: number): boolean;
+  isInBounds(pointOrRow: [number, number] | number, colOrNothing?: number): boolean {
     const { row, col } = this.extractParams(pointOrRow, colOrNothing);
     return row >= 0 && row < this.rows && col >= 0 && col < this.cols;
   }
