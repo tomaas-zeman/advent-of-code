@@ -37,12 +37,12 @@ export function sum(arr: number[]): number {
   return arr.reduce((sum, n) => sum + n, 0);
 }
 
-export function pairwise<T>(arr: T[], length = 2): T[][] {
-  const pairs: T[][] = [];
+export function nwise<T>(arr: T[], length = 2): T[][] {
+  const tuples: T[][] = [];
   for (let i = 0; i < arr.length - (length - 1); i++) {
-    pairs.push(arr.slice(i, i + length));
+    tuples.push(arr.slice(i, i + length));
   }
-  return pairs;
+  return tuples;
 }
 
 // Significantly faster than lodash/isEqual

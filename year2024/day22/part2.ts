@@ -1,10 +1,10 @@
 import { Config } from '../..';
-import { DefaultMap, pairwise, sum } from '../../aocutils';
+import { DefaultMap, nwise, sum } from '../../aocutils';
 import { getSecretNumbers } from './common';
 
 function processNumbers(numbers: number[], step: number): [any, any] {
   const lastDigits = numbers.slice(step, step + 5).map((n) => n % 10);
-  const pattern = pairwise(lastDigits, 2).map(([a, b]) => b - a).join(',');
+  const pattern = nwise(lastDigits, 2).map(([a, b]) => b - a).join(',');
   const bananas = lastDigits.get(-1);
   return [pattern, bananas];
 }
