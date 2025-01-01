@@ -45,6 +45,20 @@ export function nwise<T>(arr: T[], length = 2): T[][] {
   return tuples;
 }
 
+export function rotate<T>(arr: T[], times = 1, reverse = false): T[] {
+  if (arr.length === 0) {
+    return arr;
+  }
+  for (let i = 0; i < times; i++) {
+    if (reverse) {
+      arr.unshift(arr.pop()!);
+    } else {
+      arr.push(arr.shift()!);
+    }
+  }
+  return arr;
+}
+
 // Significantly faster than lodash/isEqual
 export function isEqual<T>(a: T[], b: T[]) {
   if (a.length !== b.length) {
