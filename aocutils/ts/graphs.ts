@@ -1,4 +1,5 @@
 import GraphologyGraph from 'graphology';
+import { isEqual } from './utils';
 
 //-----------------
 //     GRAPHS     -
@@ -22,6 +23,17 @@ export class Graph {
     for (const node of [source, target]) {
       this.addNode(node);
     }
+
+    // Do not add the same/opposite edge for undirected graphs again
+    if (
+      !this.directed &&
+      this.edges.find(
+        (e) => isEqual(e, [source, target, weight]) || isEqual(e, [target, source, weight]),
+      )
+    ) {
+      return;
+    }
+
     this.edges.push([source, target, weight]);
   }
 
