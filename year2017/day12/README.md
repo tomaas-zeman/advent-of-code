@@ -1,3 +1,0 @@
-# 
-
-![Scene](./scene.jpg)
