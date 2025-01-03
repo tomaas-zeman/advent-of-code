@@ -95,6 +95,7 @@ async function run() {
       return;
     }
 
+    console.log(color.green(`✔ Test passed`));
     const result = await solver.run(
       await getRealInput(year, day),
       createConfig(year, day, part, visualization, false),
