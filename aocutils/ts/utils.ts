@@ -77,3 +77,7 @@ export function isEqual<T>(a: T[], b: T[]) {
 export function manhattan(a: Point | Point3D | Point4D, b: Point | Point3D | Point4D) {
   return a.reduce((sum, _, i) => sum + Math.abs(a[i] - b[i]), 0);
 }
+
+export function mergePoints<T extends Point | Point3D | Point4D>(a: T, b: T): T {
+  return a.map((_, i) => a[i] + b[i]) as T;
+}

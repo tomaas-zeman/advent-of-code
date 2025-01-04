@@ -1,5 +1,5 @@
 import { Config } from '../..';
-import { Matrix, MatrixAnimation } from '../../aocutils';
+import { Matrix, MatrixAnimation, mergePoints } from '../../aocutils';
 
 export enum Type {
   ROBOT = '@',
@@ -42,10 +42,6 @@ export function sumGpsCoordinates(warehouse: Matrix<string>, config: Config): nu
   return warehouse
     .findAll(config.part === '1' ? Type.BOX : Type.BOX_L)
     .reduce((sum, [row, col]) => sum + 100 * (row - 1) + (col - 1), 0);
-}
-
-export function merge(position: [number, number], change: [number, number]): [number, number] {
-  return [position[0] + change[0], position[1] + change[1]];
 }
 
 function sortBoxes(boxes: [number, number][], positionChange: [number, number]) {
@@ -94,7 +90,7 @@ export async function organizeWarehouse(
 
   for (const move of moves) {
     const positionChange = changes[move];
-    const nextPosition = merge(robotPosition, positionChange);
+    const nextPosition = mergePoints(robotPosition, positionChange);
     const nextValue = warehouse.get(nextPosition);
 
     if (nextValue === Type.FREE) {
@@ -107,7 +103,7 @@ export async function organizeWarehouse(
       );
 
       for (const orignalBoxPosition of boxesToMove) {
-        const newBoxPosition = merge(orignalBoxPosition, positionChange);
+        const newBoxPosition = mergePoints(orignalBoxPosition, positionChange);
         moveObject(orignalBoxPosition, newBoxPosition, warehouse);
       }
 

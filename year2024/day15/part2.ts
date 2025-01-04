@@ -1,6 +1,6 @@
 import { Config } from '../..';
-import { Matrix } from '../../aocutils';
-import { merge, organizeWarehouse, parse, sumGpsCoordinates, Type } from './common';
+import { Matrix, mergePoints } from '../../aocutils';
+import { organizeWarehouse, parse, sumGpsCoordinates, Type } from './common';
 
 function getWholeBox(warehouse: Matrix<string>, part: [number, number]): [number, number][] {
   if (warehouse.get(part) === Type.BOX_L) {
@@ -22,7 +22,7 @@ function determineBoxesToMove(
 
   while (queue.length > 0) {
     const currentPos = queue.shift()!;
-    const nextPos = merge(currentPos, change);
+    const nextPos = mergePoints(currentPos, change);
     const nextVal = warehouse.get(nextPos);
 
     if (nextVal === Type.WALL) {

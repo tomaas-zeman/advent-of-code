@@ -1,6 +1,6 @@
 import { Config } from '../..';
-import { Matrix } from '../../aocutils';
-import { Type, organizeWarehouse, parse, sumGpsCoordinates, merge } from './common';
+import { Matrix, mergePoints } from '../../aocutils';
+import { Type, organizeWarehouse, parse, sumGpsCoordinates } from './common';
 
 function determineBoxesToMove(
   warehouse: Matrix<string>,
@@ -9,10 +9,10 @@ function determineBoxesToMove(
 ) {
   const boxes = [];
 
-  let nextPosition = merge(robotPosition, change);
+  let nextPosition = mergePoints(robotPosition, change);
   while (warehouse.get(nextPosition) === Type.BOX) {
     boxes.push(nextPosition);
-    nextPosition = merge(nextPosition, change);
+    nextPosition = mergePoints(nextPosition, change);
   }
 
   if (warehouse.get(nextPosition) !== Type.FREE) {
