@@ -4,6 +4,8 @@
 
 export type Node = [number, number];
 export type Point = Node;
+export type Point3D = [number, number, number];
+export type Point4D = [number, number, number, number];
 
 // Modulo that produces positive results for negative numbers.
 // For example -3 mod 5 = 2
@@ -70,4 +72,8 @@ export function isEqual<T>(a: T[], b: T[]) {
     }
   }
   return true;
+}
+
+export function manhattan(a: Point | Point3D | Point4D, b: Point | Point3D | Point4D) {
+  return a.reduce((sum, _, i) => sum + Math.abs(a[i] - b[i]), 0);
 }

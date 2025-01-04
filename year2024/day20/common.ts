@@ -1,4 +1,4 @@
-import { DefaultMap, isEqual, Matrix, Node } from '../../aocutils';
+import { DefaultMap, isEqual, manhattan, Matrix, Node } from '../../aocutils';
 
 export function parse(data: string[]) {
   const map = new Matrix<string>(data.map((line) => line.split('')));
@@ -69,8 +69,4 @@ function cheatPathsInRange(nodes: Node[], start: Node, range: number): [Node, nu
   }
 
   return cheatPaths;
-}
-
-function manhattan(a: Node, b: Node) {
-  return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
 }

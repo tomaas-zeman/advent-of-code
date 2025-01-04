@@ -1,5 +1,6 @@
 import { Config } from '../..';
-import { manhattan, parse, Point } from './common';
+import { manhattan } from '../../aocutils';
+import { parse, Point } from './common';
 
 function findNearConstellations(constellations: Point[][], star: Point) {
   const nearConsteallations: number[] = [];

@@ -1,7 +1,7 @@
 import countBy from 'lodash/countBy';
 import { Config } from '../..';
-import { Matrix } from '../../aocutils';
-import { manhattan, parse, Point } from './common';
+import { manhattan, Matrix } from '../../aocutils';
+import { parse, Point } from './common';
 
 export async function run(data: string[], config: Config): Promise<string | number> {
   const points = parse(data);
@@ -10,7 +10,7 @@ export async function run(data: string[], config: Config): Promise<string | numb
 
   for (const [row, col] of space.positions()) {
     const pointsByDistance = points
-      .map<[Point, number]>((p) => [p, manhattan({ id: 0, row, col }, p)])
+      .map<[Point, number]>((p) => [p, manhattan([row, col], [p.row, p.col])])
       .sort(([_, dist1], [__, dist2]) => dist1 - dist2);
     const shortestDistance = pointsByDistance[0][1];
     const closestPoints = pointsByDistance.filter(([p, dist]) => dist === shortestDistance);
