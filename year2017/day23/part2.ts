@@ -75,21 +75,10 @@ export async function run(data: string[], config: Config): Promise<string | numb
 
 // https://stackoverflow.com/questions/62150130/algorithm-of-checking-if-the-number-is-prime
 function isPrime(n: number) {
-  if (n <= 1 || n % 2 == 0 || n % 3 == 0) {
-    return false;
+  for (let i = 2, s = Math.sqrt(n); i <= s; i++) {
+    if (n % i === 0) return false;
   }
-
-  if (n <= 3) {
-    return true;
-  }
-
-  for (let i = 5; i * i <= n; i = i + 6) {
-    if (n % i == 0 || n % (i + 2) == 0) {
-      return false;
-    }
-  }
-
-  return true;
+  return n > 1;
 }
 
 export const testResult = 3;
