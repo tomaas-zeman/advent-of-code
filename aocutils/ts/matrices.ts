@@ -171,6 +171,10 @@ export class Matrix<T> {
     return this.data.slice(rowStart, rowEnd).map((row) => row.slice(colStart, colEnd));
   }
 
+  sliceAsMatrix(rowStart: number, rowEnd: number, colStart: number, colEnd: number): Matrix<T> {
+    return new Matrix(this.slice(rowStart, rowEnd, colStart, colEnd));
+  }
+
   diagonal(secondary = false) {
     if (this.rows !== this.cols) {
       throw new Error('Only square matrix is supported for diagonal');
@@ -264,6 +268,26 @@ export class Matrix<T> {
     return positions;
   }
 
+  rotate(): Matrix<T> {
+    const rotated: T[][] = range(0, this.rows).map(() => Array(this.cols).fill(0));
+
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        rotated[col][this.rows - 1 - row] = this.data[row][col];
+      }
+    }
+
+    return new Matrix(rotated);
+  }
+
+  flipVertically(): Matrix<T> {
+    return new Matrix(this.data.map((row) => row.toReversed()));
+  }
+
+  flipHorizontally(): Matrix<T> {
+    return new Matrix(this.data.toReversed());
+  }
+
   clone(): Matrix<T> {
     return new Matrix(this.data.map((row) => row.slice()));
   }
@@ -308,7 +332,7 @@ export class Matrix<T> {
    * BEWARE! Use only for small matrices.
    */
   hash(): string {
-    return this.data.flatMap((row) => row).join('');
+    return this.data.map((row) => row.join('')).join('/');
   }
 
   isInBounds(point: [number, number]): boolean;
@@ -333,7 +357,7 @@ export class Matrix<T> {
 }
 
 export type Distances = DefaultMap<Node, number>;
-export type State = { priority: number; point: Node; };
+export type State = { priority: number; point: Node };
 
 export function dijkstra<T>(matrix: Matrix<T>, start: Node, visitableNodes: T[]): Distances {
   const distances: Distances = new DefaultMap(Number.MAX_SAFE_INTEGER, true);
