@@ -1,8 +1,8 @@
 import { Config } from "../..";
-import { computeComplexities } from "./common";
+import { computeComplexitiesNumerical } from "./common";
 
 export async function run(data: string[], config: Config): Promise<string | number> {
-  return computeComplexities(data, 25);
+  return computeComplexitiesNumerical(data, 25);
 }
 
-export const testResult = 126384;
+export const testResult = 154115708116294;

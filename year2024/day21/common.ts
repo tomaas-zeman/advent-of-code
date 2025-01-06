@@ -1,5 +1,5 @@
 import { BaseN } from 'js-combinatorics';
-import { DefaultMap } from '../../aocutils';
+import { DefaultMap, nwise, sum } from '../../aocutils';
 import range from 'lodash/range';
 
 type Mapping = Record<string, Record<string, string>>;
@@ -27,6 +27,8 @@ const controllerMapping: Mapping = {
   A: { '<': '^', v: '>' },
 };
 
+// Generate best movements between all possible controller/keypad states
+// Keep only the ones with least amount of changes, e.i. ^^^<, ^^<^, ^<^^ => ^^^<.
 function findShortestPaths(from: string, to: string, mapping: Mapping): string[] {
   const paths: string[] = [];
   const visited = new Set<string>();
@@ -38,7 +40,7 @@ function findShortestPaths(from: string, to: string, mapping: Mapping): string[]
     const [current, path, visited] = queue.shift()!;
 
     if (current === to) {
-      paths.push(path);
+      paths.push(path + 'A');
       continue;
     }
 
@@ -50,7 +52,28 @@ function findShortestPaths(from: string, to: string, mapping: Mapping): string[]
   }
 
   const shortestLength = Math.min(...paths.map((p) => p.length));
-  return paths.filter((p) => p.length === shortestLength);
+  const shortestPaths = paths.filter((p) => p.length === shortestLength);
+  return selectPathsWithMinSwitches(shortestPaths);
+}
+
+function selectPathsWithMinSwitches(paths: string[]) {
+  const switches: [string, number][] = [];
+
+  for (const path of paths) {
+    const arr = path.split('');
+    let pathSwitches = 0;
+    let prev = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] !== prev) {
+        pathSwitches++;
+        prev = arr[i];
+      }
+    }
+    switches.push([path, pathSwitches]);
+  }
+
+  const minSwitches = Math.min(...switches.map((s) => s[1]));
+  return switches.filter(([_, s]) => s === minSwitches).map(([p, _]) => p);
 }
 
 function generateAllPaths(mapping: Mapping) {
@@ -72,8 +95,6 @@ class Module {
   sequencesFor(initialSequences: string[]): string[] {
     let sequences: string[] = [];
     let shortestSequence = Number.MAX_SAFE_INTEGER;
-    
-    const cache = new Map<string, number>(); // try caching parts ...A and count them
 
     const explore = (sequence: string, currentChar: string, remainingChars: string) => {
       if (remainingChars.length === 0) {
@@ -89,7 +110,7 @@ class Module {
       const nextChar = remainingChars[0];
 
       for (const option of this.paths.get(currentChar).get(nextChar)!) {
-        const nextSequence = sequence + option + 'A';
+        const nextSequence = sequence + option;
         if (nextSequence.length <= shortestSequence) {
           explore(nextSequence, nextChar, remainingChars.slice(1));
         }
@@ -120,6 +141,55 @@ export function computeComplexities(data: string[], controllerRobots: number) {
     }
 
     sumOfComplexities += sequences[0].length * parseInt(number.replaceAll(/[^\d]/g, ''));
+  }
+
+  return sumOfComplexities;
+}
+
+const cache = new DefaultMap<[string, number], number>(0, true);
+
+function exploreNumerical(sequence: string, depth: number, controllerPaths: Paths) {
+  const pairs = () => nwise(`A${sequence}`.split(''));
+
+  if (cache.has([sequence, depth])) {
+    return cache.get([sequence, depth]);
+  }
+
+  if (depth === 1) {
+    return sum(pairs().map(([from, to]) => controllerPaths.get(from).get(to)![0].length));
+  }
+
+  let length = 0;
+  for (const [from, to] of pairs()) {
+    let min = Number.MAX_SAFE_INTEGER;
+    for (const subSequence of controllerPaths.get(from).get(to)!) {
+      min = Math.min(min, exploreNumerical(subSequence, depth - 1, controllerPaths));
+    }
+    length += min;
+  }
+
+  cache.set([sequence, depth], length);
+  return length;
+}
+
+// Same as above, only this doesn't store the whole sequences but only counts the steps
+// and splits it into chunks and caching them.
+export function computeComplexitiesNumerical(data: string[], depth: number) {
+  const controllerPaths = generateAllPaths(controllerMapping);
+  const keypadPaths = generateAllPaths(keypadMapping);
+
+  let sumOfComplexities = 0;
+
+  for (const number of data) {
+    const keypadModule = new Module(keypadPaths);
+    const initialSequences = keypadModule.sequencesFor([number]);
+
+    let min = Number.MAX_SAFE_INTEGER;
+    for (const path of initialSequences) {
+      min = Math.min(min, exploreNumerical(path, depth, controllerPaths));
+    }
+
+    sumOfComplexities += min * parseInt(number.replaceAll(/[^\d]/g, ''));
   }
 
   return sumOfComplexities;
