@@ -1,6 +1,6 @@
 import { BaseN } from 'js-combinatorics';
 import { DefaultMap, nwise, sum } from '../../aocutils';
-import range from 'lodash/range';
+import memoize from 'lodash/memoize';
 
 type Mapping = Record<string, Record<string, string>>;
 type Paths = DefaultMap<string, Map<string, string[]>>;
@@ -27,11 +27,11 @@ const controllerMapping: Mapping = {
   A: { '<': '^', v: '>' },
 };
 
-// Generate best movements between all possible controller/keypad states
-// Keep only the ones with least amount of changes, e.i. ^^^<, ^^<^, ^<^^ => ^^^<.
+const keypadSequences = generateAllPaths(keypadMapping);
+const controllerSequences = generateAllPaths(controllerMapping);
+
 function findShortestPaths(from: string, to: string, mapping: Mapping): string[] {
   const paths: string[] = [];
-  const visited = new Set<string>();
 
   // [current, path from edges, visited nodes]
   const queue: [string, string, string][] = [[from, '', from]];
@@ -51,29 +51,7 @@ function findShortestPaths(from: string, to: string, mapping: Mapping): string[]
     }
   }
 
-  const shortestLength = Math.min(...paths.map((p) => p.length));
-  const shortestPaths = paths.filter((p) => p.length === shortestLength);
-  return selectPathsWithMinSwitches(shortestPaths);
-}
-
-function selectPathsWithMinSwitches(paths: string[]) {
-  const switches: [string, number][] = [];
-
-  for (const path of paths) {
-    const arr = path.split('');
-    let pathSwitches = 0;
-    let prev = arr[0];
-    for (let i = 1; i < arr.length; i++) {
-      if (arr[i] !== prev) {
-        pathSwitches++;
-        prev = arr[i];
-      }
-    }
-    switches.push([path, pathSwitches]);
-  }
-
-  const minSwitches = Math.min(...switches.map((s) => s[1]));
-  return switches.filter(([_, s]) => s === minSwitches).map(([p, _]) => p);
+  return paths;
 }
 
 function generateAllPaths(mapping: Mapping) {
@@ -84,112 +62,67 @@ function generateAllPaths(mapping: Mapping) {
   return paths;
 }
 
-class Module {
-  private paths: Paths;
-  private current = 'A';
+function generateSequences(initialSequence: string, paths: Paths): string[] {
+  let sequences: string[] = [];
+  let shortestSequence = Number.MAX_SAFE_INTEGER;
 
-  constructor(paths: Paths) {
-    this.paths = paths;
-  }
-
-  sequencesFor(initialSequences: string[]): string[] {
-    let sequences: string[] = [];
-    let shortestSequence = Number.MAX_SAFE_INTEGER;
-
-    const explore = (sequence: string, currentChar: string, remainingChars: string) => {
-      if (remainingChars.length === 0) {
-        if (sequence.length === shortestSequence) {
-          sequences.push(sequence);
-        } else {
-          shortestSequence = sequence.length;
-          sequences = [sequence];
-        }
-        return;
+  const explore = (sequence: string, from: string, remainingChars: string) => {
+    if (remainingChars.length === 0) {
+      if (sequence.length === shortestSequence) {
+        sequences.push(sequence);
+      } else {
+        shortestSequence = sequence.length;
+        sequences = [sequence];
       }
-
-      const nextChar = remainingChars[0];
-
-      for (const option of this.paths.get(currentChar).get(nextChar)!) {
-        const nextSequence = sequence + option;
-        if (nextSequence.length <= shortestSequence) {
-          explore(nextSequence, nextChar, remainingChars.slice(1));
-        }
-      }
-    };
-
-    for (const initialSequence of initialSequences) {
-      explore('', this.current, initialSequence);
+      return;
     }
 
-    return sequences;
-  }
+    const to = remainingChars[0];
+
+    for (const option of paths.get(from).get(to)!) {
+      const nextSequence = sequence + option;
+      if (nextSequence.length <= shortestSequence) {
+        explore(nextSequence, to, remainingChars.slice(1));
+      }
+    }
+  };
+
+  explore('', 'A', initialSequence);
+
+  return sequences;
 }
 
-export function computeComplexities(data: string[], controllerRobots: number) {
-  const controllerPaths = generateAllPaths(controllerMapping);
-  const keypadPaths = generateAllPaths(keypadMapping);
+const calculateControllerSequences = memoize(
+  (sequence: string, depth: number) => {
+    const pairs = () => nwise(`A${sequence}`.split('')) as [string, string][];
+    const nextSequence = (pair: [string, string]) => controllerSequences.get(pair[0]).get(pair[1])!;
 
+    if (depth === 1) {
+      return sum(pairs().map((pair) => nextSequence(pair)[0].length));
+    }
+
+    let length = 0;
+
+    for (const pair of pairs()) {
+      length += Math.min(
+        ...nextSequence(pair).map((seq) => calculateControllerSequences(seq, depth - 1)),
+      );
+    }
+
+    return length;
+  },
+  (...args) => JSON.stringify(args),
+);
+
+export function computeComplexities(data: string[], depth: number) {
   let sumOfComplexities = 0;
 
   for (const number of data) {
-    const keypadModule = new Module(keypadPaths);
-    const controllerModules = range(0, controllerRobots).map(() => new Module(controllerPaths));
-
-    let sequences = keypadModule.sequencesFor([number]);
-    for (const module of controllerModules) {
-      sequences = module.sequencesFor(sequences);
-    }
-
-    sumOfComplexities += sequences[0].length * parseInt(number.replaceAll(/[^\d]/g, ''));
-  }
-
-  return sumOfComplexities;
-}
-
-const cache = new DefaultMap<[string, number], number>(0, true);
-
-function exploreNumerical(sequence: string, depth: number, controllerPaths: Paths) {
-  const pairs = () => nwise(`A${sequence}`.split(''));
-
-  if (cache.has([sequence, depth])) {
-    return cache.get([sequence, depth]);
-  }
-
-  if (depth === 1) {
-    return sum(pairs().map(([from, to]) => controllerPaths.get(from).get(to)![0].length));
-  }
-
-  let length = 0;
-  for (const [from, to] of pairs()) {
-    let min = Number.MAX_SAFE_INTEGER;
-    for (const subSequence of controllerPaths.get(from).get(to)!) {
-      min = Math.min(min, exploreNumerical(subSequence, depth - 1, controllerPaths));
-    }
-    length += min;
-  }
-
-  cache.set([sequence, depth], length);
-  return length;
-}
-
-// Same as above, only this doesn't store the whole sequences but only counts the steps
-// and splits it into chunks and caching them.
-export function computeComplexitiesNumerical(data: string[], depth: number) {
-  const controllerPaths = generateAllPaths(controllerMapping);
-  const keypadPaths = generateAllPaths(keypadMapping);
-
-  let sumOfComplexities = 0;
-
-  for (const number of data) {
-    const keypadModule = new Module(keypadPaths);
-    const initialSequences = keypadModule.sequencesFor([number]);
-
-    let min = Number.MAX_SAFE_INTEGER;
-    for (const path of initialSequences) {
-      min = Math.min(min, exploreNumerical(path, depth, controllerPaths));
-    }
-
-    sumOfComplexities += min * parseInt(number.replaceAll(/[^\d]/g, ''));
+    const initialSequences = generateSequences(number, keypadSequences);
+    const bestPath = Math.min(
+      ...initialSequences.map((seq) => calculateControllerSequences(seq, depth)),
+    );
+    sumOfComplexities += bestPath * parseInt(number.replaceAll(/[^\d]/g, ''));
   }
 
   return sumOfComplexities;
