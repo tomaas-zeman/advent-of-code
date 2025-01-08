@@ -19,7 +19,7 @@ def parse(data: list[str]) -> dict[str, dict[str, int]]:
     return seating
 
 
-def compute_hapiness(seating: dict[str, dict, str, int], include_myself: bool) -> int:
+def compute_hapiness(seating: dict[str, dict[str, int]], include_myself: bool) -> int:
     hapiness = 0
 
     guests = (
