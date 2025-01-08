@@ -1,11 +1,11 @@
-def has_straight(pwd):
+def has_straight(pwd: str):
     for i in range(len(pwd) - 2):
         if ord(pwd[i]) + 2 == ord(pwd[i + 1]) + 1 == ord(pwd[i + 2]):
             return True
     return False
 
 
-def has_valid_chars(pwd):
+def has_valid_chars(pwd: str):
     invalid_chars = "iol"
     for c in invalid_chars:
         if c in pwd:
@@ -13,7 +13,7 @@ def has_valid_chars(pwd):
     return True
 
 
-def has_two_pairs(pwd):
+def has_two_pairs(pwd: str):
     for i in range(len(pwd) - 1):
         if pwd[i] == pwd[i + 1]:
             for j in range(i + 2, len(pwd) - 1):
@@ -22,7 +22,7 @@ def has_two_pairs(pwd):
     return False
 
 
-def next(pwd):
+def next(pwd: str):
     ord_a = 97
     ord_z = 122
     ords = list(map(lambda c: ord(c), pwd))
@@ -36,7 +36,7 @@ def next(pwd):
             i -= 1
 
 
-def next_valid_pwd(pwd):
+def next_valid_pwd(pwd: str):
     checks = [has_straight, has_two_pairs, has_valid_chars]
     while True:
         if all(map(lambda check: check(pwd), checks)):
