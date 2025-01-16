@@ -1,4 +1,11 @@
+from enum import Enum
 from itertools import permutations
+from operator import gt, lt
+
+
+class PathType(Enum):
+    SHORTEST = lt
+    LONGEST = gt
 
 
 def parse_input(data: list[str]) -> tuple[dict[tuple[str, str], int], set[str]]:
@@ -16,25 +23,13 @@ def parse_input(data: list[str]) -> tuple[dict[tuple[str, str], int], set[str]]:
     return distances, all_cities
 
 
-def find_longest_path_length(distances: dict[tuple[str, str], int], cities: set[str]):
-    longest_distance = 0
+def find_path_length(distances: dict[tuple[str, str], int], cities: set[str], type: PathType):
+    distance = 0 if type == PathType.LONGEST else float('inf')
 
     paths = permutations(cities, len(cities))
     for path in paths:
-        distance = sum([distances[(path[i], path[i + 1])] for i in range(len(path) - 1)])
-        if distance > longest_distance:
-            longest_distance = distance
+        new_distance = sum([distances[(path[i], path[i + 1])] for i in range(len(path) - 1)])
+        if type.value(new_distance, distance):
+            distance = new_distance
 
-    return longest_distance
-
-
-def find_shortest_path_length(distances: dict[tuple[str, str], int], cities: set[str]):
-    shortest_distance = float("inf")
-
-    paths = permutations(cities, len(cities))
-    for path in paths:
-        distance = sum([distances[(path[i], path[i + 1])] for i in range(len(path) - 1)])
-        if distance < shortest_distance:
-            shortest_distance = distance
-
-    return shortest_distance
+    return distance
