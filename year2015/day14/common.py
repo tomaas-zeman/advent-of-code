@@ -1,10 +1,9 @@
 import re
-from typing import Tuple
 
 from aocutils import as_ints
 
 
-Reindeers = list[Tuple[int, int, int]]
+Reindeers = list[tuple[int, int, int]]
 
 
 def max_time(is_test: bool):

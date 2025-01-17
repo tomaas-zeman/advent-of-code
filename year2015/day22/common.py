@@ -2,7 +2,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 import re
-from typing import Tuple
 from aocutils import as_ints
 
 
@@ -24,7 +23,7 @@ class Player:
     dmg: int
     armor: int
     mana: int
-    effects: list[Tuple[Spell, int]]
+    effects: list[tuple[Spell, int]]
 
     def effect_names(self):
         return [e for e, _ in self.effects]
@@ -76,7 +75,7 @@ def fight(data: list[str], hard_mode: bool, is_test: bool):
     boss = Player(*as_ints(re.findall("\\d+", "".join(data))), 0, 0, [])
 
     min_mana_spent = float("inf")
-    state: list[Tuple[Player, Player, int]] = [(me, boss, 0, True)]
+    state: list[tuple[Player, Player, int]] = [(me, boss, 0, True)]
 
     while len(state) > 0:
         me, boss, mana_spent, my_turn = state.pop()

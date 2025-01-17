@@ -1,11 +1,10 @@
 import re
-from typing import Tuple
 
 from aocutils import as_ints
 
 
 # (name, capacity, durability, flavor, texture, calories)
-Ingredient = Tuple[str, int, int, int, int, int]
+Ingredient = tuple[str, int, int, int, int, int]
 
 
 def parse(data: list[str]):
