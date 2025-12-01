@@ -37,8 +37,25 @@ def download_input_file():
 
 @measure_time
 def compute_solution(module: str, part: int, data: list[str], is_test: bool):
-    runnable = import_module(module).run
+    module_obj = import_module(module)
+    runnable = module_obj.run
     data = data if getattr(runnable, "uses_raw_input", False) else [line.strip() for line in data]
+    expected_test_solution = None
+
+    # For year 2025 and newer: prefer an exported `test_result` from the part module
+    # instead of parsing it from the testdata file. Keep older years backwards compatible.
+    try:
+        year_int = int(year)
+    except Exception:
+        year_int = 0
+
+    if is_test and year_int >= 2025:
+        if hasattr(module_obj, "test_result"):
+            expected_test_solution = str(getattr(module_obj, "test_result"))
+        solution = runnable(data, is_test=is_test)
+        return solution, expected_test_solution
+
+    # Backwards-compatible behavior for older years: read expected result from testdata file
     test_solution_prefix = "# part"
 
     if len(data) > 2 and all(line.startswith(test_solution_prefix) for line in data[0:2]):

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from year2025.day01.common import parse_input
 
 
@@ -13,3 +13,5 @@ def run(data: List[str], is_test: bool):
             zeros += 1
 
     return zeros
+
+test_result = 3

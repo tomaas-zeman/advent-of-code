@@ -13,3 +13,5 @@ def run(data: List[str], is_test: bool):
                 zeros += 1
 
     return zeros
+
+test_result = 6
