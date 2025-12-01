@@ -1,0 +1,15 @@
+from typing import List, Optional
+from year2025.day01.common import parse_input
+
+
+def run(data: List[str], is_test: bool):
+    zeros = 0
+    dial = 50
+
+    for direction, clicks in parse_input(data):
+        dial = (dial + clicks * direction) % 100
+
+        if dial == 0:
+            zeros += 1
+
+    return zeros
