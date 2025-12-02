@@ -1,29 +1,8 @@
-from aocutils import as_ints
+from year2025.day02.common import sum_of_invalid_ids
 
 
 def run(data: list[str], is_test: bool):
-    sum = 0
-
-    for bounds in data[0].split(","):
-        [min, max] = as_ints(bounds.split("-"))
-        for number in range(min, max + 1):
-            if is_invalid(number):
-                sum += number
-
-    return sum
-
-
-def is_invalid(number):
-    seq = str(number)
-    for length in range(1, len(seq) // 2 + 1):
-        if len(seq) % length != 0:
-            continue
-        pattern = seq[0:length]
-        repeats = len(seq) // len(pattern)
-        if seq == pattern * repeats:
-            return True
-
-    return False
+    return sum_of_invalid_ids(data[0], None)
 
 
 test_result = 4174379265
