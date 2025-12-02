@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
         return True
     aunts = parse(data)
     return find_aunt_suzie(aunts, is_valid)
+
+
+test_result = True

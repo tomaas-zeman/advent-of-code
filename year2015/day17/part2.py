@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
                 valid[len(c)] += 1
 
     return valid[min(valid.keys())]
+
+
+test_result = 3

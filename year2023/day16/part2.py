@@ -12,3 +12,6 @@ def run(data: list[str], is_test: bool):
     )
 
     return max([energized_tiles_count(starting_beam, device) for starting_beam in starting_beams])
+
+
+test_result = 51

@@ -12,3 +12,6 @@ def run(data: list[str], is_test: bool):
         result.append(cup.value)
 
     return "".join([str(c) for c in result])
+
+
+test_result = 92658374

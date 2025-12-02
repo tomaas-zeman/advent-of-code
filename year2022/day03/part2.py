@@ -8,3 +8,6 @@ def run(data: list[str], is_test: bool):
         common_letter = set(group[0]).intersection(group[1]).intersection(group[2]).pop()
         sum += letter_value(ord(common_letter))
     return sum
+
+
+test_result = 70

@@ -21,3 +21,6 @@ def run(data: list[str], is_test: bool):
     bricks = parse(data)
     settle_bricks(bricks)
     return sum(disintegrate(brick) for brick in bricks)
+
+
+test_result = 7

@@ -21,3 +21,6 @@ def run(data: list[str], is_test: bool):
         grid = clone
 
     return np.count_nonzero(grid == "#")
+
+
+test_result = 4

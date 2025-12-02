@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
     intersection: LineString = line.intersection(unary_union(to_polygons(pairs)))
 
     return round(intersection.length)
+
+
+test_result = 26

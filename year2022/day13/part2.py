@@ -9,3 +9,6 @@ def run(data: list[str], is_test: bool):
     input: list[Any] = [json.loads(line) for line in data + ["[2]", "[6]"] if len(line) > 0]
     input.sort(key=cmp_to_key(compare))
     return (input.index([2]) + 1) * (input.index([6]) + 1)
+
+
+test_result = 140

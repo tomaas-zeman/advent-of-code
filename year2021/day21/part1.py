@@ -21,3 +21,6 @@ def run(data: list[str], is_test: bool):
         game = game.play_turn(die.roll())
 
     return min(game.scores) * die.rolls
+
+
+test_result = 739785

@@ -3,3 +3,6 @@ from year2021.day20.common import enhance
 
 def run(data: list[str], is_test: bool):
     return enhance(data, 50)
+
+
+test_result = 3351

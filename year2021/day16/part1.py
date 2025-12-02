@@ -59,3 +59,6 @@ def compute(packet: str, seq=None):
 def run(data: list[str], is_test: bool):
     process_line = lambda line: bin(int(line, 16))[2:].zfill(len(line) * 4)
     return sum(compute(process_line(line)) for line in data)
+
+
+test_result = 82

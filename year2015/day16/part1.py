@@ -6,3 +6,6 @@ def run(data: list[str], is_test: bool):
         return True
     aunts = parse(data)
     return find_aunt_suzie(aunts, lambda thing, count: expected[thing] == count)
+
+
+test_result = True

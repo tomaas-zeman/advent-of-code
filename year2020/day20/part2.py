@@ -136,3 +136,6 @@ def run(data: list[str], is_test: bool):
     picture_hashes = np.count_nonzero(picture == "#")
 
     return picture_hashes - (matches * pattern_hashes)
+
+
+test_result = 273

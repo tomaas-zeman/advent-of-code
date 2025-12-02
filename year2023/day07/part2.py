@@ -27,3 +27,6 @@ def parse(data: list[str]) -> list[Hand]:
 def run(data: list[str], is_test: bool):
     hands = parse(data)
     return calculate_winnings(hands)
+
+
+test_result = 5905

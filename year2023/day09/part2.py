@@ -7,3 +7,6 @@ def initial_sequence(line: str):
 
 def run(data: list[str], is_test: bool):
     return sum(calculate_next_number(initial_sequence(line)) for line in data)
+
+
+test_result = 2

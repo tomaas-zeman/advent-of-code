@@ -17,3 +17,6 @@ def run(data: list[str], is_test: bool):
             intersections += 1
 
     return intersections
+
+
+test_result = 2

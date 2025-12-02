@@ -40,3 +40,6 @@ def run(data: list[str], is_test: bool):
         blacks.update(add)
 
     return len(blacks)
+
+
+test_result = 2208

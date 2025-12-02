@@ -49,3 +49,6 @@ def run(data: list[str], is_test: bool):
         rock_index += 1
 
     return get_tower_size(cave) + additional_tower_height
+
+
+test_result = 1514285714288

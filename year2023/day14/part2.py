@@ -22,3 +22,6 @@ def run(data: list[str], is_test: bool):
         states[state] = cycle
 
     return compute_result(grid)
+
+
+test_result = 64

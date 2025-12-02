@@ -22,3 +22,6 @@ def run(data: list[str], is_test: bool):
     c = y[0]
     x = (26501365 - (width // 2)) // width
     return (a * x**2) + (b * x) + c
+
+
+test_result = 6536

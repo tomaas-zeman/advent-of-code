@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
                 calibration.add(replace(molecule, src, dst, i))
 
     return len(calibration)
+
+
+test_result = 4

@@ -34,3 +34,6 @@ def run(data: list[str], is_test: bool):
     with multiprocessing.Pool(processes=2 if is_test else 6) as pool:
         results = pool.map(calculate_min_dest, intervals_with_maps)
         return min(results)
+
+
+test_result = 46

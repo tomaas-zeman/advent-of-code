@@ -20,3 +20,6 @@ def run(data: list[str], is_test: bool):
                     grid[row, col] += 1
 
     return int(np.sum(grid))
+
+
+test_result = 2000000

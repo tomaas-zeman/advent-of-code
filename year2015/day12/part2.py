@@ -16,3 +16,6 @@ def run(data: list[str], is_test: bool):
             return 0
     
     return recs(obj)
+
+
+test_result = 13

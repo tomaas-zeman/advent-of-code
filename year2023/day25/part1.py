@@ -18,3 +18,6 @@ def run(data: list[str], is_test: bool):
         cut_size, partition = nx.minimum_cut(graph, node1, node2)
         if cut_size == 3:
             return len(partition[0]) * len(partition[1])
+
+
+test_result = 54

@@ -23,3 +23,6 @@ def play(game: Game):
 
 def run(data: list[str], is_test: bool):
     return max(play(Game(parse(data), (0, 0), 0, 21)))
+
+
+test_result = 444356092776315

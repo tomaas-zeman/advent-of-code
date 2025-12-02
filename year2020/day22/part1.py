@@ -11,3 +11,6 @@ def run(data: list[str], is_test: bool):
         players[winner] = sorted([p1, p2]) + players[winner]
 
     return compute_result(players)
+
+
+test_result = 306

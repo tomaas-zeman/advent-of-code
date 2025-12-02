@@ -32,3 +32,6 @@ def run(data: list[str], is_test: bool):
         [value[0] for key, value in options.items() if key.startswith("departure")],
         1,
     )
+
+
+test_result = True

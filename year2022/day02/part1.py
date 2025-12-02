@@ -18,3 +18,6 @@ def run(data: list[str], is_test: bool):
         [enemy, me] = [Mapping[x].value for x in line.split(" ")]
         points += me.compareWith(enemy).value + me.value
     return points
+
+
+test_result = 15

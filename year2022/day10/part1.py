@@ -17,3 +17,6 @@ def run(data: list[str], is_test: bool):
         value = instruction.operation(value, line[1:])
 
     return sum(information)
+
+
+test_result = 13140

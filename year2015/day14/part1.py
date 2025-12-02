@@ -6,3 +6,6 @@ def run(data: list[str], is_test: bool):
     time = max_time(is_test)
     distances_each_sec = race_progress(reindeers, time)
     return max(d[time] for d in distances_each_sec)
+
+
+test_result = 1120

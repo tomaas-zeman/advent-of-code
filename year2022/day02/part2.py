@@ -19,3 +19,6 @@ def run(data: list[str], is_test: bool):
         result: Result = Mapping[line.split(" ")[1]].value
         points += result.value + enemy.optionForResult(result).value
     return points
+
+
+test_result = 12

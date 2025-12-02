@@ -18,3 +18,6 @@ def dec_to_snafu(dec: int):
 
 def run(data: list[str], is_test: bool):
     return dec_to_snafu(sum([snafu_to_dec(line) for line in data]))
+
+
+test_result = '2=-1=0'

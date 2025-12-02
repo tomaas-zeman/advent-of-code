@@ -15,3 +15,6 @@ def run(data: list[str], is_test: bool):
                 points[i] += 1
 
     return max(points) - 1
+
+
+test_result = 689

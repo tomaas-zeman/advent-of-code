@@ -20,3 +20,6 @@ def run(data: list[str], is_test: bool):
                     grid[row, col] = 1
 
     return np.count_nonzero(grid == 1)
+
+
+test_result = 1000000

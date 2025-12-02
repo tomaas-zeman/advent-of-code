@@ -4,5 +4,7 @@ def run(data: list[str], is_test: bool):
         c = data[0][i]
         count += 1 if c == "(" else -1
         if count < 0:
-            return i + 1 
+            return i + 1
 
+
+test_result = 5

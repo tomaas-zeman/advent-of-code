@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
         max_length = max(max_length, sum(graph.get_edge_data(src, dst)["weight"] for src, dst in pairwise(path)))
 
     return max_length
+
+
+test_result = 154

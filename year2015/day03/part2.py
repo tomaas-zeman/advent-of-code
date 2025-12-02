@@ -17,3 +17,6 @@ def run(data: list[str], is_test: bool):
         visited.add(robosanta)
 
     return len(visited)
+
+
+test_result = 11

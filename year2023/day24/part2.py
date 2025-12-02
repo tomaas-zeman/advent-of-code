@@ -32,3 +32,6 @@ def run(data: list[str], is_test: bool):
             return int(result[r_px]) + int(result[r_py]) + int(result[r_pz])
         except:
             pass  # need more equations
+
+
+test_result = 47

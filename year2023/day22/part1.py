@@ -9,3 +9,6 @@ def run(data: list[str], is_test: bool):
         for brick in bricks
         if len(brick.loaded_by) == 0 or all(len(above.supported_by) > 1 for above in brick.loaded_by)
     )
+
+
+test_result = 5

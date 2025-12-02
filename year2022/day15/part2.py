@@ -16,3 +16,6 @@ def run(data: list[str], is_test: bool):
 
     # round for floating point error (e.g. 56000011.00000001 -> 56000011)
     return round(4_000_000 * free_point.x + free_point.y)
+
+
+test_result = 56000011

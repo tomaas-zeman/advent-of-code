@@ -42,3 +42,6 @@ def run(data: list[str], is_test: bool):
             number_min = number
         else:
             number_max = number
+
+
+test_result = 301.0

@@ -8,3 +8,6 @@ def run(data: list[str], is_test: bool):
         hash = md5(f"{data[0]}{n}".encode()).hexdigest()
         if hash.startswith('000000'):
             return n
+
+
+test_result = True

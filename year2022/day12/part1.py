@@ -20,3 +20,6 @@ def run(data: list[str], is_test: bool):
     path = bfs(starting_point, ending_point, expansion)
     if path is not None:
         return len(path.nodes) - 1
+
+
+test_result = 31

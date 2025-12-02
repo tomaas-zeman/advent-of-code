@@ -13,3 +13,6 @@ def run(data: list[str], is_test: bool):
             result += sum(part.props.values())
 
     return result
+
+
+test_result = 19114

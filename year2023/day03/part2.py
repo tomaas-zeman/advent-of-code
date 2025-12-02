@@ -13,3 +13,6 @@ def mul_adj_numbers(special: Item, numbers: list[Item]):
 def run(data: list[str], is_test: bool):
     numbers, specials = parse(data)
     return sum([mul_adj_numbers(s, numbers) for s in specials if s.value == "*"])
+
+
+test_result = 467835

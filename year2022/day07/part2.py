@@ -7,3 +7,6 @@ def run(data: list[str], is_test: bool):
     return min(
         [n.size_of_child_nodes for n in all_nodes if n.type == Type.DIRECTORY and n.size_of_child_nodes >= need_to_free]
     )
+
+
+test_result = 24933642

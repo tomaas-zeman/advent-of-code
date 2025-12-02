@@ -11,3 +11,6 @@ def run(data: list[str], is_test: bool):
         visited.add(position)
 
     return len(visited)
+
+
+test_result = 2

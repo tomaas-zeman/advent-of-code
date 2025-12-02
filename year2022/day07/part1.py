@@ -9,3 +9,6 @@ def run(data: list[str], is_test: bool):
             if node.type == Type.DIRECTORY and node.size_of_child_nodes <= 100000
         ]
     )
+
+
+test_result = 95437

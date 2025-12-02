@@ -9,3 +9,6 @@ def run(data: list[str], is_test: bool):
         a, b, c = as_ints(line.split("x"))
         sum += 2 * a * b + 2 * b * c + 2 * a * c + mul(*sorted([a, b, c])[0:2])
     return sum
+
+
+test_result = 58

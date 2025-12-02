@@ -6,3 +6,6 @@ from year2022.day26.common import decode
 
 def run(data: list[str], is_test: bool):
     return decode(data[0], "[A-Z\-]")
+
+
+test_result = 'K-H-T'

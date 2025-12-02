@@ -33,3 +33,6 @@ def run(data: list[str], is_test: bool):
     players = parse(data)
     recursive_combat(set(), players)
     return compute_result(players)
+
+
+test_result = 291

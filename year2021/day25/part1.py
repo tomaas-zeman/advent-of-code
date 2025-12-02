@@ -54,3 +54,6 @@ def run(data: list[str], is_test: bool):
 
         moves += 1
         trench = trech_after_move
+
+
+test_result = 58

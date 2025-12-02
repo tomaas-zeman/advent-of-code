@@ -13,3 +13,6 @@ def run(data: list[str], is_test: bool):
                 valid += 1
     
     return valid
+
+
+test_result = 4

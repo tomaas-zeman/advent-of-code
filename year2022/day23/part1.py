@@ -13,3 +13,6 @@ def run(data: list[str], is_test: bool):
 
     elves = np.where(map == "#")
     return np.count_nonzero(map[min(elves[0]) : max(elves[0]) + 1, min(elves[1]) : max(elves[1]) + 1] == ".")
+
+
+test_result = 110

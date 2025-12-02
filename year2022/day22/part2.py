@@ -112,3 +112,6 @@ def run(data: list[str], is_test: bool):
         config["movements"] = movements
         config["quadrant"] = get_quadrant
     return find_password(data, find_next_valid_coord)
+
+
+test_result = 5031

@@ -15,3 +15,6 @@ def is_nice(string: str) -> bool:
 
 def run(data: list[str], is_test: bool):
     return len([s for s in data if is_nice(s)])
+
+
+test_result = 1

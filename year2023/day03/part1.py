@@ -12,3 +12,6 @@ def has_adj_special_char(number: Item, specials: list[Item]):
 def run(data: list[str], is_test: bool):
     numbers, specials = parse(data)
     return sum([int(n.value) for n in numbers if has_adj_special_char(n, specials)])
+
+
+test_result = 4361

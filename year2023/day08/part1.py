@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
 
         if current_node == "ZZZ":
             return step
+
+
+test_result = 2

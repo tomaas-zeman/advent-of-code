@@ -30,3 +30,6 @@ def run(data: list[str], is_test: bool):
             lengths.append(len(path.nodes) - 1)
 
     return min(lengths)
+
+
+test_result = 29

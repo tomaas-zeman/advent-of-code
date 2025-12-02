@@ -9,3 +9,6 @@ def parse_line(line: str) -> tuple[str, tuple[int, ...]]:
 
 def run(data: list[str], is_test: bool):
     return get_arrangement_count(data, parse_line)
+
+
+test_result = 525152

@@ -30,3 +30,6 @@ def run(data: list[str], is_test: bool):
     forest = matrix_from_data(data, convert_value=lambda x: int(x))
     flag_visible_trees(forest)
     return len([tree for tree in forest.all_points() if tree.flag == 1])
+
+
+test_result = 21

@@ -31,3 +31,6 @@ def run(data: list[str], is_test: bool):
 
     draw_crt(crt)
     return True
+
+
+test_result = True

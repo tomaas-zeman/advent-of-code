@@ -10,3 +10,6 @@ def run(data: list[str], is_test: bool):
         if result < 0:
             sum += i // 3 + 1
     return sum
+
+
+test_result = 13

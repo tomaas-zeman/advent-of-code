@@ -26,3 +26,6 @@ def run(data: list[str], is_test: bool):
         processed_allergens.add(allergen)
 
     return ",".join(flatten([allergens_by_food[allergen] for allergen in sorted(allergens_by_food.keys())]))
+
+
+test_result = 'mxmxvkd,sqjhc,fvjkl'

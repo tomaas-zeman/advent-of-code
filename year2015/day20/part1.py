@@ -7,3 +7,6 @@ def run(data: list[str], is_test: bool):
     for house in range(threshold):
         if sum(d * 10 for d in find_divisors(house)) >= threshold:
             return house
+
+
+test_result = 8

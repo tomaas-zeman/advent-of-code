@@ -9,3 +9,6 @@ def run(data: list[str], is_test: bool):
         common_letter = set(first).intersection(second).pop()
         sum += letter_value(ord(common_letter))
     return sum
+
+
+test_result = 157

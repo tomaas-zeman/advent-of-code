@@ -8,3 +8,6 @@ def run(data: list[str], is_test: bool):
         if len(numbers) > 0:
             sum += int(f"{numbers[0]}{numbers[-1]}")
     return sum
+
+
+test_result = 209

@@ -20,3 +20,6 @@ def run(data: list[str], is_test: bool):
         score = max(prod([s if s > 0 else 0 for s in property_scores]), score)
 
     return score
+
+
+test_result = 62842880

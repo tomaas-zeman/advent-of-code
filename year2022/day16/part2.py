@@ -13,3 +13,6 @@ def run(data: list[str], is_test: bool):
                 flow_exclusive_pairs.append(my_flow + elephants_flow)
 
     return max(flow_exclusive_pairs)
+
+
+test_result = 1707

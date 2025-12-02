@@ -6,3 +6,6 @@ def run(data: list[str], is_test: bool):
     maze = Numpy.from_input_as_str(data)
     counts = walk(maze, 64)
     return len(counts)
+
+
+test_result = 42

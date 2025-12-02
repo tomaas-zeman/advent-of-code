@@ -55,3 +55,6 @@ def run(data: list[str], is_test: bool):
     workflows, _ = parse(data)
     initial_interval = {p: closed(1, 4000) for p in "xmas"}
     return solve(workflows, workflows["in"], dict(initial_interval))
+
+
+test_result = 167409079868000

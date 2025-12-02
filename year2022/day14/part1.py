@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
         steps += 1
 
     return steps
+
+
+test_result = 24

@@ -13,3 +13,6 @@ def run(data: list[str], is_test: bool):
         count[Pulse.HIGH] += signal_count[Pulse.HIGH]
 
     return mul(*count.values())
+
+
+test_result = 11687500

@@ -14,3 +14,6 @@ def run(data: list[str], is_test: bool):
         rounds += 1
 
     return rounds
+
+
+test_result = 20

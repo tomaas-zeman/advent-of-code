@@ -37,3 +37,6 @@ def run(data: list[str], is_test: bool):
                 boxes[key].append(value)
 
     return compute_focusing_power(boxes)
+
+
+test_result = 145

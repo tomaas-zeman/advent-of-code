@@ -8,3 +8,6 @@ def line_parser(line: str) -> tuple[str, int]:
 
 def run(data: list[str], is_test: bool):
     return get_area(data, line_parser)
+
+
+test_result = 62

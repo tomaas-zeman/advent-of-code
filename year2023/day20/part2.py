@@ -27,3 +27,6 @@ def run(data: list[str], is_test: bool):
             break
 
     return math.lcm(*result.values())
+
+
+test_result = True

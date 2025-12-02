@@ -9,3 +9,6 @@ def run(data: list[str], is_test: bool):
         if (x1 <= y2 and y1 >= x2) or (x2 <= y1 and y2 >= x1):
             result += 1
     return result
+
+
+test_result = 4

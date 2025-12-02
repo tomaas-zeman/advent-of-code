@@ -21,3 +21,6 @@ def run(data: list[str], is_test: bool):
         encryption_key %= 20201227
 
     return encryption_key
+
+
+test_result = 14897079

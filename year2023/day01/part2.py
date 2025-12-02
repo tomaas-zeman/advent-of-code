@@ -15,3 +15,6 @@ def run(data: list[str], is_test: bool):
         numbers = [to_int(n) for n in re.findall(f"(?=(\\d|{'|'.join(words.keys())}))", line)]
         sum += int(f"{numbers[0]}{numbers[-1]}")
     return sum
+
+
+test_result = 281

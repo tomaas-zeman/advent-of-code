@@ -21,3 +21,6 @@ def find_next_valid_coord(me: Me, facing: Facing, maze: np.ndarray) -> tuple[int
 @raw_input
 def run(data: list[str], is_test: bool):
     return find_password(data, find_next_valid_coord)
+
+
+test_result = 6032

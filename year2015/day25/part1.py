@@ -17,3 +17,6 @@ def run(data: list[str], is_test: bool):
         code = (code * 252533) % 33554393
 
     return code
+
+
+test_result = 27995004

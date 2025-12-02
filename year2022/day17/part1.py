@@ -31,3 +31,6 @@ def run(data: list[str], is_test: bool):
                 break
 
     return get_tower_size(cave)
+
+
+test_result = 3068

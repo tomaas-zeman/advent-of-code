@@ -24,3 +24,6 @@ def run(data: list[str], is_test: bool):
         #     print(matrix)
 
     return steps
+
+
+test_result = 93

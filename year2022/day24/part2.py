@@ -12,3 +12,6 @@ def run(data: list[str], is_test: bool):
         total_time += time
 
     return total_time
+
+
+test_result = 54

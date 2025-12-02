@@ -7,3 +7,6 @@ def run(data: list[str], is_test: bool):
     registers = defaultdict(int)
     run_program(data, registers)
     return registers["b"]
+
+
+test_result = 2
