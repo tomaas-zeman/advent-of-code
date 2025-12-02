@@ -2,7 +2,7 @@ from aocutils import as_ints
 
 
 def run(data: list[str], is_test: bool):
-    invalid_ids = []
+    sum = 0
 
     for bounds in data[0].split(","):
         [min, max] = as_ints(bounds.split("-"))
@@ -11,9 +11,9 @@ def run(data: list[str], is_test: bool):
             first_half = seq[: len(seq) // 2]
             second_half = seq[len(seq) // 2 :]
             if first_half == second_half:
-                invalid_ids.append(number)
+                sum += number
 
-    return sum(invalid_ids)
+    return sum
 
 
 test_result = 1227775554

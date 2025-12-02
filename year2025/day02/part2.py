@@ -2,18 +2,18 @@ from aocutils import as_ints
 
 
 def run(data: list[str], is_test: bool):
-    invalid_ids = []
+    sum = 0
 
     for bounds in data[0].split(","):
         [min, max] = as_ints(bounds.split("-"))
         for number in range(min, max + 1):
-            if is_invaid(number):
-                invalid_ids.append(number)
+            if is_invalid(number):
+                sum += number
 
-    return sum(invalid_ids)
+    return sum
 
 
-def is_invaid(number):
+def is_invalid(number):
     seq = str(number)
     for length in range(1, len(seq) // 2 + 1):
         if len(seq) % length != 0:
