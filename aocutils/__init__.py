@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 import os
 import time
 from enum import Enum
@@ -84,14 +85,20 @@ def split_list_by(l: list[T], splitter: str):
 
 class Numpy:
     @staticmethod
-    def print_matrix(matrix: np.ndarray, str_formatter: Callable[[str], str] = lambda x: x, separator=""):
+    def print_matrix(
+        matrix: np.ndarray,
+        str_formatter: Callable[[str], str] = lambda x: x,
+        separator="",
+    ):
         for row in range(matrix.shape[0]):
             for col in range(matrix.shape[1]):
                 print(f"{str_formatter(str(matrix[row, col]))}{separator}", end="")
             print()
 
     @staticmethod
-    def from_input(data: list[str], dtype: T, value_convertor: Callable[[str], T]) -> np.ndarray[T]:
+    def from_input(
+        data: list[str], dtype: T, value_convertor: Callable[[str], T]
+    ) -> np.ndarray[T]:
         matrix = np.empty((len(data), len(data[0])), dtype=dtype)
         for row_index, row in enumerate(data):
             for col_index, col in enumerate(row):
@@ -107,9 +114,14 @@ class Numpy:
         return Numpy.from_input(data, np.uint8, int)
 
     @staticmethod
-    def neighbors_of(point: tuple[int, int], matrix: np.ndarray, include_diagonals: bool = False):
+    def neighbors_of(
+        point: tuple[int, int], matrix: np.ndarray, include_diagonals: bool = False
+    ):
         return [
-            matrix[n] for n in Numpy.valid_neighbor_positions_of(point, matrix, include_diagonals=include_diagonals)
+            matrix[n]
+            for n in Numpy.valid_neighbor_positions_of(
+                point, matrix, include_diagonals=include_diagonals
+            )
         ]
 
     @staticmethod
@@ -130,10 +142,14 @@ class Numpy:
         return positions
 
     @staticmethod
-    def valid_neighbor_positions_of(point: Point, matrix: np.ndarray, include_diagonals: bool = False):
+    def valid_neighbor_positions_of(
+        point: Point, matrix: np.ndarray, include_diagonals: bool = False
+    ):
         return [
             p
-            for p in Numpy.all_neighbor_positions_of(point, include_diagonals=include_diagonals)
+            for p in Numpy.all_neighbor_positions_of(
+                point, include_diagonals=include_diagonals
+            )
             if 0 <= p[0] < matrix.shape[0] and 0 <= p[1] < matrix.shape[1]
         ]
 
@@ -159,7 +175,16 @@ class Numpy:
         ax = figure.add_subplot(111, projection="3d")
 
         cube_vertices = np.array(
-            [[0, 0, 0], [1, 0, 0], [1, 0, 1], [0, 0, 1], [0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]]
+            [
+                [0, 0, 0],
+                [1, 0, 0],
+                [1, 0, 1],
+                [0, 0, 1],
+                [0, 1, 0],
+                [1, 1, 0],
+                [1, 1, 1],
+                [0, 1, 1],
+            ]
         )
 
         cube_sides = [
@@ -176,7 +201,12 @@ class Numpy:
                 for z in range(matrix.shape[2]):
                     if matrix[x, y, z]:
                         faces = [np.array(face) + [x, y, z] for face in cube_sides]
-                        cube = Poly3DCollection(faces, alpha=0.5, edgecolor="k", facecolors="bgrcmy"[randint(0, 5)])
+                        cube = Poly3DCollection(
+                            faces,
+                            alpha=0.5,
+                            edgecolor="k",
+                            facecolors="bgrcmy"[randint(0, 5)],
+                        )
                         ax.add_collection3d(cube)
 
         ax.set_xlim(0, matrix.shape[0])
@@ -269,7 +299,7 @@ class _Console:
     def with_color(text: str, color: str | None):
         if color is None:
             return text
-        return f"\x1B[{color}m{text}\x1B[0m"
+        return f"\x1b[{color}m{text}\x1b[0m"
 
 
 Console = _Console()
@@ -355,7 +385,70 @@ class Graph:
 
         if edge_labels:
             nx.draw_networkx_edge_labels(
-                graph, layout, edge_labels={(n1, n2): d["weight"] for n1, n2, d in graph.edges(data=True)}
+                graph,
+                layout,
+                edge_labels={
+                    (n1, n2): d["weight"] for n1, n2, d in graph.edges(data=True)
+                },
             )
 
         plot.show()
+
+
+####################
+# COMPLEX MATRICES #
+####################
+class ComplexMatrix(Generic[T]):
+    def __init__(
+        self,
+        raw_matrix: list[list[T]] | list[str],
+        default_value: T = None,
+        should_store_value: Callable[[T], bool] = lambda: True,
+    ):
+        if raw_matrix and isinstance(raw_matrix[0], str):
+            raw_matrix = [list(row) for row in raw_matrix]
+
+        matrix = defaultdict[complex, T](lambda: default_value)
+        for row_index, row in enumerate(raw_matrix):
+            for col_index, value in enumerate(row):
+                if should_store_value(value):
+                    matrix[ComplexMatrix.key(row_index, col_index)] = value
+
+        self.rows = len(raw_matrix)
+        self.cols = len(raw_matrix[0])
+        self.matrix = matrix
+
+    def neighbors(
+        self, point: complex, include_diagonals=True
+    ) -> Iterator[tuple[complex, T]]:
+        directions = [-1j, 1j, -1, 1]
+        if include_diagonals:
+            directions += [-1j - 1, -1j + 1, 1j - 1, 1j + 1]
+
+        for d in directions:
+            neighbor_key = point + d
+            yield neighbor_key, self.matrix[neighbor_key]
+
+    def keys(self) -> Iterator[complex]:
+        for key, _ in self.entries():
+            yield key
+
+    def values(self) -> Iterator[T]:
+        for _, value in self.entries():
+            yield value
+
+    def entries(self) -> Iterator[tuple[complex, T]]:
+        for row_index in range(self.rows):
+            for col_index in range(self.cols):
+                key = ComplexMatrix.key(row_index, col_index)
+                yield key, self.matrix[key]
+
+    def __getitem__(self, key: complex) -> T:
+        return self.matrix[key]
+
+    def __setitem__(self, key: complex, value: T) -> None:
+        self.matrix[key] = value
+
+    @staticmethod
+    def key(row_index, col_index) -> complex:
+        return row_index * 1j + col_index

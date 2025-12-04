@@ -1,18 +1,17 @@
-import numpy as np
+from aocutils import ComplexMatrix
 
-from aocutils import Numpy
+ROLL = "@"
 
 
-def find_accessible_rolls(warehouse: np.ndarray):
+def create_warehouse(data: list[str]):
+    return ComplexMatrix[str](data, should_store_value=lambda v: v == ROLL)
+
+
+def find_accessible_rolls(warehouse: ComplexMatrix[str]) -> list[complex]:
     accessible_rolls = []
 
-    for row in range(warehouse.shape[0]):
-        for col in range(warehouse.shape[1]):
-            neighbors = Numpy.neighbors_of((row, col), warehouse, True)
-            if (
-                warehouse[row, col] == "@"
-                and len([n for n in neighbors if n == "@"]) < 4
-            ):
-                accessible_rolls.append((row, col))
+    for point, value in warehouse.entries():
+        if value == ROLL and len([n for _, n in warehouse.neighbors(point) if n == ROLL]) < 4:
+            accessible_rolls.append(point)
 
     return accessible_rolls
