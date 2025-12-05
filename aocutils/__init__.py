@@ -430,18 +430,17 @@ class ComplexMatrix(Generic[T]):
             yield neighbor_key, self.matrix[neighbor_key]
 
     def keys(self) -> Iterator[complex]:
-        for key, _ in self.entries():
-            yield key
-
-    def values(self) -> Iterator[T]:
-        for _, value in self.entries():
-            yield value
-
-    def entries(self) -> Iterator[tuple[complex, T]]:
         for row_index in range(self.rows):
             for col_index in range(self.cols):
-                key = ComplexMatrix.key(row_index, col_index)
-                yield key, self.matrix[key]
+                yield ComplexMatrix.key(row_index, col_index)
+
+    def values(self) -> Iterator[T]:
+        for key in self.keys():
+            yield self.matrix[key]
+
+    def entries(self) -> Iterator[tuple[complex, T]]:
+        for key in self.keys():
+            yield key, self.matrix[key]
 
     def __getitem__(self, key: complex) -> T:
         return self.matrix[key]
