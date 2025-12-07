@@ -442,6 +442,15 @@ class ComplexMatrix(Generic[T]):
         for key in self.keys():
             yield key, self.matrix[key]
 
+    def position_of(self, value: T) -> complex:
+        for [position, stored_value] in self.entries():
+            if stored_value == value:
+                return position
+        return None
+
+    def all_positions_of(self, value: T) -> complex:
+        return [pos for pos, stored_value in self.entries() if stored_value == value]
+
     def __getitem__(self, key: complex) -> T:
         return self.matrix[key]
 
