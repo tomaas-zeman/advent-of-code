@@ -5,3 +5,5 @@ You get inside and take the elevator to its only other stop: the gift shop. "Tha
 As you make your way through the surprisingly extensive selection, one of the clerks recognizes you and asks for your help.
 
 As it turns out, one of the younger Elves was playing on a gift shop computer and managed to add a whole bunch of invalid product IDs to their gift shop database! Surely, it would be no trouble for you to identify the invalid product IDs for them, right?
+
+![Scene](./scene.jpg)
